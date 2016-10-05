@@ -1,0 +1,11 @@
+PurposeMapping
+[0] !null
+[1] resource
+[2] product
+[3] home
+[4] public
+[5] factory
+[6] inhab
+[7] decoration
+[8] 
+[9] 
