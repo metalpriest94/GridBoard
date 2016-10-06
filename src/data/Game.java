@@ -40,6 +40,11 @@ public class Game extends JFrame {
 	
 	private int zoomLevel = 3;
 	
+	// Variables defining the appearance of the MiniMap
+	// ((Mapsize / Detail) * Scale) should be as close to 256 as possible. If the map is not square-shaped, use the long side for Mapsize.
+	private int miniMapDetail = 1; //Adds every n-th tile to the MiniMap --- the smaller, the better
+	private int miniMapScale = 1; //The smaller the map, the higher this should be
+	
 	private JPanel contentPane;
 	private JGridPanel panelGame;
 	private JGridPanel panelMiniMap;
@@ -190,6 +195,7 @@ public class Game extends JFrame {
 		
 				panelGame.setVisibleCornerX(targetX);
 				panelGame.setVisibleCornerY(targetY);
+				updateMiniMap();
 				repaint();
 			}
 		});
@@ -207,14 +213,7 @@ public class Game extends JFrame {
 		action.put("right", moveRight);
 		
 		callMap("test5");
-		callMiniMap();
-		
-		
-		panelMiniMap.setTileSize(4);
-		panelMiniMap.setShowGrid(false);
-		contentPane.add(panelMiniMap, "cell 1 0,grow");
-		
-		
+		designMiniMap(miniMapDetail, miniMapScale);
 	}
 	
 	public void callMap(String name)
@@ -226,21 +225,30 @@ public class Game extends JFrame {
 		gioGame.load(name);
 	}
 	
-	public void callMiniMap()
+	public void designMiniMap(int detail, int scale)
 	{
 
 		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allAssets);
-		gioMiniMap.newMap(panelGame.getTilesX()/4, panelGame.getTilesY()/4);
-		for (int x = 0; x < panelGame.getTilesX(); x += 4)
+		gioMiniMap.newMap(panelGame.getTilesX()/detail, panelGame.getTilesY()/detail);
+		for (int x = 0; x < panelGame.getTilesX(); x += detail)
 		{
-			for (int y = 0; y < panelGame.getTilesY(); y += 4)
+			for (int y = 0; y < panelGame.getTilesY(); y += detail)
 			{
-				panelMiniMap.applyProperty(x /4 , y /4 , 0, panelGame.getMapping()[x][y][0]);
+				panelMiniMap.applyProperty(x /detail , y /detail , 0, panelGame.getMapping()[x][y][0]);
 			}
 		}
-		panelMiniMap.setTileSize(4);
+		panelMiniMap.setTileSize(scale);
 		panelMiniMap.setShowGrid(false);
+		panelMiniMap.setDragged(true); // Simulation of Mousedrag to apply the visible area as square on the MiniMap.
 		contentPane.add(panelMiniMap, "cell 1 0,grow");
+	}
+	
+	public void updateMiniMap()
+	{
+		panelMiniMap.setStartDragX(panelGame.getVisibleCornerX()-1);
+		panelMiniMap.setStartDragY(panelGame.getVisibleCornerY()-1);
+		panelMiniMap.setPosX(panelGame.getVisibleCornerX() + panelGame.getWidth()  / panelGame.getTileSize() -1);
+		panelMiniMap.setPosY(panelGame.getVisibleCornerY() + panelGame.getHeight() / panelGame.getTileSize() -1);
 	}
 	
 	public void createTileList()
@@ -376,6 +384,7 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerY() > 1)
 		{
 			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() - 1);
+			updateMiniMap();
 			repaint();
 		}
 	}
@@ -385,6 +394,7 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerY() < panelGame.getTilesY())
 		{
 			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() + 1);
+			updateMiniMap();
 			repaint();
 		}
 	}
@@ -394,6 +404,7 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerX() > 1)
 		{
 			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() - 1);
+			updateMiniMap();
 			repaint();
 		}
 	}
@@ -403,6 +414,7 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerX() < panelGame.getTilesX())
 		{
 			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() + 1);
+			updateMiniMap();
 			repaint();
 		}
 	}
@@ -419,7 +431,6 @@ public class Game extends JFrame {
 				moveDown();
 			}
 			changeZoom(+1);
-			repaint();
 		}
 	}
 	
@@ -434,7 +445,6 @@ public class Game extends JFrame {
 				moveLeft();
 				moveUp();
 			}
-			repaint();
 		}
 	}
 	public void changeZoom(int value)
