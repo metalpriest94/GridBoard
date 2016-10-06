@@ -421,31 +421,58 @@ public class Game extends JFrame {
 	
 	public void zoomIn()
 	{
+		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
+		int lastCenterY = lastCenterX * 5 / 6;
+		
 		if (zoomLevel < 8)
 		{
+			changeZoom(+1);
+			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
+			int newCenterY = newCenterX * 5 / 6;
 			
-			for(int i =0; i < (panelGame.getWidth() / panelGame.getTileSize() / 4); i++)
+			int offsetX = lastCenterX - newCenterX;
+			int offsetY = lastCenterY - newCenterY;
+			
+			for(int i =0; i < offsetX; i++)
 			{
-
 				moveRight();
+			}
+			for(int i =0; i < offsetY; i++)
+			{
 				moveDown();
 			}
-			changeZoom(+1);
+			
+			
 		}
+		repaint();
 	}
 	
 	public void zoomOut()
 	{
+		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
+		int lastCenterY = lastCenterX * 5 / 6;
+		
+		
+		//System.out.println(offsetX + " " +offsetY);
 		if (zoomLevel > 1)
 		{
 			changeZoom(-1);
-			for(int i =0; i < (panelGame.getWidth() / panelGame.getTileSize() / 4); i++)
+			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
+			int newCenterY = newCenterX * 5 / 6;
+			
+			int offsetX = newCenterX - lastCenterX;
+			int offsetY = newCenterY - lastCenterY;
+			
+			for(int i =0; i < offsetX; i++)
 			{
-				System.out.println(i);
 				moveLeft();
+			}
+			for(int i =0; i < offsetY; i++)
+			{
 				moveUp();
 			}
 		}
+		repaint();
 	}
 	public void changeZoom(int value)
 	{
