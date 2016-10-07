@@ -391,7 +391,7 @@ public class Game extends JFrame {
 	
 	public void moveDown()
 	{
-		if(panelGame.getVisibleCornerY() < panelGame.getTilesY())
+		if(panelGame.getVisibleCornerY() < panelGame.getTilesY() - (panelGame.getHeight() / panelGame.getTileSize() - 1))
 		{
 			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() + 1);
 			updateMiniMap();
@@ -411,7 +411,7 @@ public class Game extends JFrame {
 	
 	public void moveRight()
 	{
-		if(panelGame.getVisibleCornerX() < panelGame.getTilesX())
+		if(panelGame.getVisibleCornerX() < panelGame.getTilesX() - (panelGame.getWidth() / panelGame.getTileSize() - 1))
 		{
 			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() + 1);
 			updateMiniMap();
@@ -452,8 +452,6 @@ public class Game extends JFrame {
 		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
 		int lastCenterY = lastCenterX * 5 / 6;
 		
-		
-		//System.out.println(offsetX + " " +offsetY);
 		if (zoomLevel > 1)
 		{
 			changeZoom(-1);
