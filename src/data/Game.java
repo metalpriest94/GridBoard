@@ -422,13 +422,13 @@ public class Game extends JFrame {
 	public void zoomIn()
 	{
 		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-		int lastCenterY = lastCenterX * 5 / 6;
+		int lastCenterY = lastCenterX * panelGame.getHeight() / panelGame.getWidth();
 		
 		if (zoomLevel < 8)
 		{
 			changeZoom(+1);
 			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-			int newCenterY = newCenterX * 5 / 6;
+			int newCenterY = newCenterX * panelGame.getHeight() / panelGame.getWidth();
 			
 			int offsetX = lastCenterX - newCenterX;
 			int offsetY = lastCenterY - newCenterY;
@@ -450,13 +450,13 @@ public class Game extends JFrame {
 	public void zoomOut()
 	{
 		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-		int lastCenterY = lastCenterX * 5 / 6;
+		int lastCenterY = lastCenterX * panelGame.getHeight() / panelGame.getWidth();
 		
 		if (zoomLevel > 1)
 		{
 			changeZoom(-1);
 			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-			int newCenterY = newCenterX * 5 / 6;
+			int newCenterY = newCenterX * panelGame.getHeight() / panelGame.getWidth();
 			
 			int offsetX = newCenterX - lastCenterX;
 			int offsetY = newCenterY - lastCenterY;
