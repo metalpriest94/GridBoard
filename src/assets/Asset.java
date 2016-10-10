@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Asset {
 
@@ -140,7 +141,7 @@ public class Asset {
 		BufferedReader assetRead = null;
 		try
 		{
-			if (asset != "" && asset != null)
+			if (!asset.equals(""))
 			{
 				assetRead = new BufferedReader(new FileReader("src" + File.separator +  "assets" + File.separator +asset + ".ast"));
 				i = Integer.parseInt(assetRead.readLine().split("/")[0]);
@@ -148,7 +149,7 @@ public class Asset {
 		}
 		catch (IOException ex)
 		{
-			ex.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error reading " + asset + ".ast");
 		}
 		finally
 		{
@@ -159,7 +160,7 @@ public class Asset {
 			}
 			catch (IOException ex)
 			{
-				
+				JOptionPane.showMessageDialog(null, "Error reading " + asset + ".ast");
 			}
 		}
 		return i;
