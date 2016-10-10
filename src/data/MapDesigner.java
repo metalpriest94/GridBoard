@@ -524,7 +524,7 @@ public class MapDesigner extends JFrame {
 		String[] findAST, files, fileContent;
 		BufferedReader fileRead;
 		String line;
-		int i, lengthOfFile = 5;
+		int i, lengthOfFile = 11;
 		
 		allAssets = new ArrayList<Asset>();
 		listAssets.setModel(modelAssets);
@@ -627,7 +627,6 @@ public class MapDesigner extends JFrame {
 						panelMap.applyProperty(x, y, 10, Utilities.boolToInt(each.isConstructable()));
 						//panelMap.applyProperty(x, y, 11, Utilities.boolToInt(each.canCarryAsset()));
 						panelMap.applyAssetImage(x, y, each.getImage());
-						System.out.println(each.getPurpose());
 					}
 				}
 				catch (NullPointerException ex)

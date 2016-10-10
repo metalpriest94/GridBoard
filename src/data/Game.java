@@ -37,6 +37,7 @@ public class Game extends JFrame {
 	private GridIO gioGame;
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Asset> allAssets;
+	private ArrayList<Asset> constructableAssets;
 	
 	private int zoomLevel = 3;
 	
@@ -320,9 +321,10 @@ public class Game extends JFrame {
 		String[] findAST, files, fileContent;
 		BufferedReader fileRead;
 		String line;
-		int i, lengthOfFile = 5;
+		int i, lengthOfFile = 11;
 		
 		allAssets = new ArrayList<Asset>();
+		constructableAssets = new ArrayList<Asset>();
 		
 		File folderRead = new File("src" + File.separator +  "assets"); 
 			
@@ -351,6 +353,10 @@ public class Game extends JFrame {
 									i++;
 								}
 								allAssets.add(new Asset(fileContent));
+								if(fileContent[3].equals(String.valueOf(true)))
+								{
+									constructableAssets.add(new Asset(fileContent));
+								}
 							}
 							catch (IOException ex)
 							{

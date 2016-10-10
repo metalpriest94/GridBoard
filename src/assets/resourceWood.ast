@@ -1,0 +1,11 @@
+102/id
+wood/name
+resource/purpose
+false/isConstructable
+/buildResource1
+/buildResource2
+/buildResource3 
+0/amountBuildResource1
+0/amountBuildResource2
+0/amountBuildResource3
+wood.jpg/image

@@ -1,0 +1,11 @@
+301/id
+house/name
+home/purpose
+true/isConstructable
+resourceWood/buildResource1
+/buildResource2
+/buildResource3 
+10/amountBuildResource1
+0/amountBuildResource2
+0/amountBuildResource3
+house.jpg/image
