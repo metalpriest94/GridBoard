@@ -1,4 +1,4 @@
-package items;
+package data;
 
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -31,7 +31,7 @@ public class Item {
 		
 		try
 		{
-			this.setImage(ImageIO.read(Item.class.getResource("." + File.separator + data[10])));
+			this.setImage(ImageIO.read(new File("."+ File.separator + "resources" + File.separator + "images" + File.separator + "items" +  File.separator + data[10])));
 		}
 		catch (IOException ex)
 		{

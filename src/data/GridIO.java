@@ -1,6 +1,4 @@
 package data;
-import tiles.MapTile;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,8 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
-import items.Item;
 
 public class GridIO{
 	private JGridPanel panelMap;

@@ -25,9 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
-import items.Item;
 import net.miginfocom.swing.MigLayout;
-import tiles.MapTile;
 
 import java.awt.Color;
 import java.awt.event.MouseWheelListener;

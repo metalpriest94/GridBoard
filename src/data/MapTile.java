@@ -1,4 +1,4 @@
-package tiles;
+package data;
 
 import java.awt.Image;
 import java.io.File;
@@ -12,22 +12,23 @@ public class MapTile {
 	private int background;
 	private Image image;
 	private boolean accessable;
-	private boolean canCarryAsset;
+	private boolean canCarryItem;
 	
 	public MapTile(String[] data)
 	{
 		this.setID(data[0]);
 		this.setName(data[1]);
 		this.setAccessable(Boolean.parseBoolean(data[2]));
-		this.setCanCarryAsset(Boolean.parseBoolean(data[3]));
+		this.setCanCarryItem(Boolean.parseBoolean(data[3]));
 		this.setBackground((Integer.parseInt(data[4]) * 256 * 256) + (Integer.parseInt(data[5]) * 256) + Integer.parseInt(data[6]));
 		
 		try
 		{
-			this.setImage(ImageIO.read(MapTile.class.getResource("." + File.separator + data[7])));
+			this.setImage(ImageIO.read(new File("." + File.separator + "resources" + File.separator + "images" + File.separator + "tiles" + File.separator + data[7])));
 		}
 		catch (IOException ex)
 		{
+			
 			ex.printStackTrace();
 		}
 	}
@@ -67,9 +68,9 @@ public class MapTile {
 		this.accessable = accessable;
 	}
 	public final boolean canCarryItem() {
-		return canCarryAsset;
+		return canCarryItem;
 	}
-	public final void setCanCarryAsset(boolean canCarryAsset) {
-		this.canCarryAsset = canCarryAsset;
+	public final void setCanCarryItem(boolean canCarryItem) {
+		this.canCarryItem = canCarryItem;
 	}	
 }
