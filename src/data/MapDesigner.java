@@ -36,9 +36,9 @@ import javax.swing.UIManager;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
 
-import assets.Asset;
 import data.GridIO;
 import data.Utilities;
+import items.Item;
 
 import javax.swing.event.ChangeEvent;
 
@@ -52,7 +52,7 @@ public class MapDesigner extends JFrame {
 	private JButton btnLeft;
 	private JPanel panelTools;
 	private JLabel lblMaptiles;
-	private JLabel lblAssets;
+	private JLabel lblItems;
 	private JLabel lblGlobalInformation;
 	private JLabel lblSettings;
 	private JLabel lblTools;
@@ -65,19 +65,19 @@ public class MapDesigner extends JFrame {
 	private JTextField txtTileSize;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_1;
-	private JList<String> listAssets;
+	private JList<String> listItems;
 	private JList<String> listTiles;
 	private JRadioButton rdbtnPlaceMaptile;
-	private JRadioButton rdbtnPlaceAsset;
-	private JRadioButton rdbtnRemoveAsset;
+	private JRadioButton rdbtnPlaceItem;
+	private JRadioButton rdbtnRemoveItem;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	private DefaultListModel<String> modelMapTiles = new DefaultListModel<String>();
 	private ArrayList<MapTile> allTiles;
-	private DefaultListModel<String> modelAssets = new DefaultListModel<String>();
-	private ArrayList<Asset> allAssets;
+	private DefaultListModel<String> modelItems = new DefaultListModel<String>();
+	private ArrayList<Item> allItems;
 	private JLabel lblCurrentPos;
-	private JRadioButton rdbtnConfigureAsset;
+	private JRadioButton rdbtnConfigureItem;
 	private JTextField txtFileName;
 	private JLabel lblFileName;
 	private JButton btnSave;
@@ -143,10 +143,10 @@ public class MapDesigner extends JFrame {
 							{
 								if(rdbtnPlaceMaptile.isSelected())
 									assignTile(x, y);
-								else if(rdbtnPlaceAsset.isSelected() && (panelMap.getMapping()[x][y][2] == 1))
-									assignAsset(x, y, true);
-								else if(rdbtnRemoveAsset.isSelected())
-									assignAsset(x, y, false);
+								else if(rdbtnPlaceItem.isSelected() && (panelMap.getMapping()[x][y][2] == 1))
+									assignItem(x, y, true);
+								else if(rdbtnRemoveItem.isSelected())
+									assignItem(x, y, false);
 							}
 						}
 						panelMap.setDragged(false);
@@ -155,10 +155,10 @@ public class MapDesigner extends JFrame {
 					{
 						if(rdbtnPlaceMaptile.isSelected())
 							assignTile(panelMap.getCurrentX(), panelMap.getCurrentY());
-						else if(rdbtnPlaceAsset.isSelected() && (panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][2] == 1))
-							assignAsset(panelMap.getCurrentX(), panelMap.getCurrentY(), true);
-						else if(rdbtnRemoveAsset.isSelected())
-							assignAsset(panelMap.getCurrentX(), panelMap.getCurrentY(), false);
+						else if(rdbtnPlaceItem.isSelected() && (panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][2] == 1))
+							assignItem(panelMap.getCurrentX(), panelMap.getCurrentY(), true);
+						else if(rdbtnRemoveItem.isSelected())
+							assignItem(panelMap.getCurrentX(), panelMap.getCurrentY(), false);
 					}
 			}
 			@Override
@@ -316,10 +316,10 @@ public class MapDesigner extends JFrame {
 		});
 		panelTools.add(btnSave, "cell 1 2,growx");
 		
-		rdbtnPlaceAsset = new JRadioButton("Place Asset");
-		rdbtnPlaceAsset.setBackground(new Color(153, 204, 204));
-		buttonGroup.add(rdbtnPlaceAsset);
-		panelTools.add(rdbtnPlaceAsset, "cell 2 2 2 1");
+		rdbtnPlaceItem = new JRadioButton("Place Item");
+		rdbtnPlaceItem.setBackground(new Color(153, 204, 204));
+		buttonGroup.add(rdbtnPlaceItem);
+		panelTools.add(rdbtnPlaceItem, "cell 2 2 2 1");
 		
 		btnLoad = new JButton("Load");
 		btnLoad.addActionListener(new ActionListener() {
@@ -340,10 +340,10 @@ public class MapDesigner extends JFrame {
 		panelTools.add(chckbxShowGrid, "cell 7 2");
 		panelTools.add(btnLoad, "cell 1 3,growx");
 		
-		rdbtnRemoveAsset = new JRadioButton("Remove Asset");
-		rdbtnRemoveAsset.setBackground(new Color(153, 204, 204));
-		buttonGroup.add(rdbtnRemoveAsset);
-		panelTools.add(rdbtnRemoveAsset, "cell 2 3 2 1");
+		rdbtnRemoveItem = new JRadioButton("Remove Item");
+		rdbtnRemoveItem.setBackground(new Color(153, 204, 204));
+		buttonGroup.add(rdbtnRemoveItem);
+		panelTools.add(rdbtnRemoveItem, "cell 2 3 2 1");
 		
 		lblWidth = new JLabel("Width");
 		panelTools.add(lblWidth, "cell 0 4,alignx left");
@@ -353,10 +353,10 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtWidth, "cell 1 4");
 		txtWidth.setColumns(10);
 		
-		rdbtnConfigureAsset = new JRadioButton("Configure Asset");
-		buttonGroup.add(rdbtnConfigureAsset);
-		rdbtnConfigureAsset.setBackground(new Color(153, 204, 204));
-		panelTools.add(rdbtnConfigureAsset, "cell 2 4 2 1");
+		rdbtnConfigureItem = new JRadioButton("Configure Item");
+		buttonGroup.add(rdbtnConfigureItem);
+		rdbtnConfigureItem.setBackground(new Color(153, 204, 204));
+		panelTools.add(rdbtnConfigureItem, "cell 2 4 2 1");
 		
 		lblHeight = new JLabel("Height");
 		panelTools.add(lblHeight, "cell 0 5,alignx left");
@@ -379,9 +379,9 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtJumpX, "cell 3 6,growx");
 		txtJumpX.setColumns(10);
 		
-		lblAssets = new JLabel("Assets");
-		lblAssets.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelTools.add(lblAssets, "cell 5 6,aligny bottom");
+		lblItems = new JLabel("Items");
+		lblItems.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panelTools.add(lblItems, "cell 5 6,aligny bottom");
 		
 		btnResize = new JButton("Resize");
 		btnResize.setBackground(UIManager.getColor("Button.background"));
@@ -407,9 +407,9 @@ public class MapDesigner extends JFrame {
 		scrollPane = new JScrollPane();
 		panelTools.add(scrollPane, "cell 5 7 1 4,grow");
 		
-		listAssets = new JList<String>();
-		listAssets.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(listAssets);
+		listItems = new JList<String>();
+		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(listItems);
 		
 		btnJump = new JButton("Jump");
 		btnJump.addActionListener(new ActionListener() {
@@ -441,9 +441,9 @@ public class MapDesigner extends JFrame {
 		contentPane.add(btnDown, "cell 1 2,growx");
 		
 		createTileList();
-		createAssetList();
+		createItemList();
 		
-		gio = new GridIO(panelMap, allTiles, allAssets);
+		gio = new GridIO(panelMap, allTiles, allItems);
 	}
 
 	public void createTileList()
@@ -519,19 +519,19 @@ public class MapDesigner extends JFrame {
 	}
 	
 	
-	public void createAssetList()
+	public void createItemList()
 	{
-		String[] findAST, files, fileContent;
+		String[] findITM, files, fileContent;
 		BufferedReader fileRead;
 		String line;
 		int i, lengthOfFile = 11;
 		
-		allAssets = new ArrayList<Asset>();
-		listAssets.setModel(modelAssets);
+		allItems = new ArrayList<Item>();
+		listItems.setModel(modelItems);
 		
-		File folderRead = new File("src" + File.separator +  "assets"); 
+		File folderRead = new File("src" + File.separator +  "items"); 
 		
-		modelAssets.clear();		
+		modelItems.clear();		
 		{
 			
 			if(folderRead.exists() && folderRead.isDirectory())
@@ -539,14 +539,14 @@ public class MapDesigner extends JFrame {
 				files = folderRead.list();
 				for (String name: files)
 				{
-					findAST = name.split("\\.");
-					if(findAST[findAST.length - 1].equals("ast"))
+					findITM = name.split("\\.");
+					if(findITM[findITM.length - 1].equals("itm"))
 					{
 						fileRead = null;
 						fileContent = null;
 						try
 						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "assets" + File.separator + name)));
+							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "items" + File.separator + name)));
 							try
 							{
 								fileContent = new String[lengthOfFile];
@@ -556,7 +556,7 @@ public class MapDesigner extends JFrame {
 									fileContent[i] = line.split("/")[0];
 									i++;
 								}
-								allAssets.add(new Asset(fileContent));
+								allItems.add(new Item(fileContent));
 							}
 							catch (IOException ex)
 							{
@@ -583,9 +583,9 @@ public class MapDesigner extends JFrame {
 				}
 			}
 		}
-		for(Asset each:allAssets)
+		for(Item each:allItems)
 		{
-			modelAssets.addElement(each.getName());
+			modelItems.addElement(each.getName());
 		}		
 	}
 	
@@ -601,7 +601,7 @@ public class MapDesigner extends JFrame {
 					panelMap.applyProperty(x, y, 0, each.getBackground());
 					panelMap.applyProperty(x, y, 1, Integer.parseInt(each.getID()));
 					panelMap.applyProperty(x, y, 2, Utilities.boolToInt(each.isAccessable()));
-					panelMap.applyProperty(x, y, 3, Utilities.boolToInt(each.canCarryAsset()));
+					panelMap.applyProperty(x, y, 3, Utilities.boolToInt(each.canCarryItem()));
 					panelMap.applyTileImage(x, y, each.getImage());
 				}
 			}
@@ -612,21 +612,21 @@ public class MapDesigner extends JFrame {
 		}
 	}
 	
-	public void assignAsset(int x, int y, boolean place)
+	public void assignItem(int x, int y, boolean place)
 	{
 		if(place)
 		{
-			for(Asset each:allAssets)
+			for(Item each:allItems)
 			{
 				try
 				{
-					if (listAssets.getSelectedValue().equals(each.getName()))
+					if (listItems.getSelectedValue().equals(each.getName()))
 					{
 						panelMap.applyProperty(x, y, 8, Integer.parseInt(each.getID()));
 						panelMap.applyProperty(x, y, 9, each.getPurpose());
 						panelMap.applyProperty(x, y, 10, Utilities.boolToInt(each.isConstructable()));
-						//panelMap.applyProperty(x, y, 11, Utilities.boolToInt(each.canCarryAsset()));
-						panelMap.applyAssetImage(x, y, each.getImage());
+						//panelMap.applyProperty(x, y, 11, Utilities.boolToInt(each.canCarryItem()));
+						panelMap.applyItemImage(x, y, each.getImage());
 					}
 				}
 				catch (NullPointerException ex)
@@ -643,7 +643,7 @@ public class MapDesigner extends JFrame {
 				panelMap.applyProperty(x, y, 9, 0);
 				panelMap.applyProperty(x, y, 10, 0);
 				//panelMap.applyProperty(x, y, 11, 0);
-				panelMap.applyAssetImage(x, y, null);
+				panelMap.applyItemImage(x, y, null);
 
 			}
 			catch (NullPointerException ex)

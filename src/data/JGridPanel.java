@@ -28,9 +28,9 @@ public class JGridPanel extends JPanel implements Serializable{
 	
 	private int properties = 16;
 	private transient Image[][] imageTile;
-	private transient Image[][] imageAsset;
+	private transient Image[][] imageItem;
 	private transient Image[][] imageTileCache;
-	private transient Image[][] imageAssetCache;
+	private transient Image[][] imageItemCache;
 	
 	private int[][][] mapping; 		// Dreidimensionales Array für X-Ordinate, Y-Ordinate und Eigenschaften jeder Kachel
 	private int[][][] mappingCache;
@@ -47,7 +47,6 @@ public class JGridPanel extends JPanel implements Serializable{
 	private int draggedHeight;
 	private int draggedTilesX;
 	private int draggedTilesY;
-	//private assets;
 	
 	
 	
@@ -177,9 +176,9 @@ public class JGridPanel extends JPanel implements Serializable{
 		this.imageTile[x][y] = img;
 	}
 	
-	public void setImageAsset(int x, int y, Image img)
+	public void setImageItem(int x, int y, Image img)
 	{
-		this.imageAsset[x][y] = img;
+		this.imageItem[x][y] = img;
 	}
 	
 	public int[][][] getMapping() {
@@ -246,9 +245,9 @@ public class JGridPanel extends JPanel implements Serializable{
 		{
 			for(int j = visibleCornerY -1 ; ((j - visibleCornerY) < getHeight() / tileSize && j < tilesY); j++)
 			{
-				if(imageAsset[i][j] != null)
+				if(imageItem[i][j] != null)
 				{
-					g2d.drawImage(imageAsset[i][j], (i - (visibleCornerX - 1)) * tileSize, (j  - (visibleCornerY - 1)) * tileSize, tileSize, tileSize, this);
+					g2d.drawImage(imageItem[i][j], (i - (visibleCornerX - 1)) * tileSize, (j  - (visibleCornerY - 1)) * tileSize, tileSize, tileSize, this);
 				}
 				if(showGrid)
 				{
@@ -309,11 +308,11 @@ public class JGridPanel extends JPanel implements Serializable{
 		{
 			mappingCache = mapping;
 			imageTileCache = imageTile;
-			imageAssetCache = imageAsset;
+			imageItemCache = imageItem;
 		}
 		mapping = new int[sizeX][sizeY][properties];
 		imageTile = new Image[sizeX][sizeY];
-		imageAsset = new Image[sizeX][sizeY];
+		imageItem = new Image[sizeX][sizeY];
 		for(int x = 0; x < sizeX; x++)
 		{
 			for(int y = 0; y < sizeY; y++)
@@ -331,7 +330,7 @@ public class JGridPanel extends JPanel implements Serializable{
 						{
 							applyProperty(x, y, z, mappingCache[x][y][z]);
 							applyTileImage(x, y, imageTileCache[x][y]);
-							applyAssetImage(x, y, imageAssetCache[x][y]);
+							applyItemImage(x, y, imageItemCache[x][y]);
 						}
 						catch (ArrayIndexOutOfBoundsException ex)
 						{
@@ -369,9 +368,9 @@ public class JGridPanel extends JPanel implements Serializable{
 		repaint();
 	}
 	
-	public void applyAssetImage(int x, int y ,Image img)
+	public void applyItemImage(int x, int y ,Image img)
 	{
-		imageAsset[x][y] = img;
+		imageItem[x][y] = img;
 		repaint();
 	}
 

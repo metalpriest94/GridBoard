@@ -1,7 +1,7 @@
 3/id
 tileSwamp/name
 true/access
-true/canCarryAsset
+true/canCarryItem
 95/red
 127/green
 63/blue

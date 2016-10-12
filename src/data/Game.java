@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
-import assets.Asset;
+import items.Item;
 import net.miginfocom.swing.MigLayout;
 import tiles.MapTile;
 
@@ -36,8 +36,8 @@ import java.awt.event.MouseWheelEvent;
 public class Game extends JFrame {
 	private GridIO gioGame;
 	private ArrayList<MapTile> allTiles;
-	private ArrayList<Asset> allAssets;
-	private ArrayList<Asset> constructableAssets;
+	private ArrayList<Item> allItems;
+	private ArrayList<Item> constructableItems;
 	
 	private int zoomLevel = 3;
 	
@@ -220,8 +220,8 @@ public class Game extends JFrame {
 	public void callMap(String name)
 	{
 		createTileList();
-		createAssetList();
-		gioGame = new GridIO(panelGame, allTiles, allAssets);
+		createItemList();
+		gioGame = new GridIO(panelGame, allTiles, allItems);
 		
 		gioGame.load(name);
 	}
@@ -229,7 +229,7 @@ public class Game extends JFrame {
 	public void designMiniMap(int detail, int scale)
 	{
 
-		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allAssets);
+		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allItems);
 		gioMiniMap.newMap(panelGame.getTilesX()/detail, panelGame.getTilesY()/detail);
 		for (int x = 0; x < panelGame.getTilesX(); x += detail)
 		{
@@ -316,17 +316,17 @@ public class Game extends JFrame {
 		}	
 	}
 	
-	public void createAssetList()
+	public void createItemList()
 	{
-		String[] findAST, files, fileContent;
+		String[] findITM, files, fileContent;
 		BufferedReader fileRead;
 		String line;
 		int i, lengthOfFile = 11;
 		
-		allAssets = new ArrayList<Asset>();
-		constructableAssets = new ArrayList<Asset>();
+		allItems = new ArrayList<Item>();
+		constructableItems = new ArrayList<Item>();
 		
-		File folderRead = new File("src" + File.separator +  "assets"); 
+		File folderRead = new File("src" + File.separator +  "items"); 
 			
 		{
 			
@@ -335,14 +335,14 @@ public class Game extends JFrame {
 				files = folderRead.list();
 				for (String name: files)
 				{
-					findAST = name.split("\\.");
-					if(findAST[findAST.length - 1].equals("ast"))
+					findITM = name.split("\\.");
+					if(findITM[findITM.length - 1].equals("itm"))
 					{
 						fileRead = null;
 						fileContent = null;
 						try
 						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "assets" + File.separator + name)));
+							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "items" + File.separator + name)));
 							try
 							{
 								fileContent = new String[lengthOfFile];
@@ -352,10 +352,10 @@ public class Game extends JFrame {
 									fileContent[i] = line.split("/")[0];
 									i++;
 								}
-								allAssets.add(new Asset(fileContent));
+								allItems.add(new Item(fileContent));
 								if(fileContent[3].equals(String.valueOf(true)))
 								{
-									constructableAssets.add(new Asset(fileContent));
+									constructableItems.add(new Item(fileContent));
 								}
 							}
 							catch (IOException ex)

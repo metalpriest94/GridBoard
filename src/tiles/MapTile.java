@@ -66,7 +66,7 @@ public class MapTile {
 	public final void setAccessable(boolean accessable) {
 		this.accessable = accessable;
 	}
-	public final boolean canCarryAsset() {
+	public final boolean canCarryItem() {
 		return canCarryAsset;
 	}
 	public final void setCanCarryAsset(boolean canCarryAsset) {

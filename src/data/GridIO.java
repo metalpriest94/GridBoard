@@ -1,6 +1,5 @@
 package data;
 import tiles.MapTile;
-import assets.Asset;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,22 +15,24 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import items.Item;
+
 public class GridIO{
 	private JGridPanel panelMap;
 	
 	private ArrayList<MapTile> allTiles;
-	private ArrayList<Asset> allAssets;
+	private ArrayList<Item> allItems;
 	
 	//Variables required by load() and readMap(isLastLine)
 	String[] lastSplitData, nextSplitData;
 	String nextLineContent;
 	int lastY, nextY;
 	
-	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Asset> listassets)
+	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems)
 	{
 		panelMap = jgridpanel;
 		allTiles = listmaptiles;
-		allAssets = listassets;
+		allItems = listitems;
 	}
 	
 	public void save(String fileName)
@@ -147,12 +148,12 @@ public class GridIO{
 						panelMap.applyProperty(Integer.parseInt(lastSplitData[0]), y, prop, Integer.parseInt(lastSplitData[prop + 2]));
 					}
 				}
-				for(Asset each:allAssets)
+				for(Item each:allItems)
 				{
 					
 					if(lastSplitData[10].equals(each.getID()))
 					{
-						panelMap.applyAssetImage(Integer.parseInt(lastSplitData[0]), y, each.getImage());
+						panelMap.applyItemImage(Integer.parseInt(lastSplitData[0]), y, each.getImage());
 					}
 				}
 			}
@@ -253,7 +254,7 @@ public class GridIO{
 		{
 			panelMap.applyProperty(0, 0, i, 0);
 			panelMap.applyTileImage(0, 0, null);
-			panelMap.applyAssetImage(0, 0, null);
+			panelMap.applyItemImage(0, 0, null);
 		}
 		resize(x,y);
 	}

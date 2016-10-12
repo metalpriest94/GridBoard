@@ -1,4 +1,4 @@
-package assets;
+package items;
 
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-public class Asset {
+public class Item {
 
 	private String id,name;
 	private int purpose, buildResource1, buildResource2, buildResource3, amountBuildResource1, amountBuildResource2, amountBuildResource3;
@@ -17,21 +17,21 @@ public class Asset {
 	private Image image;
 	
 	
-	public Asset(String[] data) {
+	public Item(String[] data) {
 		this.id = data[0];
 		this.name = data[1];
 		this.purpose = translatePurposeToInt(data[2]);
 		this.isConstructable = Boolean.parseBoolean(data[3]);
-		this.buildResource1 = translateAssetToInt(data[4]);
-		this.buildResource2 = translateAssetToInt(data[5]);
-		this.buildResource3 = translateAssetToInt(data[6]);
+		this.buildResource1 = translateItemToInt(data[4]);
+		this.buildResource2 = translateItemToInt(data[5]);
+		this.buildResource3 = translateItemToInt(data[6]);
 		this.amountBuildResource1 = Integer.parseInt(data[7]);
 		this.amountBuildResource2 = Integer.parseInt(data[8]);
 		this.amountBuildResource3 = Integer.parseInt(data[9]);
 		
 		try
 		{
-			this.setImage(ImageIO.read(Asset.class.getResource("." + File.separator + data[10])));
+			this.setImage(ImageIO.read(Item.class.getResource("." + File.separator + data[10])));
 		}
 		catch (IOException ex)
 		{
@@ -135,32 +135,32 @@ public class Asset {
 			i = 1;
 		return i;
 	}
-	public int translateAssetToInt(String asset)
+	public int translateItemToInt(String item)
 	{
 		int i = 0;
-		BufferedReader assetRead = null;
+		BufferedReader itemRead = null;
 		try
 		{
-			if (!asset.equals(""))
+			if (!item.equals(""))
 			{
-				assetRead = new BufferedReader(new FileReader("src" + File.separator +  "assets" + File.separator +asset + ".ast"));
-				i = Integer.parseInt(assetRead.readLine().split("/")[0]);
+				itemRead = new BufferedReader(new FileReader("src" + File.separator +  "items" + File.separator +item + ".itm"));
+				i = Integer.parseInt(itemRead.readLine().split("/")[0]);
 			}
 		}
 		catch (IOException ex)
 		{
-			JOptionPane.showMessageDialog(null, "Error reading " + asset + ".ast");
+			JOptionPane.showMessageDialog(null, "Error reading " + item + ".itm");
 		}
 		finally
 		{
 			try 
 			{
-				if (assetRead != null)
-					assetRead.close();
+				if (itemRead != null)
+					itemRead.close();
 			}
 			catch (IOException ex)
 			{
-				JOptionPane.showMessageDialog(null, "Error reading " + asset + ".ast");
+				JOptionPane.showMessageDialog(null, "Error reading " + item + ".itm");
 			}
 		}
 		return i;

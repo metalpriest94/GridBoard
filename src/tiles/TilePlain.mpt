@@ -1,7 +1,7 @@
 1/id
 tilePlain/name
 true/access
-true/canCarryAsset
+true/canCarryItem
 63/red
 191/green
 63/blue
