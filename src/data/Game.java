@@ -30,12 +30,18 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
+	private GridScroller gsGame;
+	private Thread gridScroll;
+	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
 	private ArrayList<Item> constructableItems;
+	
 	
 	private int zoomLevel = 3;
 	
@@ -102,11 +108,11 @@ public class Game extends JFrame {
 			}
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 818, 491);
+		setBounds(100, 100, 1096, 621);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[663.00,grow][grow]", "[grow]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[256:n:256,grow][361.00,grow]"));
 		
 		panelGame = new JGridPanel(4,4,16);
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
@@ -119,7 +125,7 @@ public class Game extends JFrame {
 		});
 		panelGame.setTileSize(52);
 		panelGame.setBackground(Color.DARK_GRAY);
-		contentPane.add(panelGame, "cell 0 0,grow");
+		contentPane.add(panelGame, "cell 0 0 1 2,grow");
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -152,18 +158,9 @@ public class Game extends JFrame {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				panelGame.setDragged(false);
+				gsGame.moved(e.getX(), e.getY());
 				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
 				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
-				if(e.getX() <= 10)
-					moveLeft();
-				else if(e.getX() >= panelGame.getWidth() - 10 )
-					moveRight();
-				
-				if(e.getY() <= 10)
-					moveUp();
-				else if(e.getY() >= panelGame.getHeight() - 10 )
-					moveDown();
-				repaint();
 			}
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -176,6 +173,9 @@ public class Game extends JFrame {
 		panelGame.setShowGrid(false);
 		
 		panelMiniMap = new JGridPanel(panelGame.getTilesX()/4, panelGame.getTilesY()/4, 1);
+		panelMiniMap.setBackground(Color.WHITE);
+		FlowLayout flowLayout = (FlowLayout) panelMiniMap.getLayout();
+		flowLayout.setAlignOnBaseline(true);
 		panelMiniMap.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -213,6 +213,10 @@ public class Game extends JFrame {
 		
 		callMap("test5");
 		designMiniMap(miniMapDetail, miniMapScale);
+		gsGame = new GridScroller(panelGame);
+		gridScroll = new Thread(gsGame);
+		gridScroll.start();
+		
 	}
 	
 	public void callMap(String name)
