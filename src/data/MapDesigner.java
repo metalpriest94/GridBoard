@@ -620,16 +620,22 @@ public class MapDesigner extends JFrame {
 				{
 					if (listItems.getSelectedValue().equals(each.getName()))
 					{
-						panelMap.applyProperty(x, y, 8, Integer.parseInt(each.getID()));
-						panelMap.applyProperty(x, y, 9, each.getPurpose());
-						panelMap.applyProperty(x, y, 10, Utilities.boolToInt(each.isConstructable()));
-						//panelMap.applyProperty(x, y, 11, Utilities.boolToInt(each.canCarryItem()));
+						panelMap.applyProperty(x, y, 4, Integer.parseInt(each.getID()));
+						panelMap.applyProperty(x, y, 5, each.getPurpose());
+						panelMap.applyProperty(x, y, 6, Utilities.boolToInt(each.isConstructable()));
+						panelMap.applyProperty(x, y, 7, each.getPurpose());
+						panelMap.applyProperty(x, y, 8, each.getBuildResource1());
+						panelMap.applyProperty(x, y, 9, each.getBuildResource2());
+						panelMap.applyProperty(x, y, 10, each.getBuildResource3());
+						panelMap.applyProperty(x, y, 11, each.getAmountBuildResource1());
+						panelMap.applyProperty(x, y, 12, each.getAmountBuildResource2());
+						panelMap.applyProperty(x, y, 13, each.getAmountBuildResource3());
 						panelMap.applyItemImage(x, y, each.getImage());
 					}
 				}
 				catch (NullPointerException ex)
 				{
-					panelMap.applyProperty(x, y, 8, 0);
+					panelMap.applyProperty(x, y, 4, 0);
 				}
 			}
 		}
@@ -637,16 +643,22 @@ public class MapDesigner extends JFrame {
 		{
 			try
 			{
+				panelMap.applyProperty(x, y, 4, 0);
+				panelMap.applyProperty(x, y, 5, 0);
+				panelMap.applyProperty(x, y, 6, 0);
+				panelMap.applyProperty(x, y, 7, 0);
 				panelMap.applyProperty(x, y, 8, 0);
 				panelMap.applyProperty(x, y, 9, 0);
 				panelMap.applyProperty(x, y, 10, 0);
-				//panelMap.applyProperty(x, y, 11, 0);
+				panelMap.applyProperty(x, y, 11, 0);
+				panelMap.applyProperty(x, y, 12, 0);
+				panelMap.applyProperty(x, y, 13, 0);
 				panelMap.applyItemImage(x, y, null);
 
 			}
 			catch (NullPointerException ex)
 			{
-				panelMap.applyProperty(x, y, 8, 0);
+				panelMap.applyProperty(x, y, 4, 0);
 			}
 		}
 			

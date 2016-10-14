@@ -147,7 +147,7 @@ public class GridIO{
 				for(Item each:allItems)
 				{
 					
-					if(lastSplitData[10].equals(each.getID()))
+					if(lastSplitData[6].equals(each.getID()))
 					{
 						panelMap.applyItemImage(Integer.parseInt(lastSplitData[0]), y, each.getImage());
 					}

@@ -141,7 +141,7 @@ public class Item {
 		BufferedReader itemRead = null;
 		try
 		{
-			if (!item.equals(""))
+			if (!(item.equals("") || item.equals("0")))
 			{
 				itemRead = new BufferedReader(new FileReader("src" + File.separator +  "items" + File.separator +item + ".itm"));
 				i = Integer.parseInt(itemRead.readLine().split("/")[0]);

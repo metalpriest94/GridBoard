@@ -2,9 +2,9 @@
 water/name
 resource/purpose
 false/isConstructable
-/buildResource1
-/buildResource2
-/buildResource3 
+0/buildResource1
+0/buildResource2
+0/buildResource3 
 0/amountBuildResource1
 0/amountBuildResource2
 0/amountBuildResource3
