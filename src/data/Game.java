@@ -36,7 +36,9 @@ import java.awt.FlowLayout;
 public class Game extends JFrame {
 	private GridIO gioGame;
 	private GridScroller gsGame;
+	private MiniMapUpdater mmuGame;
 	private Thread gridScroll;
+	private Thread miniMapUpdate;
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
@@ -194,7 +196,6 @@ public class Game extends JFrame {
 		
 				panelGame.setVisibleCornerX(targetX);
 				panelGame.setVisibleCornerY(targetY);
-				updateMiniMap();
 				repaint();
 			}
 		});
@@ -213,9 +214,15 @@ public class Game extends JFrame {
 		
 		callMap("test5");
 		designMiniMap(miniMapDetail, miniMapScale);
+		
 		gsGame = new GridScroller(panelGame);
 		gridScroll = new Thread(gsGame);
 		gridScroll.start();
+		
+		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
+		miniMapUpdate = new Thread(mmuGame);
+		miniMapUpdate.start();
+		
 		
 	}
 	
@@ -244,14 +251,6 @@ public class Game extends JFrame {
 		panelMiniMap.setShowGrid(false);
 		panelMiniMap.setDragged(true); // Simulation of Mousedrag to apply the visible area as square on the MiniMap.
 		contentPane.add(panelMiniMap, "cell 1 0,grow");
-	}
-	
-	public void updateMiniMap()
-	{
-		panelMiniMap.setStartDragX(panelGame.getVisibleCornerX()-1);
-		panelMiniMap.setStartDragY(panelGame.getVisibleCornerY()-1);
-		panelMiniMap.setPosX(panelGame.getVisibleCornerX() + panelGame.getWidth()  / panelGame.getTileSize() -1);
-		panelMiniMap.setPosY(panelGame.getVisibleCornerY() + panelGame.getHeight() / panelGame.getTileSize() -1);
 	}
 	
 	public void createTileList()
@@ -392,7 +391,6 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerY() > 1)
 		{
 			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() - 1);
-			updateMiniMap();
 			repaint();
 		}
 	}
@@ -402,7 +400,6 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerY() < panelGame.getTilesY() - (panelGame.getHeight() / panelGame.getTileSize() - 1))
 		{
 			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() + 1);
-			updateMiniMap();
 			repaint();
 		}
 	}
@@ -412,7 +409,6 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerX() > 1)
 		{
 			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() - 1);
-			updateMiniMap();
 			repaint();
 		}
 	}
@@ -422,7 +418,6 @@ public class Game extends JFrame {
 		if(panelGame.getVisibleCornerX() < panelGame.getTilesX() - (panelGame.getWidth() / panelGame.getTileSize() - 1))
 		{
 			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() + 1);
-			updateMiniMap();
 			repaint();
 		}
 	}
