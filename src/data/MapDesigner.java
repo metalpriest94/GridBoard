@@ -8,9 +8,11 @@ import net.miginfocom.swing.MigLayout;
 
 import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
@@ -93,6 +95,9 @@ public class MapDesigner extends JFrame {
 	private JTextField txtJumpY;
 	private JButton btnJump;
 	private GridIO gio; 
+	private JLabel lblItemModifier1;
+	private JTextField txtItemModifier1;
+	private JButton btnApplyAsStandard;
 
 	/**
 	 * Launch the application.
@@ -246,7 +251,7 @@ public class MapDesigner extends JFrame {
 		panelTools = new JPanel();
 		panelTools.setBackground(new Color(153, 204, 204));
 		contentPane.add(panelTools, "cell 3 1,grow");
-		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][][157.00,grow][][grow]", "[][][][][20.00][20.00][][][][][]"));
+		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][][119.00][][grow]", "[][][][][20.00][20.00][][][][][][]"));
 		
 		lblGlobalInformation = new JLabel("Global Information");
 		lblGlobalInformation.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -278,7 +283,7 @@ public class MapDesigner extends JFrame {
 		panelTools.add(rdbtnPlaceMaptile, "cell 2 1 2 1");
 		
 		scrollPane_1 = new JScrollPane();
-		panelTools.add(scrollPane_1, "cell 5 1 1 4,grow");
+		panelTools.add(scrollPane_1, "cell 4 1 2 4,grow");
 		
 		listTiles = new JList<String>();
 		listTiles.setVisibleRowCount(6);
@@ -343,6 +348,37 @@ public class MapDesigner extends JFrame {
 		buttonGroup.add(rdbtnRemoveItem);
 		panelTools.add(rdbtnRemoveItem, "cell 2 3 2 1");
 		
+		btnApplyAsStandard = new JButton("Apply as Standard");
+		btnApplyAsStandard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BufferedWriter writeConfig = null;
+				try
+				{
+					writeConfig = new BufferedWriter(new FileWriter(new File("src" + File.separator + "config" + File.separator + "editor.config")));
+					writeConfig.write(txtTileSize.getText());
+					writeConfig.newLine();
+					writeConfig.write(String.valueOf(chckbxShowGrid.isSelected()));
+				}
+				catch(IOException ex)
+				{
+					JOptionPane.showMessageDialog(null, "Error writing config-File");
+				}
+				finally
+				{
+					try
+					{
+						if (writeConfig != null)
+							writeConfig.close();
+					}
+					catch (IOException ex) 
+					{
+						JOptionPane.showMessageDialog(null, "Error writing config-File");
+					}
+				}
+			}
+		});
+		panelTools.add(btnApplyAsStandard, "cell 6 3 2 1,growx");
+		
 		lblWidth = new JLabel("Width");
 		panelTools.add(lblWidth, "cell 0 4,alignx left");
 		
@@ -352,6 +388,21 @@ public class MapDesigner extends JFrame {
 		txtWidth.setColumns(10);
 		
 		rdbtnConfigureItem = new JRadioButton("Configure Item");
+		rdbtnConfigureItem.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if (rdbtnConfigureItem.isSelected())
+				{
+					lblItemModifier1.setVisible(true);
+					lblItemModifier1.setText("Info");
+					txtItemModifier1.setVisible(true);
+				}
+				else
+				{
+					lblItemModifier1.setVisible(false);
+					txtItemModifier1.setVisible(false);
+				}
+			}
+		});
 		buttonGroup.add(rdbtnConfigureItem);
 		rdbtnConfigureItem.setBackground(new Color(153, 204, 204));
 		panelTools.add(rdbtnConfigureItem, "cell 2 4 2 1");
@@ -377,10 +428,6 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtJumpX, "cell 3 6,growx");
 		txtJumpX.setColumns(10);
 		
-		lblItems = new JLabel("Items");
-		lblItems.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelTools.add(lblItems, "cell 5 6,aligny bottom");
-		
 		btnResize = new JButton("Resize");
 		btnResize.setBackground(UIManager.getColor("Button.background"));
 		btnResize.addActionListener(new ActionListener() {
@@ -389,6 +436,10 @@ public class MapDesigner extends JFrame {
 				repaint();
 			}
 		});
+		
+		lblItems = new JLabel("Items");
+		lblItems.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panelTools.add(lblItems, "cell 4 6 2 1,aligny bottom");
 		panelTools.add(btnResize, "cell 1 7,growx");
 		
 		lblJumpX = new JLabel("X");
@@ -403,7 +454,7 @@ public class MapDesigner extends JFrame {
 		txtJumpY.setColumns(10);
 		
 		scrollPane = new JScrollPane();
-		panelTools.add(scrollPane, "cell 5 7 1 4,grow");
+		panelTools.add(scrollPane, "cell 4 7 2 4,grow");
 		
 		listItems = new JList<String>();
 		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -416,6 +467,26 @@ public class MapDesigner extends JFrame {
 				{
 					panelMap.setVisibleCornerX(Integer.parseInt(txtJumpX.getText()));
 					panelMap.setVisibleCornerY(Integer.parseInt(txtJumpY.getText()));
+					if (panelMap.getVisibleCornerX() > 1)
+						btnLeft.setEnabled(true);
+					else
+						btnLeft.setEnabled(false);
+					
+					if (panelMap.getVisibleCornerX() < panelMap.getTilesX())
+						btnRight.setEnabled(true);
+					else
+						btnRight.setEnabled(false);
+					
+					
+					if (panelMap.getVisibleCornerY() > 1)
+						btnUp.setEnabled(true);
+					else 
+						btnUp.setEnabled(false);
+					
+					if (panelMap.getVisibleCornerY() < panelMap.getTilesY())
+						btnDown.setEnabled(true);
+					else 
+						btnDown.setEnabled(false);
 					repaint();					
 				}
 				catch(NumberFormatException ex)
@@ -436,14 +507,60 @@ public class MapDesigner extends JFrame {
 			}
 		});
 		panelTools.add(btnJump, "cell 3 8,growx");
+		
+		lblItemModifier1 = new JLabel("Info");
+		panelTools.add(lblItemModifier1, "cell 4 11");
+		
+		txtItemModifier1 = new JTextField();
+		panelTools.add(txtItemModifier1, "cell 5 11,growx");
+		txtItemModifier1.setColumns(10);
 		contentPane.add(btnDown, "cell 1 2,growx");
 		
+		lblItemModifier1.setVisible(false);
+		txtItemModifier1.setVisible(false);
+		
+		readConfig();
 		createTileList();
 		createItemList();
 		
 		gio = new GridIO(panelMap, allTiles, allItems);
 	}
-
+	
+	public void readConfig()
+	{
+		BufferedReader readConfig = null;
+		ArrayList<String> allLines = new ArrayList<String>();
+		String line;
+		
+		try
+		{
+			readConfig = new BufferedReader(new FileReader(new File("src" + File.separator + "config" + File.separator + "editor.config")));
+			while ((line=readConfig.readLine()) != null)
+			{
+				allLines.add(line);
+			}
+			txtTileSize.setText(allLines.get(0));
+			chckbxShowGrid.setSelected(Boolean.parseBoolean(allLines.get(1)));
+		}
+		catch(IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "editor.config is corrupted or does not exist.");
+		}
+		finally
+		{
+			try
+			{
+				if (readConfig != null)
+					readConfig.close();
+			}
+			catch (IOException ex)
+			{
+				JOptionPane.showMessageDialog(null, "editor.config is corrupted or does not exist.");
+			}
+		}
+		
+	}
+	
 	public void createTileList()
 	{
 		String[] findMPT, files, fileContent;
