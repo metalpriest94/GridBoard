@@ -522,7 +522,7 @@ public class MapDesigner extends JFrame {
 		String[] findITM, files, fileContent;
 		BufferedReader fileRead;
 		String line;
-		int i, lengthOfFile = 11;
+		int i, lengthOfFile = 28;
 		
 		allItems = new ArrayList<Item>();
 		listItems.setModel(modelItems);
@@ -623,13 +623,14 @@ public class MapDesigner extends JFrame {
 						panelMap.applyProperty(x, y, 4, Integer.parseInt(each.getID()));
 						panelMap.applyProperty(x, y, 5, each.getPurpose());
 						panelMap.applyProperty(x, y, 6, Utilities.boolToInt(each.isConstructable()));
-						panelMap.applyProperty(x, y, 7, each.getPurpose());
-						panelMap.applyProperty(x, y, 8, each.getBuildResource1());
-						panelMap.applyProperty(x, y, 9, each.getBuildResource2());
-						panelMap.applyProperty(x, y, 10, each.getBuildResource3());
-						panelMap.applyProperty(x, y, 11, each.getAmountBuildResource1());
-						panelMap.applyProperty(x, y, 12, each.getAmountBuildResource2());
-						panelMap.applyProperty(x, y, 13, each.getAmountBuildResource3());
+						panelMap.applyProperty(x, y, 7, each.getEmployee());
+						panelMap.applyProperty(x, y, 8, Utilities.boolToInt(each.hasEmployee()));
+						panelMap.applyProperty(x, y, 9, each.getCapacity());
+						panelMap.applyProperty(x, y, 10, each.getUsedCapacity());
+						panelMap.applyProperty(x, y, 11, each.getStore1());
+						panelMap.applyProperty(x, y, 12, each.getStore2());
+						panelMap.applyProperty(x, y, 13, each.getStore3());
+						panelMap.applyProperty(x, y, 14, each.getStoreSideProduct());
 						panelMap.applyItemImage(x, y, each.getImage());
 					}
 				}
@@ -643,16 +644,10 @@ public class MapDesigner extends JFrame {
 		{
 			try
 			{
-				panelMap.applyProperty(x, y, 4, 0);
-				panelMap.applyProperty(x, y, 5, 0);
-				panelMap.applyProperty(x, y, 6, 0);
-				panelMap.applyProperty(x, y, 7, 0);
-				panelMap.applyProperty(x, y, 8, 0);
-				panelMap.applyProperty(x, y, 9, 0);
-				panelMap.applyProperty(x, y, 10, 0);
-				panelMap.applyProperty(x, y, 11, 0);
-				panelMap.applyProperty(x, y, 12, 0);
-				panelMap.applyProperty(x, y, 13, 0);
+				for (int i = 4; i <= 15; i++)
+				{
+					panelMap.applyProperty(x, y, i, 0);
+				}
 				panelMap.applyItemImage(x, y, null);
 
 			}

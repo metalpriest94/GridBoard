@@ -323,7 +323,7 @@ public class Game extends JFrame {
 		String[] findITM, files, fileContent;
 		BufferedReader fileRead;
 		String line;
-		int i, lengthOfFile = 11;
+		int i, lengthOfFile = 28;
 		
 		allItems = new ArrayList<Item>();
 		constructableItems = new ArrayList<Item>();

@@ -2,8 +2,9 @@ package data;
 
 public class GridScroller implements Runnable {
 	private JGridPanel affected; 
-	private int positionX;
-	private int positionY;
+	private int positionX, positionY;
+	
+	private final int edgeSize = 20;
 	
 	
 	public GridScroller(JGridPanel jgridpanel) {
@@ -59,14 +60,14 @@ public class GridScroller implements Runnable {
 		{
 			synchronized (this) 
 			{
-				if(positionX <= 10 && positionX != 0)
+				if(positionX <= edgeSize && positionX != 0)
 					moveLeft();
-				else if(positionX >= affected.getWidth() - 11 && positionX != affected.getWidth()-1)
+				else if(positionX >= affected.getWidth() - (edgeSize + 1) && positionX != affected.getWidth()-1)
 					moveRight();
 				
-				if(positionY <= 10 && positionY != 0)
+				if(positionY <= edgeSize && positionY != 0)
 					moveUp();
-				else if(positionY >= affected.getHeight() - 11 && positionY != affected.getHeight()-1)
+				else if(positionY >= affected.getHeight() - (edgeSize + 1) && positionY != affected.getHeight()-1)
 					moveDown();
 				
 				affected.repaint();
