@@ -3,14 +3,37 @@ package data;
 public class GridScroller implements Runnable {
 	private JGridPanel affected; 
 	private int positionX, positionY;
-	
 	private final int edgeSize = 20;
+	
+	private boolean keyUp, keyDown, keyLeft, keyRight;
+	
 	
 	
 	public GridScroller(JGridPanel jgridpanel) {
 		affected = jgridpanel;
 	}
 	
+	
+	public void setKeyUp(boolean keyUp) 
+	{
+		this.keyUp = keyUp;
+	}
+
+	public void setKeyDown(boolean keyDown) 
+	{
+		this.keyDown = keyDown;
+	}
+
+	public void setKeyLeft(boolean keyLeft) 
+	{
+		this.keyLeft = keyLeft;
+	}
+
+	public void setKeyRight(boolean keyRight) 
+	{
+		this.keyRight = keyRight;
+	}
+
 	public void moved(int x, int y)
 	{
 		synchronized (this) 
@@ -60,14 +83,14 @@ public class GridScroller implements Runnable {
 		{
 			synchronized (this) 
 			{
-				if(positionX <= edgeSize && positionX != 0)
+				if((positionX <= edgeSize && positionX != 0) || keyLeft)
 					moveLeft();
-				else if(positionX >= affected.getWidth() - (edgeSize + 1) && positionX != affected.getWidth()-1)
+				else if((positionX >= affected.getWidth() - (edgeSize + 1) && positionX != affected.getWidth()-1) || keyRight)
 					moveRight();
 				
-				if(positionY <= edgeSize && positionY != 0)
+				if((positionY <= edgeSize && positionY != 0) || keyUp)
 					moveUp();
-				else if(positionY >= affected.getHeight() - (edgeSize + 1) && positionY != affected.getHeight()-1)
+				else if((positionY >= affected.getHeight() - (edgeSize + 1) && positionY != affected.getHeight()-1) || keyDown)
 					moveDown();
 				
 				affected.repaint();

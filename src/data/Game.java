@@ -82,7 +82,7 @@ public class Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				moveUp();
+				gsGame.setKeyUp(true);
 			}
 		};
 		
@@ -90,7 +90,7 @@ public class Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				moveDown();
+				gsGame.setKeyDown(true);
 			}
 		};
 		
@@ -98,7 +98,7 @@ public class Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				moveLeft();
+				gsGame.setKeyLeft(true);
 			}
 		};
 		
@@ -106,7 +106,39 @@ public class Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				moveRight();
+				gsGame.setKeyRight(true);
+			}
+		};
+		
+		AbstractAction moveUpRelease = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				gsGame.setKeyUp(false);
+			}
+		};
+		
+		AbstractAction moveDownRelease = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				gsGame.setKeyDown(false);
+			}
+		};
+		
+		AbstractAction moveLeftRelease = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				gsGame.setKeyLeft(false);
+			}
+		};
+		
+		AbstractAction moveRightRelease = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				gsGame.setKeyRight(false);
 			}
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -203,14 +235,24 @@ public class Game extends JFrame {
 		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap action = panelGame.getActionMap();
 	
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");		
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "leftR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "rightR");
+		
 		action.put("up", moveUp);
 		action.put("down", moveDown);
 		action.put("left", moveLeft);
-		action.put("right", moveRight);
+		action.put("right", moveRight);	
+		action.put("upR", moveUpRelease);
+		action.put("downR", moveDownRelease);
+		action.put("leftR", moveLeftRelease);
+		action.put("rightR", moveRightRelease);	
+		
 		
 		callMap("test5");
 		designMiniMap(miniMapDetail, miniMapScale);
@@ -386,42 +428,6 @@ public class Game extends JFrame {
 		}	
 	}
 	
-	public void moveUp()
-	{
-		if(panelGame.getVisibleCornerY() > 1)
-		{
-			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() - 1);
-			repaint();
-		}
-	}
-	
-	public void moveDown()
-	{
-		if(panelGame.getVisibleCornerY() < panelGame.getTilesY() - (panelGame.getHeight() / panelGame.getTileSize() - 1))
-		{
-			panelGame.setVisibleCornerY(panelGame.getVisibleCornerY() + 1);
-			repaint();
-		}
-	}
-	
-	public void moveLeft()
-	{
-		if(panelGame.getVisibleCornerX() > 1)
-		{
-			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() - 1);
-			repaint();
-		}
-	}
-	
-	public void moveRight()
-	{
-		if(panelGame.getVisibleCornerX() < panelGame.getTilesX() - (panelGame.getWidth() / panelGame.getTileSize() - 1))
-		{
-			panelGame.setVisibleCornerX(panelGame.getVisibleCornerX() + 1);
-			repaint();
-		}
-	}
-	
 	public void zoomIn()
 	{
 		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
@@ -438,11 +444,11 @@ public class Game extends JFrame {
 			
 			for(int i =0; i < offsetX; i++)
 			{
-				moveRight();
+				gsGame.moveRight();
 			}
 			for(int i =0; i < offsetY; i++)
 			{
-				moveDown();
+				gsGame.moveDown();
 			}
 			
 			
@@ -466,11 +472,11 @@ public class Game extends JFrame {
 			
 			for(int i =0; i < offsetX; i++)
 			{
-				moveLeft();
+				gsGame.moveLeft();
 			}
 			for(int i =0; i < offsetY; i++)
 			{
-				moveUp();
+				gsGame.moveUp();
 			}
 		}
 		repaint();
