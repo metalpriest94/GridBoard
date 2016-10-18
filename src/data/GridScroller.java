@@ -4,6 +4,7 @@ public class GridScroller implements Runnable {
 	private JGridPanel affected; 
 	private int positionX, positionY;
 	private final int edgeSize = 20;
+	private final int refresh = 12;
 	
 	private boolean keyUp, keyDown, keyLeft, keyRight;
 	
@@ -97,7 +98,7 @@ public class GridScroller implements Runnable {
 			}
 			try
 			{
-				Thread.sleep(40);
+				Thread.sleep(1000 / refresh);
 			}
 			catch(InterruptedException ex)
 			{
