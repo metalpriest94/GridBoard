@@ -187,6 +187,15 @@ public class Game extends JFrame {
 				panelGame.setStartDragX(panelGame.getPosX());
 				panelGame.setStartDragY(panelGame.getPosY()); 
 			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				gsGame.setInComponent(false);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gsGame.setInComponent(true);
+			}
 		});
 		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override

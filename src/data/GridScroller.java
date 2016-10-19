@@ -5,6 +5,9 @@ public class GridScroller implements Runnable {
 	private int positionX, positionY;
 	private final int edgeSize = 20;
 	private final int refresh = 12;
+	private boolean isInComponent = true;
+	
+	
 	
 	private boolean keyUp, keyDown, keyLeft, keyRight;
 	
@@ -34,6 +37,11 @@ public class GridScroller implements Runnable {
 	{
 		this.keyRight = keyRight;
 	}
+
+	public void setInComponent(boolean isInComponent) {
+		this.isInComponent = isInComponent;
+	}
+
 
 	public void moved(int x, int y)
 	{
@@ -84,14 +92,14 @@ public class GridScroller implements Runnable {
 		{
 			synchronized (this) 
 			{
-				if((positionX <= edgeSize && positionX != 0) || keyLeft)
+				if((positionX <= edgeSize && isInComponent ) || keyLeft)
 					moveLeft();
-				else if((positionX >= affected.getWidth() - (edgeSize + 1) && positionX != affected.getWidth()-1) || keyRight)
+				else if((positionX >= affected.getWidth() - (edgeSize + 1) && isInComponent) || keyRight)
 					moveRight();
 				
-				if((positionY <= edgeSize && positionY != 0) || keyUp)
+				if((positionY <= edgeSize && isInComponent) || keyUp)
 					moveUp();
-				else if((positionY >= affected.getHeight() - (edgeSize + 1) && positionY != affected.getHeight()-1) || keyDown)
+				else if((positionY >= affected.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
 					moveDown();
 				
 				affected.repaint();
