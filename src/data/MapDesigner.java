@@ -520,10 +520,11 @@ public class MapDesigner extends JFrame {
 		txtItemModifier1.setVisible(false);
 		
 		readConfig();
-		createTileList();
-		createItemList();
-		
 		gio = new GridIO(panelMap, allTiles, allItems);
+		allTiles = gio.createTileList();
+		allItems = gio.createItemList(false);
+		
+		
 	}
 	
 	public void readConfig()
@@ -559,149 +560,6 @@ public class MapDesigner extends JFrame {
 			}
 		}
 		
-	}
-	
-	public void createTileList()
-	{
-		String[] findMPT, files, fileContent;
-		BufferedReader fileRead;
-		String line;
-		int i, lengthOfFile = 8;
-		allTiles = new ArrayList<MapTile>();
-		listTiles.setModel(modelMapTiles);
-		
-		File folderRead = new File("src" + File.separator +  "tiles"); 
-		
-		modelMapTiles.clear();		
-		{
-			
-			if(folderRead.exists() && folderRead.isDirectory())
-			{
-				files = folderRead.list();
-				for (String name: files)
-				{
-					findMPT = name.split("\\.");
-					if(findMPT[findMPT.length - 1].equals("mpt"))
-					{
-						fileRead = null;
-						fileContent = null;
-						try
-						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "tiles" + File.separator + name)));
-							try
-							{
-								fileContent = new String[lengthOfFile];
-								i = 0;
-								while((line = fileRead.readLine()) != null)
-								{
-									fileContent[i] = line.split("/")[0];
-									i++;
-									
-								}
-								allTiles.add(new MapTile(fileContent));
-							}
-							catch (IOException ex)
-							{
-								JOptionPane.showMessageDialog(null, "Error in" + name);
-							}
-							finally
-							{
-								try
-								{
-									if(fileRead != null)
-										fileRead.close();
-								}
-								catch (IOException ex)
-								{
-									JOptionPane.showMessageDialog(null, "Error in" + name);
-								}
-							}
-							
-
-						}
-						catch (FileNotFoundException ex)
-						{
-							JOptionPane.showMessageDialog(null, "Error in" + name);
-						}
-					}
-				}
-			}
-		}
-		for(MapTile each:allTiles)
-		{
-			modelMapTiles.addElement(each.getName());
-		}		
-	}
-	
-	
-	public void createItemList()
-	{
-		String[] findITM, files, fileContent;
-		BufferedReader fileRead;
-		String line;
-		int i, lengthOfFile = 28;
-		
-		allItems = new ArrayList<Item>();
-		listItems.setModel(modelItems);
-		
-		File folderRead = new File("src" + File.separator +  "items"); 
-		
-		modelItems.clear();		
-		{
-			
-			if(folderRead.exists() && folderRead.isDirectory())
-			{
-				files = folderRead.list();
-				for (String name: files)
-				{
-					findITM = name.split("\\.");
-					if(findITM[findITM.length - 1].equals("itm"))
-					{
-						fileRead = null;
-						fileContent = null;
-						try
-						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "items" + File.separator + name)));
-							try
-							{
-								fileContent = new String[lengthOfFile];
-								i = 0;
-								while((line = fileRead.readLine()) != null)
-								{
-									fileContent[i] = line.split("/")[0];
-									i++;
-								}
-								allItems.add(new Item(fileContent));
-							}
-							catch (IOException ex)
-							{
-								JOptionPane.showMessageDialog(null, "Error in" + name);
-							}
-							finally
-							{
-								try
-								{
-									if(fileRead != null)
-										fileRead.close();
-								}
-								catch (IOException ex)
-								{
-									JOptionPane.showMessageDialog(null, "Error in" + name);
-								}
-							}
-						}
-						catch (FileNotFoundException ex)
-						{
-							JOptionPane.showMessageDialog(null, "Error in" + name);
-						}
-					}
-				}
-			}
-		}
-		for(Item each:allItems)
-		{
-			modelItems.addElement(each.getName());
-		}		
 	}
 	
 	

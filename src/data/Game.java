@@ -32,6 +32,8 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Dialog.ModalExclusionType;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -46,6 +48,7 @@ public class Game extends JFrame {
 	
 	
 	private int zoomLevel = 3;
+	private final int baseTileSize = 16;
 	
 	// Variables defining the appearance of the MiniMap
 	// ((Mapsize / Detail) * Scale) should be as close to 256 as possible. If the map is not square-shaped, use the long side for Mapsize.
@@ -78,6 +81,7 @@ public class Game extends JFrame {
 	 * Create the frame.
 	 */
 	public Game() {
+		setUndecorated(true);
 		AbstractAction moveUp = new AbstractAction(){
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -144,11 +148,15 @@ public class Game extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1096, 621);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setAlignmentY(0.0f);
+		contentPane.setAlignmentX(0.0f);
+		contentPane.setBorder(null);
+		contentPane.setBackground(new Color(153, 204, 204));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[256:n:256,grow][361.00,grow]"));
 		
 		panelGame = new JGridPanel(4,4,16);
+		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				if(e.getWheelRotation() < 0)
@@ -158,11 +166,11 @@ public class Game extends JFrame {
 			}
 		});
 		panelGame.setTileSize(52);
-		panelGame.setBackground(Color.DARK_GRAY);
+		panelGame.setBackground(new Color(153, 204, 204));
 		contentPane.add(panelGame, "cell 0 0 1 2,grow");
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
+			public void mouseReleased(MouseEvent e) {
 				int startX = panelGame.getCornerDragX() / panelGame.getTileSize() + panelGame.getVisibleCornerX() -1;
 				int startY = panelGame.getCornerDragY() / panelGame.getTileSize() + panelGame.getVisibleCornerY() -1;
 				
@@ -189,7 +197,7 @@ public class Game extends JFrame {
 			}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {
+			public void mouseExited(MouseEvent e) {
 				gsGame.setInComponent(false);
 			}
 			@Override
@@ -279,9 +287,11 @@ public class Game extends JFrame {
 	
 	public void callMap(String name)
 	{
-		createTileList();
-		createItemList();
+
 		gioGame = new GridIO(panelGame, allTiles, allItems);
+		allTiles = gioGame.createTileList();
+		allItems = gioGame.createItemList(false);
+		constructableItems = gioGame.createItemList(true);
 		
 		gioGame.load(name);
 	}
@@ -304,138 +314,7 @@ public class Game extends JFrame {
 		contentPane.add(panelMiniMap, "cell 1 0,grow");
 	}
 	
-	public void createTileList()
-	{
-		String[] findMPT, files, fileContent;
-		BufferedReader fileRead;
-		String line;
-		int i, lengthOfFile = 8;
-		allTiles = new ArrayList<MapTile>();
-		File folderRead = new File("src" + File.separator +  "tiles"); 	
-		{
-			
-			if(folderRead.exists() && folderRead.isDirectory())
-			{
-				files = folderRead.list();
-				for (String name: files)
-				{
-					findMPT = name.split("\\.");
-					if(findMPT[findMPT.length - 1].equals("mpt"))
-					{
-						fileRead = null;
-						fileContent = null;
-						try
-						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "tiles" + File.separator + name)));
-							try
-							{
-								fileContent = new String[lengthOfFile];
-								i = 0;
-								while((line = fileRead.readLine()) != null)
-								{
-									fileContent[i] = line.split("/")[0];
-									i++;
-									
-								}
-								allTiles.add(new MapTile(fileContent));
-							}
-							catch (IOException ex)
-							{
-								JOptionPane.showMessageDialog(null, "Error in" + name);
-							}
-							finally
-							{
-								try
-								{
-									if(fileRead != null)
-										fileRead.close();
-								}
-								catch (IOException ex)
-								{
-									JOptionPane.showMessageDialog(null, "Error in" + name);
-								}
-							}
-							
-
-						}
-						catch (FileNotFoundException ex)
-						{
-							JOptionPane.showMessageDialog(null, "Error in" + name);
-						}
-					}
-				}
-			}
-		}	
-	}
 	
-	public void createItemList()
-	{
-		String[] findITM, files, fileContent;
-		BufferedReader fileRead;
-		String line;
-		int i, lengthOfFile = 28;
-		
-		allItems = new ArrayList<Item>();
-		constructableItems = new ArrayList<Item>();
-		
-		File folderRead = new File("src" + File.separator +  "items"); 
-			
-		{
-			
-			if(folderRead.exists() && folderRead.isDirectory())
-			{
-				files = folderRead.list();
-				for (String name: files)
-				{
-					findITM = name.split("\\.");
-					if(findITM[findITM.length - 1].equals("itm"))
-					{
-						fileRead = null;
-						fileContent = null;
-						try
-						{
-							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "items" + File.separator + name)));
-							try
-							{
-								fileContent = new String[lengthOfFile];
-								i = 0;
-								while((line = fileRead.readLine()) != null)
-								{
-									fileContent[i] = line.split("/")[0];
-									i++;
-								}
-								allItems.add(new Item(fileContent));
-								if(fileContent[3].equals(String.valueOf(true)))
-								{
-									constructableItems.add(new Item(fileContent));
-								}
-							}
-							catch (IOException ex)
-							{
-								JOptionPane.showMessageDialog(null, "Error in" + name);
-							}
-							finally
-							{
-								try
-								{
-									if(fileRead != null)
-										fileRead.close();
-								}
-								catch (IOException ex)
-								{
-									JOptionPane.showMessageDialog(null, "Error in" + name);
-								}
-							}
-						}
-						catch (FileNotFoundException ex)
-						{
-							JOptionPane.showMessageDialog(null, "Error in" + name);
-						}
-					}
-				}
-			}
-		}	
-	}
 	
 	public void zoomIn()
 	{
@@ -493,6 +372,6 @@ public class Game extends JFrame {
 	public void changeZoom(int value)
 	{
 		zoomLevel += value;
-		panelGame.setTileSize(18 * (zoomLevel - 1) + 16);
+		panelGame.setTileSize(zoomLevel * baseTileSize);
 	}
 }

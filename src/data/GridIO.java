@@ -23,6 +23,8 @@ public class GridIO{
 	String[] lastSplitData, nextSplitData;
 	String nextLineContent;
 	int lastY, nextY;
+
+	private ArrayList<Item> constructableItems;
 	
 	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems)
 	{
@@ -255,7 +257,143 @@ public class GridIO{
 		resize(x,y);
 	}
 	
+	public ArrayList<MapTile> createTileList()
+	{
+		String[] findMPT, files, fileContent;
+		BufferedReader fileRead;
+		String line;
+		int i, lengthOfFile = 8;
+		allTiles = new ArrayList<MapTile>();
+		File folderRead = new File("src" + File.separator +  "tiles"); 	
+		{
+			
+			if(folderRead.exists() && folderRead.isDirectory())
+			{
+				files = folderRead.list();
+				for (String name: files)
+				{
+					findMPT = name.split("\\.");
+					if(findMPT[findMPT.length - 1].equals("mpt"))
+					{
+						fileRead = null;
+						fileContent = null;
+						try
+						{
+							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "tiles" + File.separator + name)));
+							try
+							{
+								fileContent = new String[lengthOfFile];
+								i = 0;
+								while((line = fileRead.readLine()) != null)
+								{
+									fileContent[i] = line.split("/")[0];
+									i++;
+									
+								}
+								allTiles.add(new MapTile(fileContent));
+							}
+							catch (IOException ex)
+							{
+								JOptionPane.showMessageDialog(null, "Error in" + name);
+							}
+							finally
+							{
+								try
+								{
+									if(fileRead != null)
+										fileRead.close();
+								}
+								catch (IOException ex)
+								{
+									JOptionPane.showMessageDialog(null, "Error in" + name);
+								}
+							}
+							
+
+						}
+						catch (FileNotFoundException ex)
+						{
+							JOptionPane.showMessageDialog(null, "Error in" + name);
+						}
+					}
+				}
+			}
+		}
+		return allTiles;
+	}
 	
+	public ArrayList<Item> createItemList(boolean onlyConstructables)
+	{
+		String[] findITM, files, fileContent;
+		BufferedReader fileRead;
+		String line;
+		int i, lengthOfFile = 28;
+		
+		allItems = new ArrayList<Item>();
+		constructableItems = new ArrayList<Item>();
+		
+		File folderRead = new File("src" + File.separator +  "items"); 
+			
+		{
+			
+			if(folderRead.exists() && folderRead.isDirectory())
+			{
+				files = folderRead.list();
+				for (String name: files)
+				{
+					findITM = name.split("\\.");
+					if(findITM[findITM.length - 1].equals("itm"))
+					{
+						fileRead = null;
+						fileContent = null;
+						try
+						{
+							fileRead = new BufferedReader(new FileReader(new File("src" + File.separator +  "items" + File.separator + name)));
+							try
+							{
+								fileContent = new String[lengthOfFile];
+								i = 0;
+								while((line = fileRead.readLine()) != null)
+								{
+									fileContent[i] = line.split("/")[0];
+									i++;
+								}
+								allItems.add(new Item(fileContent));
+								if(fileContent[3].equals(String.valueOf(true)))
+								{
+									constructableItems.add(new Item(fileContent));
+								}
+							}
+							catch (IOException ex)
+							{
+								JOptionPane.showMessageDialog(null, "Error in" + name);
+							}
+							finally
+							{
+								try
+								{
+									if(fileRead != null)
+										fileRead.close();
+								}
+								catch (IOException ex)
+								{
+									JOptionPane.showMessageDialog(null, "Error in" + name);
+								}
+							}
+						}
+						catch (FileNotFoundException ex)
+						{
+							JOptionPane.showMessageDialog(null, "Error in" + name);
+						}
+					}
+				}
+			}
+		}
+		if(onlyConstructables)
+			return constructableItems;
+		else
+			return allItems;
+	}
 }
 
 
