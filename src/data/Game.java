@@ -46,10 +46,6 @@ public class Game extends JFrame {
 	private ArrayList<Item> allItems;
 	private ArrayList<Item> constructableItems;
 	
-	
-	private int zoomLevel = 3;
-	private final int baseTileSize = 16;
-	
 	// Variables defining the appearance of the MiniMap
 	// ((Mapsize / Detail) * Scale) should be as close to 256 as possible. If the map is not square-shaped, use the long side for Mapsize.
 	private int miniMapDetail = 1; //Adds every n-th tile to the MiniMap --- the smaller, the better
@@ -160,9 +156,9 @@ public class Game extends JFrame {
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				if(e.getWheelRotation() < 0)
-					zoomIn();
+					gsGame.zoomIn();
 				else
-					zoomOut();
+					gsGame.zoomOut();
 			}
 		});
 		panelGame.setTileSize(52);
@@ -314,64 +310,5 @@ public class Game extends JFrame {
 		contentPane.add(panelMiniMap, "cell 1 0,grow");
 	}
 	
-	
-	
-	public void zoomIn()
-	{
-		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-		int lastCenterY = lastCenterX * panelGame.getHeight() / panelGame.getWidth();
-		
-		if (zoomLevel < 8)
-		{
-			changeZoom(+1);
-			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-			int newCenterY = newCenterX * panelGame.getHeight() / panelGame.getWidth();
-			
-			int offsetX = lastCenterX - newCenterX;
-			int offsetY = lastCenterY - newCenterY;
-			
-			for(int i =0; i < offsetX; i++)
-			{
-				gsGame.moveRight();
-			}
-			for(int i =0; i < offsetY; i++)
-			{
-				gsGame.moveDown();
-			}
-			
-			
-		}
-		repaint();
-	}
-	
-	public void zoomOut()
-	{
-		int lastCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-		int lastCenterY = lastCenterX * panelGame.getHeight() / panelGame.getWidth();
-		
-		if (zoomLevel > 1)
-		{
-			changeZoom(-1);
-			int newCenterX = panelGame.getWidth() / panelGame.getTileSize() / 2;
-			int newCenterY = newCenterX * panelGame.getHeight() / panelGame.getWidth();
-			
-			int offsetX = newCenterX - lastCenterX;
-			int offsetY = newCenterY - lastCenterY;
-			
-			for(int i =0; i < offsetX; i++)
-			{
-				gsGame.moveLeft();
-			}
-			for(int i =0; i < offsetY; i++)
-			{
-				gsGame.moveUp();
-			}
-		}
-		repaint();
-	}
-	public void changeZoom(int value)
-	{
-		zoomLevel += value;
-		panelGame.setTileSize(zoomLevel * baseTileSize);
-	}
+
 }
