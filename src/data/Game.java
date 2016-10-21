@@ -266,7 +266,7 @@ public class Game extends JFrame {
 		action.put("leftR", moveLeftRelease);
 		action.put("rightR", moveRightRelease);	
 		
-		
+		panelGame.setDoubleBuffered(true);
 		callMap("test5");
 		designMiniMap(miniMapDetail, miniMapScale);
 		

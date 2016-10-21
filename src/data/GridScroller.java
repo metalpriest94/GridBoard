@@ -4,15 +4,15 @@ public class GridScroller implements Runnable {
 	private JGridPanel affected; 
 	private int positionX, positionY;
 	private final int edgeSize = 20;
-	private final int refresh = 12;
+	private final int refresh = 25;
 	private boolean isInComponent = true;
 	
 	private int zoomLevel = 3;
+	private final int maxZoomLevel = 8;
 	private final int baseTileSize = 16;
 	
-	
-	
 	private boolean keyUp, keyDown, keyLeft, keyRight;
+	private boolean awaitZoomIn, awaitZoomOut;
 	
 	
 	
@@ -40,6 +40,16 @@ public class GridScroller implements Runnable {
 	{
 		this.keyRight = keyRight;
 	}
+
+	public void setAwaitZoomIn(boolean awaitZoomIn) {
+		this.awaitZoomIn = awaitZoomIn;
+	}
+
+
+	public void setAwaitZoomOut(boolean awaitZoomOut) {
+		this.awaitZoomOut = awaitZoomOut;
+	}
+
 
 	public void setInComponent(boolean isInComponent) {
 		this.isInComponent = isInComponent;
@@ -94,7 +104,7 @@ public class GridScroller implements Runnable {
 		int lastCenterX = affected.getPosX() / affected.getTileSize();
 		int lastCenterY = affected.getPosY() / affected.getTileSize();
 		
-		if (zoomLevel < 8)
+		if (zoomLevel < maxZoomLevel)
 		{
 			changeZoom(+1);
 			int newCenterX = affected.getPosX() / affected.getTileSize();
@@ -112,7 +122,7 @@ public class GridScroller implements Runnable {
 				moveDown();
 			}			
 		}
-		affected.repaint();
+		awaitZoomIn = false;
 	}
 	
 	public void zoomOut()
@@ -146,12 +156,12 @@ public class GridScroller implements Runnable {
 				moveUp();
 			}
 		}
-		affected.repaint();
+		awaitZoomOut = false;
 	}
 	public void changeZoom(int value)
 	{
 		zoomLevel += value;
-		affected.setTileSize(zoomLevel * baseTileSize);
+		affected.setTileSize(zoomLevel * baseTileSize + baseTileSize);
 	}
 	
 	@Override
@@ -169,6 +179,10 @@ public class GridScroller implements Runnable {
 					moveUp();
 				else if((positionY >= affected.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
 					moveDown();
+				if(awaitZoomIn)
+					zoomIn();
+				if(awaitZoomOut)
+					zoomOut();
 				
 				affected.repaint();
 			}
