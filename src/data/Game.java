@@ -60,9 +60,10 @@ public class Game extends JFrame {
 	private JButton btnExit;
 	private JButton btnResume;
 	private JLabel lblExit1;
-	private JLabel lblExit2;
 	
 	private boolean askExit = false;
+	private JPanel panelQuit;
+	private JButton btnSaveQuit;
 	
 
 	/**
@@ -158,16 +159,16 @@ public class Game extends JFrame {
 				if (askExit)
 				{
 					lblExit1.setVisible(false);
-					lblExit2.setVisible(false);
 					btnResume.setVisible(false);
+					btnSaveQuit.setVisible(false);
 					btnExit.setVisible(false);
 					askExit = false;
 				}
 				else
 				{
 					lblExit1.setVisible(true);
-					lblExit2.setVisible(true);
 					btnResume.setVisible(true);
+					btnSaveQuit.setVisible(true);
 					btnExit.setVisible(true);
 					askExit = true;
 				}
@@ -182,7 +183,7 @@ public class Game extends JFrame {
 		contentPane.setBorder(null);
 		contentPane.setBackground(new Color(153, 204, 204));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[256:n:256,grow][361.00,grow]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[256:n:256,grow][361.00,grow][]"));
 		
 		panelGame = new JGridPanel(4,4,16);
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
@@ -196,7 +197,7 @@ public class Game extends JFrame {
 		});
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelGame, "cell 0 0 1 2,grow");
+		contentPane.add(panelGame, "cell 0 0 1 3,grow");
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -320,36 +321,47 @@ public class Game extends JFrame {
 		contentPane.add(panelTools, "cell 1 1,grow");
 		panelTools.setLayout(new MigLayout("", "[123:n:128][123:n:128]", "[][][][][][][][][][][][]"));
 		
-		btnResume = new JButton("Resume");
-		btnResume.setVisible(false);
-		btnResume.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					lblExit1.setVisible(false);
-					lblExit2.setVisible(false);
-					btnResume.setVisible(false);
-					btnExit.setVisible(false);
-					askExit = false;
-			}
-		});
+		panelQuit = new JPanel();
+		panelQuit.setBackground(new Color(153, 204, 204));
+		contentPane.add(panelQuit, "cell 1 2,grow");
+		panelQuit.setLayout(new MigLayout("", "[grow][grow][grow]", "[][][]"));
 		
 		lblExit1 = new JLabel("Return to Main Menu?");
-		lblExit1.setVisible(false);
-		panelTools.add(lblExit1, "cell 0 9");
+		panelQuit.add(lblExit1, "cell 0 0 3 1,alignx center");
 		
-		lblExit2 = new JLabel("Unsaved data will be lost!");
-		lblExit2.setVisible(false);
-		panelTools.add(lblExit2, "cell 0 10");
-		panelTools.add(btnResume, "cell 0 11,growx");
+		btnResume = new JButton("Resume");
+		panelQuit.add(btnResume, "cell 0 1,growx");
+		
+		btnSaveQuit = new JButton("Save & Quit");
+		btnSaveQuit.setVisible(false);
+		btnSaveQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gioGame.save("test", true);
+				dispose();
+				MainMenu.main(new String[0]);
+			}
+		});
+		panelQuit.add(btnSaveQuit, "cell 1 1,growx");
 		
 		btnExit = new JButton("Quit");
+		panelQuit.add(btnExit, "cell 2 1,growx");
+		btnExit.setVisible(false);
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				MainMenu.main(new String[0]);
 			}
 		});
-		btnExit.setVisible(false);
-		panelTools.add(btnExit, "cell 1 11,growx");
+		btnResume.setVisible(false);
+		btnResume.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					lblExit1.setVisible(false);
+					btnResume.setVisible(false);
+					btnExit.setVisible(false);
+					askExit = false;
+			}
+		});
+		lblExit1.setVisible(false);
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		

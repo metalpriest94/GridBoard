@@ -314,7 +314,7 @@ public class MapDesigner extends JFrame {
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gio.save(txtFileName.getText());
+				gio.save(txtFileName.getText(), false);
 			}
 		});
 		panelTools.add(btnSave, "cell 1 2,growx");

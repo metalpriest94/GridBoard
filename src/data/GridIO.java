@@ -33,14 +33,17 @@ public class GridIO{
 		allItems = listitems;
 	}
 	
-	public void save(String fileName)
+	public void save(String fileName, boolean isSav)
 	{
 		BufferedWriter fileWrite = null;
 		String data, collectData, lastData;
 		collectData = "";
 		try
 		{
-			fileWrite = new BufferedWriter(new FileWriter("src" + File.separator +  "maps" + File.separator + fileName +".map"));
+			if (isSav)
+				fileWrite = new BufferedWriter(new FileWriter("src" + File.separator +  "savegames" + File.separator + fileName +".sav"));
+			else
+				fileWrite = new BufferedWriter(new FileWriter("src" + File.separator +  "maps" + File.separator + fileName +".map"));
 			fileWrite.write(panelMap.getTilesX() + "/" + panelMap.getTilesY());
 			fileWrite.newLine();
 			for (int i = 0; i < panelMap.getMapping().length; i++)
