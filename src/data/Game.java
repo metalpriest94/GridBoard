@@ -34,6 +34,8 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Dialog.ModalExclusionType;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -54,6 +56,13 @@ public class Game extends JFrame {
 	private JPanel contentPane;
 	private JGridPanel panelGame;
 	private JGridPanel panelMiniMap;
+	private JPanel panel;
+	private JButton btnExit;
+	private JButton btnResume;
+	private JLabel lblExit1;
+	private JLabel lblExit2;
+	
+	private boolean askExit = false;
 	
 
 	/**
@@ -141,6 +150,30 @@ public class Game extends JFrame {
 				gsGame.setKeyRight(false);
 			}
 		};
+		
+		AbstractAction escape = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (askExit)
+				{
+					lblExit1.setVisible(false);
+					lblExit2.setVisible(false);
+					btnResume.setVisible(false);
+					btnExit.setVisible(false);
+					askExit = false;
+				}
+				else
+				{
+					lblExit1.setVisible(true);
+					lblExit2.setVisible(true);
+					btnResume.setVisible(true);
+					btnExit.setVisible(true);
+					askExit = true;
+				}
+			}
+		};
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1096, 621);
 		contentPane = new JPanel();
@@ -252,15 +285,20 @@ public class Game extends JFrame {
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
+		
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "leftR");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "rightR");
 		
+		
 		action.put("up", moveUp);
 		action.put("down", moveDown);
 		action.put("left", moveLeft);
-		action.put("right", moveRight);	
+		action.put("right", moveRight);
+		action.put("escape", escape);
+		
 		action.put("upR", moveUpRelease);
 		action.put("downR", moveDownRelease);
 		action.put("leftR", moveLeftRelease);
@@ -275,6 +313,41 @@ public class Game extends JFrame {
 		gridScroll.start();
 		
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(153, 204, 204));
+		contentPane.add(panel, "cell 1 1,grow");
+		panel.setLayout(new MigLayout("", "[123:n:128][123:n:128]", "[][][][][][][][][][][][]"));
+		
+		btnResume = new JButton("Resume");
+		btnResume.setVisible(false);
+		btnResume.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					lblExit1.setVisible(false);
+					lblExit2.setVisible(false);
+					btnResume.setVisible(false);
+					btnExit.setVisible(false);
+					askExit = false;
+			}
+		});
+		
+		lblExit1 = new JLabel("Do you really wanna quit?");
+		lblExit1.setVisible(false);
+		panel.add(lblExit1, "cell 0 9");
+		
+		lblExit2 = new JLabel("Unsaved data will be lost!");
+		lblExit2.setVisible(false);
+		panel.add(lblExit2, "cell 0 10");
+		panel.add(btnResume, "cell 0 11,growx");
+		
+		btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnExit.setVisible(false);
+		panel.add(btnExit, "cell 1 11,growx");
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
