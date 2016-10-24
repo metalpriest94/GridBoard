@@ -56,7 +56,7 @@ public class Game extends JFrame {
 	private JPanel contentPane;
 	private JGridPanel panelGame;
 	private JGridPanel panelMiniMap;
-	private JPanel panel;
+	private JPanel panelTools;
 	private JButton btnExit;
 	private JButton btnResume;
 	private JLabel lblExit1;
@@ -68,7 +68,7 @@ public class Game extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -314,10 +314,11 @@ public class Game extends JFrame {
 		
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		
-		panel = new JPanel();
-		panel.setBackground(new Color(153, 204, 204));
-		contentPane.add(panel, "cell 1 1,grow");
-		panel.setLayout(new MigLayout("", "[123:n:128][123:n:128]", "[][][][][][][][][][][][]"));
+		panelTools = new JPanel();
+		panelTools.setBorder(null);
+		panelTools.setBackground(new Color(153, 204, 204));
+		contentPane.add(panelTools, "cell 1 1,grow");
+		panelTools.setLayout(new MigLayout("", "[123:n:128][123:n:128]", "[][][][][][][][][][][][]"));
 		
 		btnResume = new JButton("Resume");
 		btnResume.setVisible(false);
@@ -331,23 +332,24 @@ public class Game extends JFrame {
 			}
 		});
 		
-		lblExit1 = new JLabel("Do you really wanna quit?");
+		lblExit1 = new JLabel("Return to Main Menu?");
 		lblExit1.setVisible(false);
-		panel.add(lblExit1, "cell 0 9");
+		panelTools.add(lblExit1, "cell 0 9");
 		
 		lblExit2 = new JLabel("Unsaved data will be lost!");
 		lblExit2.setVisible(false);
-		panel.add(lblExit2, "cell 0 10");
-		panel.add(btnResume, "cell 0 11,growx");
+		panelTools.add(lblExit2, "cell 0 10");
+		panelTools.add(btnResume, "cell 0 11,growx");
 		
-		btnExit = new JButton("Exit");
+		btnExit = new JButton("Quit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				dispose();
+				MainMenu.main(new String[0]);
 			}
 		});
 		btnExit.setVisible(false);
-		panel.add(btnExit, "cell 1 11,growx");
+		panelTools.add(btnExit, "cell 1 11,growx");
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
