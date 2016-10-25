@@ -7,8 +7,9 @@ public class GridScroller implements Runnable {
 	private final int refresh = 25;
 	private boolean isInComponent = true;
 	
-	private int zoomLevel = 3;
-	private final int maxZoomLevel = 8;
+	final int baseZoomLevel = 3;
+	final int maxZoomLevel = 8;
+	private int zoomLevel = baseZoomLevel;
 	private final int baseTileSize = 16;
 	
 	private boolean keyUp, keyDown, keyLeft, keyRight;
@@ -55,6 +56,10 @@ public class GridScroller implements Runnable {
 		this.isInComponent = isInComponent;
 	}
 
+	public int getZoomLevel() {
+		return zoomLevel;
+	}
+
 
 	public void moved(int x, int y)
 	{
@@ -99,16 +104,16 @@ public class GridScroller implements Runnable {
 		}
 	}
 	
-	public void zoomIn()
+	public void zoomIn(int focusX, int focusY)
 	{
-		int lastCenterX = affected.getPosX() / affected.getTileSize();
-		int lastCenterY = affected.getPosY() / affected.getTileSize();
+		int lastCenterX = focusX / affected.getTileSize();
+		int lastCenterY = focusY / affected.getTileSize();
 		
 		if (zoomLevel < maxZoomLevel)
 		{
 			changeZoom(+1);
-			int newCenterX = affected.getPosX() / affected.getTileSize();
-			int newCenterY = affected.getPosY() / affected.getTileSize();
+			int newCenterX = focusX / affected.getTileSize();
+			int newCenterY = focusY / affected.getTileSize();
 			
 			int offsetX = lastCenterX - newCenterX;
 			int offsetY = lastCenterY - newCenterY;
@@ -125,16 +130,16 @@ public class GridScroller implements Runnable {
 		awaitZoomIn = false;
 	}
 	
-	public void zoomOut()
+	public void zoomOut(int focusX, int focusY)
 	{
-		int lastCenterX = affected.getPosX() / affected.getTileSize();
-		int lastCenterY = affected.getPosY() / affected.getTileSize();
+		int lastCenterX = focusX / affected.getTileSize();
+		int lastCenterY = focusY / affected.getTileSize();
 		
 		if (zoomLevel > 1)
 		{
 			changeZoom(-1);
-			int newCenterX = affected.getPosX() / affected.getTileSize();
-			int newCenterY = affected.getPosY() / affected.getTileSize();
+			int newCenterX = focusX / affected.getTileSize();
+			int newCenterY = focusY / affected.getTileSize();
 			
 			int offsetX = newCenterX - lastCenterX;
 			int offsetY = newCenterY - lastCenterY;
@@ -180,9 +185,9 @@ public class GridScroller implements Runnable {
 				else if((positionY >= affected.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
 					moveDown();
 				if(awaitZoomIn)
-					zoomIn();
+					zoomIn(affected.getPosX(), affected.getPosY());
 				if(awaitZoomOut)
-					zoomOut();
+					zoomOut(affected.getPosX(), affected.getPosY());
 				
 				affected.repaint();
 			}

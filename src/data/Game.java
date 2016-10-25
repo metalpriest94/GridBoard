@@ -191,9 +191,9 @@ public class Game extends JFrame {
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				if(e.getWheelRotation() < 0)
-					gsGame.zoomIn();
+					gsGame.zoomIn(panelGame.getPosX(), panelGame.getPosY());
 				else
-					gsGame.zoomOut();
+					gsGame.zoomOut(panelGame.getPosX(), panelGame.getPosY());
 			}
 		});
 		panelGame.setTileSize(52);
@@ -404,6 +404,10 @@ public class Game extends JFrame {
 		btnSaveQuit.setVisible(false);
 		btnSaveQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				while (gsGame.getZoomLevel() > gsGame.baseZoomLevel)
+					gsGame.zoomOut(panelGame.getWidth() / 2, panelGame.getHeight() / 2);
+				while (gsGame.getZoomLevel() < gsGame.baseZoomLevel)
+					gsGame.zoomIn(panelGame.getWidth() / 2, panelGame.getHeight() / 2);
 				gioGame.save("test", true);
 				dispose();
 				MainMenu.main(new String[0]);

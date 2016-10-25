@@ -67,6 +67,7 @@ public class GridIO{
 					else;
 				}
 			}
+			fileWrite.write(panelMap.getVisibleCornerX() + "/" + panelMap.getVisibleCornerY());
 		}
 		catch (IOException ex)
 		{
