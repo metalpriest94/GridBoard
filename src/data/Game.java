@@ -36,6 +36,8 @@ import java.awt.Frame;
 import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import javax.swing.JToggleButton;
+import java.awt.CardLayout;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -57,14 +59,25 @@ public class Game extends JFrame {
 	private JGridPanel panelGame;
 	private JGridPanel panelMiniMap;
 	private JPanel panelTools;
-	private JButton btnExit;
+	private JButton btnQuit;
 	private JButton btnResume;
 	private JLabel lblExit1;
 	
 	private boolean askExit = false;
 	private JPanel panelQuit;
 	private JButton btnSaveQuit;
+	private JToggleButton tglbtnBuild;
+	private JToggleButton tglbtnInfo;
+	private JToggleButton tglbtnOptions;
+	private JPanel panelToolSelection;
+	private JPanel panelBuild;
+	private JPanel panelInfo;
+	private JPanel panelOptions;
+	private JLabel lblOptions;
+	private JLabel lblInfo;
+	private JLabel lblBuild;
 	
+	private CardLayout toolsCard;
 
 	/**
 	 * Launch the application.
@@ -157,21 +170,9 @@ public class Game extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				if (askExit)
-				{
-					lblExit1.setVisible(false);
-					btnResume.setVisible(false);
-					btnSaveQuit.setVisible(false);
-					btnExit.setVisible(false);
-					askExit = false;
-				}
+					hideExitMenu();
 				else
-				{
-					lblExit1.setVisible(true);
-					btnResume.setVisible(true);
-					btnSaveQuit.setVisible(true);
-					btnExit.setVisible(true);
-					askExit = true;
-				}
+					showExitMenu();
 			}
 		};
 		
@@ -183,7 +184,7 @@ public class Game extends JFrame {
 		contentPane.setBorder(null);
 		contentPane.setBackground(new Color(153, 204, 204));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[256:n:256,grow][361.00,grow][]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[][256:n:256,grow][][361.00,grow]"));
 		
 		panelGame = new JGridPanel(4,4,16);
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
@@ -197,7 +198,7 @@ public class Game extends JFrame {
 		});
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelGame, "cell 0 0 1 3,grow");
+		contentPane.add(panelGame, "cell 0 0 1 4,grow");
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -254,7 +255,7 @@ public class Game extends JFrame {
 		panelGame.setShowGrid(false);
 		
 		panelMiniMap = new JGridPanel(panelGame.getTilesX()/4, panelGame.getTilesY()/4, 1);
-		panelMiniMap.setBackground(Color.WHITE);
+		panelMiniMap.setBackground(new Color(102, 153, 153));
 		FlowLayout flowLayout = (FlowLayout) panelMiniMap.getLayout();
 		flowLayout.setAlignOnBaseline(true);
 		panelMiniMap.addMouseListener(new MouseAdapter() {
@@ -315,15 +316,82 @@ public class Game extends JFrame {
 		
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		
-		panelTools = new JPanel();
+		panelToolSelection = new JPanel();
+		panelToolSelection.setBackground(new Color(102, 153, 153));
+		contentPane.add(panelToolSelection, "cell 1 2,grow");
+		panelToolSelection.setLayout(new MigLayout("", "[grow][grow][grow]", "[][]"));
+		
+		tglbtnBuild = new JToggleButton("Build");
+		panelToolSelection.add(tglbtnBuild, "cell 0 0,growx");
+		tglbtnBuild.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toolsCard.show(panelTools, "build");
+				tglbtnBuild.setSelected(true);
+				tglbtnInfo.setSelected(false);
+				tglbtnOptions.setSelected(false);
+
+			}
+		});
+		tglbtnBuild.setSelected(true);
+		
+		tglbtnInfo = new JToggleButton("Info");
+		panelToolSelection.add(tglbtnInfo, "cell 1 0,growx");
+		tglbtnInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toolsCard.show(panelTools, "info");
+				tglbtnBuild.setSelected(false);
+				tglbtnInfo.setSelected(true);
+				tglbtnOptions.setSelected(false);
+
+			}
+		});
+		
+		tglbtnOptions = new JToggleButton("Options");
+		panelToolSelection.add(tglbtnOptions, "cell 2 0,growx");
+		tglbtnOptions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toolsCard.show(panelTools, "options");
+				tglbtnBuild.setSelected(false);
+				tglbtnInfo.setSelected(false);
+				tglbtnOptions.setSelected(true);
+
+			}
+		});
+		
+		panelTools = new JPanel(new CardLayout());
 		panelTools.setBorder(null);
-		panelTools.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelTools, "cell 1 1,grow");
-		panelTools.setLayout(new MigLayout("", "[123:n:128][123:n:128]", "[][][][][][][][][][][][]"));
+		panelTools.setBackground(new Color(102, 153, 153));
+		contentPane.add(panelTools, "cell 1 3,grow");
+		panelTools.setLayout(new CardLayout(0, 0));
+		toolsCard = ((CardLayout)panelTools.getLayout());
+		
+		panelBuild = new JPanel();
+		panelBuild.setBackground(new Color(102, 153, 153));
+		panelTools.add(panelBuild, "build");
+		panelBuild.setLayout(new MigLayout("", "[]", "[]"));
+		
+		lblBuild = new JLabel("Build");
+		panelBuild.add(lblBuild, "cell 0 0");
+		
+		panelInfo = new JPanel();
+		panelInfo.setBackground(new Color(102, 153, 153));
+		panelTools.add(panelInfo, "info");
+		panelInfo.setLayout(new MigLayout("", "[]", "[]"));
+		
+		lblInfo = new JLabel("Info");
+		panelInfo.add(lblInfo, "cell 0 0");
+		
+		panelOptions = new JPanel();
+		panelOptions.setBackground(new Color(102, 153, 153));
+		panelTools.add(panelOptions, "options");
+		panelOptions.setLayout(new MigLayout("", "[]", "[]"));
+		
+		lblOptions = new JLabel("Options");
+		panelOptions.add(lblOptions, "cell 0 0");
 		
 		panelQuit = new JPanel();
-		panelQuit.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelQuit, "cell 1 2,grow");
+		panelQuit.setBackground(new Color(102, 153, 153));
+		contentPane.add(panelQuit, "cell 1 0,grow");
 		panelQuit.setLayout(new MigLayout("", "[grow][grow][grow]", "[][][]"));
 		
 		lblExit1 = new JLabel("Return to Main Menu?");
@@ -343,10 +411,10 @@ public class Game extends JFrame {
 		});
 		panelQuit.add(btnSaveQuit, "cell 1 1,growx");
 		
-		btnExit = new JButton("Quit");
-		panelQuit.add(btnExit, "cell 2 1,growx");
-		btnExit.setVisible(false);
-		btnExit.addActionListener(new ActionListener() {
+		btnQuit = new JButton("Quit");
+		panelQuit.add(btnQuit, "cell 2 1,growx");
+		btnQuit.setVisible(false);
+		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				MainMenu.main(new String[0]);
@@ -355,10 +423,7 @@ public class Game extends JFrame {
 		btnResume.setVisible(false);
 		btnResume.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					lblExit1.setVisible(false);
-					btnResume.setVisible(false);
-					btnExit.setVisible(false);
-					askExit = false;
+				hideExitMenu();
 			}
 		});
 		lblExit1.setVisible(false);
@@ -394,8 +459,24 @@ public class Game extends JFrame {
 		panelMiniMap.setTileSize(scale);
 		panelMiniMap.setShowGrid(false);
 		panelMiniMap.setDragged(true); // Simulation of Mousedrag to apply the visible area as square on the MiniMap.
-		contentPane.add(panelMiniMap, "cell 1 0,grow");
+		contentPane.add(panelMiniMap, "cell 1 1,grow");
 	}
 	
-
+	
+	public void showExitMenu()
+	{
+		lblExit1.setVisible(true);
+		btnResume.setVisible(true);
+		btnSaveQuit.setVisible(true);
+		btnQuit.setVisible(true);
+		askExit = true;
+	}
+	public void hideExitMenu()
+	{
+		lblExit1.setVisible(false);
+		btnResume.setVisible(false);
+		btnSaveQuit.setVisible(false);
+		btnQuit.setVisible(false);
+		askExit = false;
+	}
 }
