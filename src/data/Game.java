@@ -285,28 +285,19 @@ public class Game extends JFrame {
 		panelGame.setShowGrid(false);
 		
 		panelMiniMap = new JGridPanel(panelGame.getTilesX()/4, panelGame.getTilesY()/4, 1);
+		panelMiniMap.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				mmuGame.clickMiniMap(e);
+			}
+		});
 		panelMiniMap.setBackground(new Color(102, 153, 153));
 		FlowLayout flowLayout = (FlowLayout) panelMiniMap.getLayout();
 		flowLayout.setAlignOnBaseline(true);
 		panelMiniMap.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				int targetX = e.getX() - (panelGame.getWidth() / 2) / panelGame.getTileSize();
-				int targetY = e.getY() - (panelGame.getHeight() / 2) / panelGame.getTileSize();
-				
-				if(targetX <= 0)
-					targetX = 1;
-				else if (targetX > panelGame.getTilesX() - (panelGame.getWidth() / 2) / panelGame.getTileSize() * 2)
-					targetX = panelGame.getTilesX() - (panelGame.getWidth() / panelGame.getTileSize()) +1;
-				
-				if(targetY <= 0)
-					targetY = 1;
-				else if (targetY > panelGame.getTilesY() - (panelGame.getHeight() / 2) / panelGame.getTileSize() * 2)
-					targetY = panelGame.getTilesY() - (panelGame.getHeight() / panelGame.getTileSize()) +1;
-		
-				panelGame.setVisibleCornerX(targetX);
-				panelGame.setVisibleCornerY(targetY);
-				repaint();
+				mmuGame.clickMiniMap(e);
 			}
 		});
 		
@@ -522,4 +513,6 @@ public class Game extends JFrame {
 		btnQuit.setVisible(false);
 		askExit = false;
 	}
+	
+	
 }
