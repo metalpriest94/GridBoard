@@ -78,6 +78,13 @@ public class Game extends JFrame {
 	private JLabel lblBuild;
 	
 	private CardLayout toolsCard;
+	private String activeCard;
+	private final String cardBuild 	 = "cardBuild" ;
+	private final String cardInfo	 = "cardInfo";
+	private final String cardOptions = "cardOptions";
+	private JLabel lblPosition;
+	private JLabel lblTilename;
+	private JLabel lblItemname;
 
 	/**
 	 * Launch the application.
@@ -239,16 +246,39 @@ public class Game extends JFrame {
 		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				String tile = null, item = null;
 				panelGame.setDragged(false);
 				gsGame.moved(e.getX(), e.getY());
 				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
 				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
+				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
+				for (MapTile each:allTiles)
+				{
+					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][1])
+					{
+						tile = each.getName().substring(4);
+						break;
+					}
+		
+				}
+				for (Item each:allItems)
+				{
+					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][4])
+					{
+						item = each.getName();
+						break;
+					}
+		
+				}
+				lblTilename.setText(tile);
+				lblItemname.setText(item);
 			}
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				panelGame.setDragged(true);
 				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
 				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
+				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
 				repaint();
 			}
 		});
@@ -325,7 +355,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnBuild, "cell 0 0,growx");
 		tglbtnBuild.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, "build");
+				toolsCard.show(panelTools, cardBuild);
 				tglbtnBuild.setSelected(true);
 				tglbtnInfo.setSelected(false);
 				tglbtnOptions.setSelected(false);
@@ -338,7 +368,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnInfo, "cell 1 0,growx");
 		tglbtnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, "info");
+				toolsCard.show(panelTools, cardInfo);
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(true);
 				tglbtnOptions.setSelected(false);
@@ -350,7 +380,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnOptions, "cell 2 0,growx");
 		tglbtnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, "options");
+				toolsCard.show(panelTools, cardOptions);
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(false);
 				tglbtnOptions.setSelected(true);
@@ -358,7 +388,7 @@ public class Game extends JFrame {
 			}
 		});
 		
-		panelTools = new JPanel(new CardLayout());
+		panelTools = new JPanel();
 		panelTools.setBorder(null);
 		panelTools.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelTools, "cell 1 3,grow");
@@ -367,7 +397,7 @@ public class Game extends JFrame {
 		
 		panelBuild = new JPanel();
 		panelBuild.setBackground(new Color(102, 153, 153));
-		panelTools.add(panelBuild, "build");
+		panelTools.add(panelBuild, cardBuild);
 		panelBuild.setLayout(new MigLayout("", "[]", "[]"));
 		
 		lblBuild = new JLabel("Build");
@@ -375,15 +405,24 @@ public class Game extends JFrame {
 		
 		panelInfo = new JPanel();
 		panelInfo.setBackground(new Color(102, 153, 153));
-		panelTools.add(panelInfo, "info");
-		panelInfo.setLayout(new MigLayout("", "[]", "[]"));
+		panelTools.add(panelInfo, cardInfo);
+		panelInfo.setLayout(new MigLayout("", "[][grow]", "[][][]"));
 		
 		lblInfo = new JLabel("Info");
 		panelInfo.add(lblInfo, "cell 0 0");
 		
+		lblPosition = new JLabel("- X: 1 | Y: 1");
+		panelInfo.add(lblPosition, "cell 1 0,growx");
+		
+		lblTilename = new JLabel("TileName");
+		panelInfo.add(lblTilename, "cell 0 1");
+		
+		lblItemname = new JLabel("ItemName");
+		panelInfo.add(lblItemname, "cell 0 2");
+		
 		panelOptions = new JPanel();
 		panelOptions.setBackground(new Color(102, 153, 153));
-		panelTools.add(panelOptions, "options");
+		panelTools.add(panelOptions, cardOptions);
 		panelOptions.setLayout(new MigLayout("", "[]", "[]"));
 		
 		lblOptions = new JLabel("Options");

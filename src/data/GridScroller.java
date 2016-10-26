@@ -76,6 +76,7 @@ public class GridScroller implements Runnable {
 		if(affected.getVisibleCornerY() > 1)
 		{
 			affected.setVisibleCornerY(affected.getVisibleCornerY() - 1);
+			affected.setCurrentY(affected.getCurrentY() -1);
 		}
 	}
 	
@@ -84,6 +85,7 @@ public class GridScroller implements Runnable {
 		if(affected.getVisibleCornerY() < affected.getTilesY() - (affected.getHeight() / affected.getTileSize() - 1))
 		{
 			affected.setVisibleCornerY(affected.getVisibleCornerY() + 1);
+			affected.setCurrentY(affected.getCurrentY() +1);
 		}
 	}
 	
@@ -92,6 +94,7 @@ public class GridScroller implements Runnable {
 		if(affected.getVisibleCornerX() > 1)
 		{
 			affected.setVisibleCornerX(affected.getVisibleCornerX() - 1);
+			affected.setCurrentX(affected.getCurrentX() -1);
 		}
 	}
 	
@@ -100,6 +103,7 @@ public class GridScroller implements Runnable {
 		if(affected.getVisibleCornerX() < affected.getTilesX() - (affected.getWidth() / affected.getTileSize() - 1))
 		{
 			affected.setVisibleCornerX(affected.getVisibleCornerX() + 1);
+			affected.setCurrentX(affected.getCurrentX() +1);
 
 		}
 	}
