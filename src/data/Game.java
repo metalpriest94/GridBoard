@@ -424,10 +424,7 @@ public class Game extends JFrame {
 				hideExitMenu();
 			}
 		});
-		lblExit1.setVisible(false);
-		miniMapUpdate = new Thread(mmuGame);
-		miniMapUpdate.start();
-		
+		lblExit1.setVisible(false);	
 		
 		
 		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -468,6 +465,8 @@ public class Game extends JFrame {
 		gridScroll.start();
 		
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
+		miniMapUpdate = new Thread(mmuGame);
+		miniMapUpdate.start();
 		
 		
 	}
