@@ -327,7 +327,7 @@ public class MapDesigner extends JFrame {
 		btnLoad = new JButton("Load");
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gio.load(txtFileName.getText());
+				gio.load(txtFileName.getText(),false);
 			}
 		});
 		

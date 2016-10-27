@@ -48,23 +48,29 @@ public class MainMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow]", "[grow][96:n][96:n][96:n][96:n]"));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 0 0,grow");
+		JPanel panelLogo = new JPanel();
+		contentPane.add(panelLogo, "cell 0 0,grow");
 		
-		JLabel lblSpaceForUpcoming = new JLabel("Space for upcoming logo");
-		panel.add(lblSpaceForUpcoming);
+		JLabel lblLoad = new JLabel("Space for upcoming logo");
+		panelLogo.add(lblLoad);
 		
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.setFont(new Font("Tahoma", Font.BOLD, 30));
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Game.main();
+				Game.main(true);
 			}
 		});
 		contentPane.add(btnNewGame, "cell 0 1,grow");
 		
 		JButton btnLoad = new JButton("Load Game (coming soon)");
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Game.main(false);
+			}
+		});
 		btnLoad.setFont(new Font("Tahoma", Font.BOLD, 30));
 		contentPane.add(btnLoad, "cell 0 2,grow");
 		
@@ -77,6 +83,10 @@ public class MainMenu extends JFrame {
 		});
 		
 		JButton btnOptions = new JButton("Options (coming soon)");
+		btnOptions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnOptions.setFont(new Font("Tahoma", Font.BOLD, 30));
 		contentPane.add(btnOptions, "cell 0 3,grow");
 		contentPane.add(btnExit, "cell 0 4,grow");

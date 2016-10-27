@@ -18,11 +18,12 @@ public class GridIO{
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
+	private final String mapDataSeparator = "---";
 	
 	//Variables required by load() and readMap(isLastLine)
-	String[] lastSplitData, nextSplitData;
-	String nextLineContent;
-	int lastY, nextY;
+	private String[] lastSplitData, nextSplitData;
+	private String nextLineContent;
+	private int lastY, nextY;
 
 	private ArrayList<Item> constructableItems;
 	
@@ -67,7 +68,10 @@ public class GridIO{
 					else;
 				}
 			}
+			fileWrite.write(mapDataSeparator);
+			fileWrite.newLine();
 			fileWrite.write(panelMap.getVisibleCornerX() + "/" + panelMap.getVisibleCornerY());
+			fileWrite.newLine();
 		}
 		catch (IOException ex)
 		{
@@ -89,23 +93,41 @@ public class GridIO{
 		}
 	}
 	
-	public void load(String fileName)
+	public void load(String fileName, boolean isSav)
 	{
 		BufferedReader fileRead = null;
 		try
 		{
-			fileRead = new BufferedReader(new FileReader("src" + File.separator + "maps" + File.separator + fileName + ".map"));
+			if(isSav)
+				fileRead = new BufferedReader(new FileReader("src" + File.separator + "savegames" + File.separator + fileName + ".sav"));
+			else
+				fileRead = new BufferedReader(new FileReader("src" + File.separator + "maps" + File.separator + fileName + ".map"));
 			lastSplitData = fileRead.readLine().split("/");
 			newMap(Integer.parseInt(lastSplitData[0]), Integer.parseInt(lastSplitData[1]));
 			
 			lastSplitData = fileRead.readLine().split("/");
 			lastY = Integer.parseInt(lastSplitData[1]);
-			while ((nextLineContent = fileRead.readLine())  != null)
+			if (isSav)
 			{
-				readMap(false); //is not the last line of map-File
+				while (!(nextLineContent = fileRead.readLine()).equals(mapDataSeparator))
+				{
+					readMap(false); //is not the last line of map-File
+				}
+				readMap(true); //is the last line of map-File
+				nextLineContent = fileRead.readLine(); //Line after mapDataSeparator ("---")
+				nextSplitData = nextLineContent.split("/");
+				panelMap.setVisibleCornerX(Integer.parseInt(nextSplitData[0]));
+				panelMap.setVisibleCornerY(Integer.parseInt(nextSplitData[1]));
+				panelMap.repaint();
 			}
-			readMap(true); //is the last line of map-File
-			
+			else
+			{
+				while ((nextLineContent = fileRead.readLine()) != null)
+				{
+					readMap(false); //is not the last line of map-File
+				}
+				readMap(true); //is the last line of map-File
+			}
 		}
 		catch (IOException ex)
 		{

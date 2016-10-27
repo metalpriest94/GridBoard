@@ -89,11 +89,11 @@ public class Game extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main() {
+	public static void main(boolean isNewGame) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Game frame = new Game();
+					Game frame = new Game(isNewGame);
 					frame.setVisible(true);
 					frame.setExtendedState(MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -106,7 +106,7 @@ public class Game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Game() {
+	public Game(boolean isNewGame) {
 		setUndecorated(true);
 		AbstractAction moveUp = new AbstractAction(){
 			@Override
@@ -301,42 +301,6 @@ public class Game extends JFrame {
 			}
 		});
 		
-		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap action = panelGame.getActionMap();
-	
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");		
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
-		
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "leftR");
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "rightR");
-		
-		
-		action.put("up", moveUp);
-		action.put("down", moveDown);
-		action.put("left", moveLeft);
-		action.put("right", moveRight);
-		action.put("escape", escape);
-		
-		action.put("upR", moveUpRelease);
-		action.put("downR", moveDownRelease);
-		action.put("leftR", moveLeftRelease);
-		action.put("rightR", moveRightRelease);	
-		
-		panelGame.setDoubleBuffered(true);
-		callMap("test5");
-		designMiniMap(miniMapDetail, miniMapScale);
-		
-		gsGame = new GridScroller(panelGame);
-		gridScroll = new Thread(gsGame);
-		gridScroll.start();
-		
-		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
-		
 		panelToolSelection = new JPanel();
 		panelToolSelection.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelToolSelection, "cell 1 2,grow");
@@ -465,9 +429,50 @@ public class Game extends JFrame {
 		miniMapUpdate.start();
 		
 		
+		
+		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap action = panelGame.getActionMap();
+	
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");		
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
+		
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "leftR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "rightR");
+		
+		
+		action.put("up", moveUp);
+		action.put("down", moveDown);
+		action.put("left", moveLeft);
+		action.put("right", moveRight);
+		action.put("escape", escape);
+		
+		action.put("upR", moveUpRelease);
+		action.put("downR", moveDownRelease);
+		action.put("leftR", moveLeftRelease);
+		action.put("rightR", moveRightRelease);	
+		
+		panelGame.setDoubleBuffered(true);
+		if(isNewGame)
+			callMap("test5", false);
+		else
+			callMap("test", true);
+		designMiniMap(miniMapDetail, miniMapScale);
+		
+		gsGame = new GridScroller(panelGame);
+		gridScroll = new Thread(gsGame);
+		gridScroll.start();
+		
+		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
+		
+		
 	}
 	
-	public void callMap(String name)
+	public void callMap(String name, boolean isNewGame)
 	{
 
 		gioGame = new GridIO(panelGame, allTiles, allItems);
@@ -475,7 +480,7 @@ public class Game extends JFrame {
 		allItems = gioGame.createItemList(false);
 		constructableItems = gioGame.createItemList(true);
 		
-		gioGame.load(name);
+		gioGame.load(name, isNewGame);
 	}
 	
 	public void designMiniMap(int detail, int scale)
