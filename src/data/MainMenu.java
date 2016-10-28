@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.CardLayout;
@@ -25,6 +26,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class MainMenu extends JFrame {
 
@@ -131,6 +134,7 @@ public class MainMenu extends JFrame {
 		panelLoad.add(btnBack, "cell 0 0,grow");
 		
 		JButton btnLoad = new JButton("Load");
+		btnLoad.setEnabled(false);
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menuCards.show(contentPane, cardLoadingScreen);
@@ -141,6 +145,7 @@ public class MainMenu extends JFrame {
 		panelLoad.add(btnLoad, "cell 1 0,grow");
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.setEnabled(false);
 		btnDelete.setFont(menuFont);
 		panelLoad.add(btnDelete, "cell 2 0,grow");
 		
@@ -148,6 +153,12 @@ public class MainMenu extends JFrame {
 		panelLoad.add(scrollPaneLoad, "cell 0 1 3 1,grow");
 		
 		listSavs = new JList<String>();
+		listSavs.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				btnLoad.setEnabled(true);
+				btnDelete.setEnabled(true);
+			}
+		});
 		listSavs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSavs.setFont(menuFont);
 		scrollPaneLoad.setViewportView(listSavs);
@@ -175,12 +186,12 @@ public class MainMenu extends JFrame {
 			if(folderRead.exists() && folderRead.isDirectory())
 			{
 				files = folderRead.list();
+				
 				for (String name: files)
 				{
 					if(name.split("\\.")[1].equals("sav"))
-					modelSavs.addElement(name.split("\\.")[0]);
+						modelSavs.addElement(name.split("\\.")[0]);
 				}
-				
 			}
 		}
 	}
