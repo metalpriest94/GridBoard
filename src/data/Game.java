@@ -89,11 +89,11 @@ public class Game extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(boolean isNewGame) {
+	public static void main(boolean isNewGame, String file, JFrame caller) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Game frame = new Game(isNewGame);
+					Game frame = new Game(isNewGame, file, caller);
 					frame.setVisible(true);
 					frame.setExtendedState(MAXIMIZED_BOTH);
 				} catch (Exception e) {
@@ -106,7 +106,7 @@ public class Game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Game(boolean isNewGame) {
+	public Game(boolean isNewGame, String file, JFrame caller) {
 		setUndecorated(true);
 		AbstractAction moveUp = new AbstractAction(){
 			@Override
@@ -455,9 +455,9 @@ public class Game extends JFrame {
 		
 		panelGame.setDoubleBuffered(true);
 		if(isNewGame)
-			callMap("test5", false);
+			callMap(file, false);
 		else
-			callMap("test", true);
+			callMap(file, true);
 		designMiniMap(miniMapDetail, miniMapScale);
 		
 		gsGame = new GridScroller(panelGame);
@@ -468,7 +468,7 @@ public class Game extends JFrame {
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
-		
+		caller.dispose();
 	}
 	
 	public void callMap(String name, boolean isNewGame)
