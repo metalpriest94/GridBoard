@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.DefaultListModel;
@@ -33,11 +34,17 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import javax.swing.JToggleButton;
 import java.awt.CardLayout;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.awt.Insets;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -78,14 +85,15 @@ public class Game extends JFrame {
 	private JLabel lblBuild;
 	
 	private CardLayout toolsCard;
-	private String activeCard;
 	private final String cardBuild 	 = "cardBuild" ;
 	private final String cardInfo	 = "cardInfo";
 	private final String cardOptions = "cardOptions";
+	private String activeCard = cardBuild; 
 	private JLabel lblPosition;
 	private JLabel lblTilename;
 	private JLabel lblItemname;
-
+	private JScrollPane scrollPane;
+	private JGridPanel panelSelectItem;
 	/**
 	 * Launch the application.
 	 */
@@ -242,6 +250,13 @@ public class Game extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				gsGame.setInComponent(true);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(activeCard.equals(cardBuild))
+				{
+					constructBuilding(panelSelectItem.getMapping()[panelSelectItem.getCurrentX()][panelSelectItem.getCurrentY()][1]);
+				}
+			}
 		});
 		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -314,6 +329,7 @@ public class Game extends JFrame {
 				tglbtnBuild.setSelected(true);
 				tglbtnInfo.setSelected(false);
 				tglbtnOptions.setSelected(false);
+				activeCard = cardBuild;
 
 			}
 		});
@@ -327,7 +343,7 @@ public class Game extends JFrame {
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(true);
 				tglbtnOptions.setSelected(false);
-
+				activeCard = cardInfo;
 			}
 		});
 		
@@ -339,7 +355,7 @@ public class Game extends JFrame {
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(false);
 				tglbtnOptions.setSelected(true);
-
+				activeCard = cardOptions;
 			}
 		});
 		
@@ -353,11 +369,32 @@ public class Game extends JFrame {
 		panelBuild = new JPanel();
 		panelBuild.setBackground(new Color(102, 153, 153));
 		panelTools.add(panelBuild, cardBuild);
-		panelBuild.setLayout(new MigLayout("", "[]", "[]"));
+		panelBuild.setLayout(new MigLayout("", "[grow]", "[][grow]"));
 		
 		lblBuild = new JLabel("Build");
 		panelBuild.add(lblBuild, "cell 0 0");
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelBuild.add(scrollPane, "cell 0 1,grow");
+		
+		panelSelectItem = new JGridPanel(3,3,4);
+		panelSelectItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				panelSelectItem.setDragged(false);
+				panelSelectItem.setPosX(e.getX() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
+				panelSelectItem.setPosY(e.getY() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
+
+				panelSelectItem.repaint();
+			}
+		});
+		
+		
+		panelSelectItem.setBackground(new Color(102, 153, 153));
+		panelSelectItem.setTileSize(64);
+		scrollPane.setViewportView(panelSelectItem);
+				
 		panelInfo = new JPanel();
 		panelInfo.setBackground(new Color(102, 153, 153));
 		panelTools.add(panelInfo, cardInfo);
@@ -370,10 +407,10 @@ public class Game extends JFrame {
 		panelInfo.add(lblPosition, "cell 1 0,growx");
 		
 		lblTilename = new JLabel("TileName");
-		panelInfo.add(lblTilename, "cell 0 1");
+		panelInfo.add(lblTilename, "cell 0 1 2 1");
 		
 		lblItemname = new JLabel("ItemName");
-		panelInfo.add(lblItemname, "cell 0 2");
+		panelInfo.add(lblItemname, "cell 0 2 2 1");
 		
 		panelOptions = new JPanel();
 		panelOptions.setBackground(new Color(102, 153, 153));
@@ -427,6 +464,8 @@ public class Game extends JFrame {
 		lblExit1.setVisible(false);	
 		
 		
+		
+		
 		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap action = panelGame.getActionMap();
 	
@@ -467,6 +506,8 @@ public class Game extends JFrame {
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
+		
+		setUpBuildCard();
 		
 		caller.dispose();
 	}
@@ -518,5 +559,87 @@ public class Game extends JFrame {
 		askExit = false;
 	}
 	
+	public void setUpBuildCard()
+	{
+		int column = 0;
+		int row = 0;
+		ArrayList<String> config = readBuildConfig();
+		for(String line: config)
+		{
+			if (!(line.trim().equals("-new") || line.trim().equals("--")))
+			{
+				for(Item each: constructableItems)
+				{
+					if(each.getName().equals(line))
+					{
+						panelSelectItem.applyItemImage(column, row, each.getImage());
+						panelSelectItem.applyProperty(column, row, 1, Integer.parseInt(each.getID()));
+					}
+				}
+				row++;
+			}
+			else if (line.trim().equals("-new"))
+			{
+				row = 0;
+				column++;
+			}
+		}
+	}
 	
+	public ArrayList<String> readBuildConfig()
+	{
+		BufferedReader readConfig = null;
+		ArrayList<String> allLines = new ArrayList<String>();
+		String line;
+		
+		try
+		{
+			readConfig = new BufferedReader(new FileReader(new File("src" + File.separator + "config" + File.separator + "build.config")));
+			while ((line=readConfig.readLine()) != null)
+			{
+				allLines.add(line);
+			}
+		}
+		catch(IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "build.config is corrupted or does not exist.");
+		}
+		finally
+		{
+			try
+			{
+				if (readConfig != null)
+					readConfig.close();
+			}
+			catch (IOException ex)
+			{
+				JOptionPane.showMessageDialog(null, "build.config is corrupted or does not exist.");
+			}
+		}
+		return allLines;
+		
+	}
+	
+	public void constructBuilding(int id)
+	{
+		for(Item each: constructableItems)
+		{
+			if (Integer.parseInt(each.getID()) == id)
+			{
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 4, Integer.parseInt(each.getID()));
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 5, each.getPurpose());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 6, Utilities.boolToInt(each.isConstructable()));
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 7, each.getEmployee());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 8, Utilities.boolToInt(each.hasEmployee()));
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 9, each.getCapacity());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 10, each.getUsedCapacity());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 11, each.getStore1());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 12, each.getStore2());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 13, each.getStore3());
+				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getStoreSideProduct());
+				panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
+			}
+		}
+		panelGame.repaint();
+	}
 }
