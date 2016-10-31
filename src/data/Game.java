@@ -622,9 +622,16 @@ public class Game extends JFrame {
 	
 	public void constructBuilding(int id)
 	{
+		boolean canConstructHere = false;
+		for(MapTile each: allTiles)
+		{
+			if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][1] && each.canCarryItem())
+				canConstructHere = true;
+		}
+		
 		for(Item each: constructableItems)
 		{
-			if (Integer.parseInt(each.getID()) == id)
+			if (Integer.parseInt(each.getID()) == id && panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][4] == 0 && canConstructHere)
 			{
 				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 4, Integer.parseInt(each.getID()));
 				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 5, each.getPurpose());
