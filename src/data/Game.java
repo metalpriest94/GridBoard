@@ -45,6 +45,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Font;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -94,6 +95,13 @@ public class Game extends JFrame {
 	private JLabel lblItemname;
 	private JScrollPane scrollPane;
 	private JGridPanel panelSelectItem;
+	private JPanel panelOverview;
+	private JImgPanel panelPicWood;
+	private JLabel lblWood;
+	
+	private int storeWood;
+	
+	private final Font overview = new Font("Tahoma", Font.PLAIN, 24);
 	/**
 	 * Launch the application.
 	 */
@@ -227,9 +235,23 @@ public class Game extends JFrame {
 					gsGame.zoomOut(panelGame.getPosX(), panelGame.getPosY());
 			}
 		});
+		
+		panelOverview = new JPanel();
+		panelOverview.setBackground(new Color(102, 153, 153));
+		contentPane.add(panelOverview, "cell 0 0,grow");
+		panelOverview.setLayout(new MigLayout("", "[48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		
+		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
+		panelPicWood.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelPicWood, "cell 0 0,grow");
+		
+		lblWood = new JLabel("10");
+		lblWood.setFont(overview);
+		panelOverview.add(lblWood, "cell 1 0");
+		
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelGame, "cell 0 0 1 4,grow");
+		contentPane.add(panelGame, "cell 0 1 1 3,grow");
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -515,6 +537,8 @@ public class Game extends JFrame {
 		miniMapUpdate.start();
 		
 		setUpBuildCard();
+		setUpStorage();
+
 		
 		caller.dispose();
 	}
@@ -636,7 +660,7 @@ public class Game extends JFrame {
 	
 	public void constructBuilding(int id)
 	{
-		boolean canConstructHere = false;
+		boolean canConstructHere = false, enoughRes1 = false, enoughRes2 = false, enoughRes3 = false;
 		for(MapTile each: allTiles)
 		{
 			if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][1] && each.canCarryItem())
@@ -647,20 +671,50 @@ public class Game extends JFrame {
 		{
 			if (Integer.parseInt(each.getID()) == id && panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][4] == 0 && canConstructHere)
 			{
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 4, Integer.parseInt(each.getID()));
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 5, each.getPurpose());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 6, Utilities.boolToInt(each.isConstructable()));
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 7, each.getEmployee());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 8, Utilities.boolToInt(each.hasEmployee()));
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 9, each.getCapacity());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 10, each.getUsedCapacity());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 11, each.getStore1());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 12, each.getStore2());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 13, each.getStore3());
-				panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getStoreSideProduct());
-				panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
+				if (each.getBuildResource1() == 102 && storeWood >= each.getAmountBuildResource1())
+					enoughRes1 = true;
+				if (each.getBuildResource2() == 102 && storeWood >= each.getAmountBuildResource2())	
+					enoughRes2 = true;
+				if (each.getBuildResource3() == 102 && storeWood >= each.getAmountBuildResource3()) 
+					enoughRes3 = true;
+				
+				if (each.getBuildResource1() == 0) 
+					enoughRes1 = true;
+				if (each.getBuildResource2() == 0)
+					enoughRes2 = true;
+				if (each.getBuildResource3() == 0) 
+					enoughRes3 = true;
+				if (enoughRes1 && enoughRes2 && enoughRes3)
+				{
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 4, Integer.parseInt(each.getID()));
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 5, each.getPurpose());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 6, Utilities.boolToInt(each.isConstructable()));
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 7, each.getEmployee());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 8, Utilities.boolToInt(each.hasEmployee()));
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 9, each.getCapacity());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 10, each.getUsedCapacity());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 11, each.getStore1());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 12, each.getStore2());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 13, each.getStore3());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getStoreSideProduct());
+					panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
+					
+					if (each.getBuildResource1() == 102)
+						storeWood -= each.getAmountBuildResource1();
+					if (each.getBuildResource2() == 102)	
+						storeWood -= each.getAmountBuildResource2();
+					if (each.getBuildResource3() == 102) 	
+						storeWood += each.getAmountBuildResource3();
+	
+					lblWood.setText(String.valueOf(storeWood));
+				}
 			}
 		}
 		panelGame.repaint();
+	}	
+	public void setUpStorage()
+	{
+		storeWood = 30;
+		lblWood.setText(String.valueOf(storeWood));
 	}
 }
