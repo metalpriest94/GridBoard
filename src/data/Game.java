@@ -194,6 +194,22 @@ public class Game extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1096, 621);
 		contentPane = new JPanel();
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				gsGame.setInComponent(false);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gsGame.setInComponent(true);
+			}
+		});
+		contentPane.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				gsGame.moved(e.getX(), e.getY());
+			}
+		});
 		contentPane.setAlignmentY(0.0f);
 		contentPane.setAlignmentX(0.0f);
 		contentPane.setBorder(null);
@@ -242,14 +258,7 @@ public class Game extends JFrame {
 				panelGame.setStartDragY(panelGame.getPosY()); 
 			}
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				gsGame.setInComponent(false);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				gsGame.setInComponent(true);
-			}
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(activeCard.equals(cardBuild))
@@ -263,7 +272,6 @@ public class Game extends JFrame {
 			public void mouseMoved(MouseEvent e) {
 				String tile = null, item = null;
 				panelGame.setDragged(false);
-				gsGame.moved(e.getX(), e.getY());
 				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
 				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
 				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
@@ -498,7 +506,7 @@ public class Game extends JFrame {
 			callMap(file, true);
 		designMiniMap(miniMapDetail, miniMapScale);
 		
-		gsGame = new GridScroller(panelGame);
+		gsGame = new GridScroller(panelGame, contentPane);
 		gridScroll = new Thread(gsGame);
 		gridScroll.start();
 		

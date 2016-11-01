@@ -1,6 +1,9 @@
 package data;
 
+import javax.swing.JComponent;
+
 public class GridScroller implements Runnable {
+	private JComponent frame;
 	private JGridPanel affected; 
 	private int positionX, positionY;
 	private final int edgeSize = 20;
@@ -17,8 +20,9 @@ public class GridScroller implements Runnable {
 	
 	
 	
-	public GridScroller(JGridPanel jgridpanel) {
+	public GridScroller(JGridPanel jgridpanel, JComponent cursorBase) {
 		affected = jgridpanel;
+		frame = cursorBase;
 	}
 	
 	
@@ -188,6 +192,7 @@ public class GridScroller implements Runnable {
 					moveUp();
 				else if((positionY >= affected.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
 					moveDown();
+				
 				if(awaitZoomIn)
 					zoomIn(affected.getPosX(), affected.getPosY());
 				if(awaitZoomOut)
