@@ -384,8 +384,7 @@ public class Game extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				panelSelectItem.setDragged(false);
 				panelSelectItem.setPosX(e.getX() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
-				panelSelectItem.setPosY(e.getY() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
-
+				panelSelectItem.setPosY(e.getY() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() ); 
 				panelSelectItem.repaint();
 			}
 		});
@@ -582,6 +581,13 @@ public class Game extends JFrame {
 			{
 				row = 0;
 				column++;
+			}
+		}
+		for(int x = 0; x < panelSelectItem.getMapping()[0].length; x++)
+		{
+			for(int y = 0; y < panelSelectItem.getMapping()[0].length; y++)
+			{
+				panelSelectItem.applyProperty(x, y, 0, (102 *256*256 + 155 *256 + 155));
 			}
 		}
 	}
