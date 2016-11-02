@@ -475,11 +475,12 @@ public class Game extends JFrame {
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		panelBuild.add(scrollPane, "cell 0 1,grow");
 		
 		panelSelectItem = new JGridPanel(3,6,4);
 		panelSelectItem.setTileSize(64);
-		panelSelectItem.setPreferredSize(new Dimension(256, (panelSelectItem.getTilesY() * panelSelectItem.getTileSize())));
+		panelSelectItem.setPreferredSize(new Dimension(192, (panelSelectItem.getTilesY() * panelSelectItem.getTileSize())));
 		panelSelectItem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -494,6 +495,7 @@ public class Game extends JFrame {
 		panelSelectItem.setBackground(new Color(102, 153, 153));
 		
 		scrollPane.setViewportView(panelSelectItem);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(panelSelectItem.getTileSize());
 				
 		panelInfo = new JPanel();
 		panelInfo.setBackground(new Color(102, 153, 153));
