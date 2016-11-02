@@ -1,12 +1,13 @@
 package data;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 public class GridScroller implements Runnable {
 	private JComponent frame;
 	private JGridPanel affected; 
 	private int positionX, positionY;
-	private final int edgeSize = 20;
+	private final int edgeSize = 5;
 	private final int refresh = 25;
 	private boolean isInComponent = true;
 	
@@ -185,12 +186,12 @@ public class GridScroller implements Runnable {
 			{
 				if((positionX <= edgeSize && isInComponent ) || keyLeft)
 					moveLeft();
-				else if((positionX >= affected.getWidth() - (edgeSize + 1) && isInComponent) || keyRight)
+				else if((positionX >= frame.getWidth() - (edgeSize + 1) && isInComponent) || keyRight)
 					moveRight();
 				
 				if((positionY <= edgeSize && isInComponent) || keyUp)
 					moveUp();
-				else if((positionY >= affected.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
+				else if((positionY >= frame.getHeight() - (edgeSize + 1) && isInComponent) || keyDown)
 					moveDown();
 				
 				if(awaitZoomIn)
@@ -206,10 +207,8 @@ public class GridScroller implements Runnable {
 			}
 			catch(InterruptedException ex)
 			{
-				
+				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
 			}
 		}
-
 	}
-
 }

@@ -46,6 +46,8 @@ import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Game extends JFrame {
 	private GridIO gioGame;
@@ -81,14 +83,17 @@ public class Game extends JFrame {
 	private JPanel panelBuild;
 	private JPanel panelInfo;
 	private JPanel panelOptions;
+	private JPanel panelStorage;
 	private JLabel lblOptions;
 	private JLabel lblInfo;
 	private JLabel lblBuild;
+	private JLabel lblStorage;
 	
 	private CardLayout toolsCard;
 	private final String cardBuild 	 = "cardBuild" ;
 	private final String cardInfo	 = "cardInfo";
 	private final String cardOptions = "cardOptions";
+	private final String cardStorage = "cardStorage";
 	private String activeCard = cardBuild; 
 	private JLabel lblPosition;
 	private JLabel lblTilename;
@@ -97,11 +102,27 @@ public class Game extends JFrame {
 	private JGridPanel panelSelectItem;
 	private JPanel panelOverview;
 	private JImgPanel panelPicWood;
-	private JLabel lblWood;
+	private JLabel lblStoreWood;
 	
 	private int storeWood;
+	private int storeStone;
+	private int storeSteel;
+	private int storeGlass;
+	private int storeGold;
 	
 	private final Font overview = new Font("Tahoma", Font.PLAIN, 24);
+	private JImgPanel panelPicStone;
+	private JImgPanel panelPicSteel;
+	private JImgPanel panelPicGlass;
+	private JLabel lblStoreStone;
+	private JLabel lblStoreSteel;
+	private JLabel lblStoreGlass;
+	private JPanel panelSpacer1;
+	private JPanel panelSpacer2;
+	private JPanel panelSpacer3;
+	private JPanel panelSpacer4;
+	private JImgPanel panelPicGold;
+	private JLabel lblGold;
 	/**
 	 * Launch the application.
 	 */
@@ -239,15 +260,63 @@ public class Game extends JFrame {
 		panelOverview = new JPanel();
 		panelOverview.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelOverview, "cell 0 0,grow");
-		panelOverview.setLayout(new MigLayout("", "[48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		panelOverview.setLayout(new MigLayout("", "[48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
 		panelPicWood.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicWood, "cell 0 0,grow");
 		
-		lblWood = new JLabel("10");
-		lblWood.setFont(overview);
-		panelOverview.add(lblWood, "cell 1 0");
+		lblStoreWood = new JLabel("0");
+		lblStoreWood.setFont(overview);
+		panelOverview.add(lblStoreWood, "cell 1 0");
+		
+		panelSpacer1 = new JPanel();
+		panelSpacer1.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelSpacer1, "cell 2 0,grow");
+		
+		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
+		panelPicStone.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelPicStone, "cell 3 0,grow");
+		
+		lblStoreStone = new JLabel("0");
+		lblStoreStone.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panelOverview.add(lblStoreStone, "cell 4 0");
+		
+		panelSpacer2 = new JPanel();
+		panelSpacer2.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelSpacer2, "cell 5 0,grow");
+		
+		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
+		panelPicSteel.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelPicSteel, "cell 6 0,grow");
+		
+		lblStoreSteel = new JLabel("0");
+		lblStoreSteel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panelOverview.add(lblStoreSteel, "cell 7 0");
+		
+		panelSpacer3 = new JPanel();
+		panelSpacer3.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelSpacer3, "cell 8 0,grow");
+		
+		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
+		panelPicGlass.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelPicGlass, "cell 9 0,grow");
+		
+		lblStoreGlass = new JLabel("0");
+		lblStoreGlass.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panelOverview.add(lblStoreGlass, "cell 10 0");
+		
+		panelSpacer4 = new JPanel();
+		panelSpacer4.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelSpacer4, "cell 11 0,grow");
+		
+		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
+		panelPicGold.setBackground(new Color(102, 153, 153));
+		panelOverview.add(panelPicGold, "cell 12 0,grow");
+		
+		lblGold = new JLabel("10");
+		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panelOverview.add(lblGold, "cell 13 0");
 		
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
@@ -408,7 +477,9 @@ public class Game extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelBuild.add(scrollPane, "cell 0 1,grow");
 		
-		panelSelectItem = new JGridPanel(3,3,4);
+		panelSelectItem = new JGridPanel(3,6,4);
+		panelSelectItem.setTileSize(64);
+		panelSelectItem.setPreferredSize(new Dimension(256, (panelSelectItem.getTilesY() * panelSelectItem.getTileSize())));
 		panelSelectItem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -421,7 +492,7 @@ public class Game extends JFrame {
 		
 		
 		panelSelectItem.setBackground(new Color(102, 153, 153));
-		panelSelectItem.setTileSize(64);
+		
 		scrollPane.setViewportView(panelSelectItem);
 				
 		panelInfo = new JPanel();
@@ -448,6 +519,14 @@ public class Game extends JFrame {
 		
 		lblOptions = new JLabel("Options");
 		panelOptions.add(lblOptions, "cell 0 0");
+		
+		panelStorage = new JPanel();
+		panelStorage.setBackground(new Color(102, 153, 153));
+		panelTools.add(panelStorage, cardStorage);
+		panelStorage.setLayout(new MigLayout("", "[]", "[]"));
+		
+		lblStorage = new JLabel("Storage");
+		panelStorage.add(lblStorage, "cell 0 0");
 		
 		panelQuit = new JPanel();
 		panelQuit.setBackground(new Color(102, 153, 153));
@@ -491,7 +570,6 @@ public class Game extends JFrame {
 			}
 		});
 		lblExit1.setVisible(false);	
-		
 		
 		
 		
@@ -615,7 +693,7 @@ public class Game extends JFrame {
 				column++;
 			}
 		}
-		for(int x = 0; x < panelSelectItem.getMapping()[0].length; x++)
+		for(int x = 0; x < panelSelectItem.getMapping().length; x++)
 		{
 			for(int y = 0; y < panelSelectItem.getMapping()[0].length; y++)
 			{
@@ -706,7 +784,7 @@ public class Game extends JFrame {
 					if (each.getBuildResource3() == 102) 	
 						storeWood += each.getAmountBuildResource3();
 	
-					lblWood.setText(String.valueOf(storeWood));
+					lblStoreWood.setText(String.valueOf(storeWood));
 				}
 			}
 		}
@@ -715,6 +793,14 @@ public class Game extends JFrame {
 	public void setUpStorage()
 	{
 		storeWood = 30;
-		lblWood.setText(String.valueOf(storeWood));
+		lblStoreWood.setText(String.valueOf(storeWood));
+		storeStone = 10;
+		lblStoreStone.setText(String.valueOf(storeStone));
+		storeSteel = 10;
+		lblStoreSteel.setText(String.valueOf(storeSteel));
+		storeGlass = 10;
+		lblStoreGlass.setText(String.valueOf(storeGlass));
+		storeGold = 10;
+		lblGold.setText(String.valueOf(storeGold));
 	}
 }
