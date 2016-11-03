@@ -263,6 +263,7 @@ public class Game extends JFrame {
 		panelOverview.setLayout(new MigLayout("", "[48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
+		panelPicWood.setToolTipText("WOOD");
 		panelPicWood.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicWood, "cell 0 0,grow");
 		
@@ -275,6 +276,7 @@ public class Game extends JFrame {
 		panelOverview.add(panelSpacer1, "cell 2 0,grow");
 		
 		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
+		panelPicStone.setToolTipText("STONE");
 		panelPicStone.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicStone, "cell 3 0,grow");
 		
@@ -287,6 +289,7 @@ public class Game extends JFrame {
 		panelOverview.add(panelSpacer2, "cell 5 0,grow");
 		
 		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
+		panelPicSteel.setToolTipText("STEEL");
 		panelPicSteel.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicSteel, "cell 6 0,grow");
 		
@@ -299,6 +302,7 @@ public class Game extends JFrame {
 		panelOverview.add(panelSpacer3, "cell 8 0,grow");
 		
 		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
+		panelPicGlass.setToolTipText("GLASS");
 		panelPicGlass.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicGlass, "cell 9 0,grow");
 		
@@ -311,6 +315,7 @@ public class Game extends JFrame {
 		panelOverview.add(panelSpacer4, "cell 11 0,grow");
 		
 		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
+		panelPicGold.setToolTipText("GOLD");
 		panelPicGold.setBackground(new Color(102, 153, 153));
 		panelOverview.add(panelPicGold, "cell 12 0,grow");
 		
@@ -551,7 +556,7 @@ public class Game extends JFrame {
 					gsGame.zoomIn(panelGame.getWidth() / 2, panelGame.getHeight() / 2);
 				gioGame.save("test", true);
 				dispose();
-				MainMenu.main(new String[0]);
+				MainMenu.main(null);
 			}
 		});
 		panelQuit.add(btnSaveQuit, "cell 1 1,growx");
@@ -562,7 +567,7 @@ public class Game extends JFrame {
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				MainMenu.main(new String[0]);
+				MainMenu.main(null);
 			}
 		});
 		btnResume.setVisible(false);
@@ -753,30 +758,30 @@ public class Game extends JFrame {
 			{
 				if (each.getBuildResource1() == 102 && storeWood >= each.getAmountBuildResource1())
 					enoughRes1 = true;
-				if (each.getBuildResource2() == 102 && storeWood >= each.getAmountBuildResource2())	
+				else if (each.getBuildResource2() == 102 && storeWood >= each.getAmountBuildResource2())	
 					enoughRes2 = true;
-				if (each.getBuildResource3() == 102 && storeWood >= each.getAmountBuildResource3()) 
+				else if (each.getBuildResource3() == 102 && storeWood >= each.getAmountBuildResource3()) 
 					enoughRes3 = true;
 				
 				if (each.getBuildResource1() == 103 && storeStone >= each.getAmountBuildResource1())
 					enoughRes1 = true;
-				if (each.getBuildResource2() == 103 && storeStone >= each.getAmountBuildResource2())	
+				else if (each.getBuildResource2() == 103 && storeStone >= each.getAmountBuildResource2())	
 					enoughRes2 = true;
-				if (each.getBuildResource3() == 103 && storeStone >= each.getAmountBuildResource3()) 
+				else if (each.getBuildResource3() == 103 && storeStone >= each.getAmountBuildResource3()) 
 					enoughRes3 = true;
 				
 				if (each.getBuildResource1() == 104 && storeSteel >= each.getAmountBuildResource1())
 					enoughRes1 = true;
-				if (each.getBuildResource2() == 104 && storeSteel >= each.getAmountBuildResource2())	
+				else if (each.getBuildResource2() == 104 && storeSteel >= each.getAmountBuildResource2())	
 					enoughRes2 = true;
-				if (each.getBuildResource3() == 104 && storeSteel >= each.getAmountBuildResource3()) 
+				else if (each.getBuildResource3() == 104 && storeSteel >= each.getAmountBuildResource3()) 
 					enoughRes3 = true;
 				
 				if (each.getBuildResource1() == 105 && storeGlass >= each.getAmountBuildResource1())
 					enoughRes1 = true;
-				if (each.getBuildResource2() == 105 && storeGlass >= each.getAmountBuildResource2())	
+				else if (each.getBuildResource2() == 105 && storeGlass >= each.getAmountBuildResource2())	
 					enoughRes2 = true;
-				if (each.getBuildResource3() == 105 && storeGlass >= each.getAmountBuildResource3()) 
+				else if (each.getBuildResource3() == 105 && storeGlass >= each.getAmountBuildResource3()) 
 					enoughRes3 = true;
 				
 				if (each.getBuildResource1() == 0) 
@@ -802,30 +807,30 @@ public class Game extends JFrame {
 					
 					if (each.getBuildResource1() == 102)
 						storeWood -= each.getAmountBuildResource1();
-					if (each.getBuildResource2() == 102)	
+					else if (each.getBuildResource2() == 102)	
 						storeWood -= each.getAmountBuildResource2();
-					if (each.getBuildResource3() == 102) 	
+					else if (each.getBuildResource3() == 102) 	
 						storeWood -= each.getAmountBuildResource3();
 					
 					if (each.getBuildResource1() == 103)
 						storeStone -= each.getAmountBuildResource1();
-					if (each.getBuildResource2() == 103)	
+					else if (each.getBuildResource2() == 103)	
 						storeStone -= each.getAmountBuildResource2();
-					if (each.getBuildResource3() == 103) 	
+					else if (each.getBuildResource3() == 103) 	
 						storeStone -= each.getAmountBuildResource3();
 					
 					if (each.getBuildResource1() == 104)
 						storeSteel -= each.getAmountBuildResource1();
-					if (each.getBuildResource2() == 104)	
+					else if (each.getBuildResource2() == 104)	
 						storeSteel -= each.getAmountBuildResource2();
-					if (each.getBuildResource3() == 104) 	
+					else if (each.getBuildResource3() == 104) 	
 						storeSteel -= each.getAmountBuildResource3();
 					
 					if (each.getBuildResource1() == 105)
 						storeGlass -= each.getAmountBuildResource1();
-					if (each.getBuildResource2() == 105)	
+					else if (each.getBuildResource2() == 105)	
 						storeGlass -= each.getAmountBuildResource2();
-					if (each.getBuildResource3() == 105) 	
+					else if (each.getBuildResource3() == 105) 	
 						storeGlass -= each.getAmountBuildResource3();
 	
 					lblStoreWood.setText(String.valueOf(storeWood));
