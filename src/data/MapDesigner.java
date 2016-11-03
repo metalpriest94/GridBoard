@@ -288,6 +288,7 @@ public class MapDesigner extends JFrame {
 		listTiles = new JList<String>();
 		listTiles.setVisibleRowCount(6);
 		listTiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listTiles.setModel(modelMapTiles);
 		scrollPane_1.setViewportView(listTiles);
 		
 		lblTileSize = new JLabel("Tile Size");
@@ -458,6 +459,7 @@ public class MapDesigner extends JFrame {
 		
 		listItems = new JList<String>();
 		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listItems.setModel(modelItems);
 		scrollPane.setViewportView(listItems);
 		
 		btnJump = new JButton("Jump");
@@ -523,6 +525,15 @@ public class MapDesigner extends JFrame {
 		gio = new GridIO(panelMap, allTiles, allItems);
 		allTiles = gio.createTileList();
 		allItems = gio.createItemList(false);
+		for(MapTile each: allTiles)
+		{
+			modelMapTiles.addElement(each.getName());
+		}
+		
+		for(Item each: allItems)
+		{
+			modelItems.addElement(each.getName());
+		}
 		
 		
 	}
@@ -553,6 +564,7 @@ public class MapDesigner extends JFrame {
 			{
 				if (readConfig != null)
 					readConfig.close();
+				System.out.println("config");
 			}
 			catch (IOException ex)
 			{
