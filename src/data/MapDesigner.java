@@ -564,7 +564,6 @@ public class MapDesigner extends JFrame {
 			{
 				if (readConfig != null)
 					readConfig.close();
-				System.out.println("config");
 			}
 			catch (IOException ex)
 			{
