@@ -662,9 +662,24 @@ public class Game extends JFrame {
 	
 	public void designMiniMap(int detail, int scale)
 	{
-
 		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allItems);
 		gioMiniMap.newMap(panelGame.getTilesX()/detail, panelGame.getTilesY()/detail);
+		if (panelGame.getTilesX() >= panelGame.getTilesY())
+		{
+			if (panelGame.getTilesX() % panelMiniMap.getTilesX() == 0)
+				detail = (panelGame.getTilesX() / panelMiniMap.getTilesX());
+			else
+				detail = (panelGame.getTilesX() / panelMiniMap.getTilesX()) + 1;
+		}
+		else
+		{
+			if (panelGame.getTilesY() % panelMiniMap.getTilesY() == 0)
+				detail = (panelGame.getTilesY() / panelMiniMap.getTilesY());
+			else
+				detail = (panelGame.getTilesY() / panelMiniMap.getTilesY()) + 1;
+		}
+			
+		
 		for (int x = 0; x < panelGame.getTilesX(); x += detail)
 		{
 			for (int y = 0; y < panelGame.getTilesY(); y += detail)
@@ -672,12 +687,34 @@ public class Game extends JFrame {
 				panelMiniMap.applyProperty(x /detail , y /detail , 0, panelGame.getMapping()[x][y][0]);
 			}
 		}
-		panelMiniMap.setTileSize(scale);
+		
 		panelMiniMap.setShowGrid(false);
 		panelMiniMap.setDragged(true); // Simulation of Mousedrag to apply the visible area as square on the MiniMap.
 		contentPane.add(panelMiniMap, "cell 1 1,grow");
+		scaleMiniMap();
 	}
-	
+	public void scaleMiniMap()
+	{
+		int scale;
+		final int size = 256;
+		if (panelGame.getTilesX() > size || panelGame.getTilesY() > size)
+			scale = 1;
+		else
+		{
+			if (panelGame.getTilesX() >= panelGame.getTilesY())
+			{
+				scale = size / panelGame.getTilesX();
+				System.out.println("!2");
+			}
+			else
+			{
+				scale = size / panelGame.getTilesY();
+				System.out.println("!3");
+			}
+		}
+		System.out.println(scale);
+		panelMiniMap.setTileSize(scale);
+	}
 	
 	public void showExitMenu()
 	{
@@ -876,4 +913,6 @@ public class Game extends JFrame {
 		storeGold = 10;
 		lblGold.setText(String.valueOf(storeGold));
 	}
+	
+
 }
