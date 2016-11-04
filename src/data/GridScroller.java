@@ -161,11 +161,11 @@ public class GridScroller implements Runnable {
 			{
 				moveUp();
 			}
-			while (affected.getVisibleCornerX() > (affected.getTilesX() - affected.getWidth() / affected.getTileSize()) +1)
+			while (affected.getVisibleCornerX() > (affected.getTilesX() - affected.getWidth() / affected.getTileSize()) +1 && affected.getWidth() < affected.getTilesX() * affected.getTileSize())
 			{
 				moveLeft();
 			}
-			while (affected.getVisibleCornerY() > (affected.getTilesY() - affected.getHeight() / affected.getTileSize()) +1)
+			while (affected.getVisibleCornerY() > (affected.getTilesY() - affected.getHeight() / affected.getTileSize()) +1 && affected.getHeight() < affected.getTilesY() * affected.getTileSize())
 			{
 				moveUp();
 			}
