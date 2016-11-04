@@ -54,7 +54,7 @@ public class Clockwork implements Runnable {
 		{
 			try
 			{
-				Thread.sleep(100 * HOUR_DURATION / (60 / INTERVAL));
+				Thread.sleep(1000 * HOUR_DURATION / (60 / INTERVAL));
 			}
 			catch(InterruptedException ex)
 			{
