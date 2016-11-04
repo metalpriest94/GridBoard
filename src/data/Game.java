@@ -53,8 +53,10 @@ public class Game extends JFrame {
 	private GridIO gioGame;
 	private GridScroller gsGame;
 	private MiniMapUpdater mmuGame;
+	private Clockwork cwGame;
 	private Thread gridScroll;
 	private Thread miniMapUpdate;
+	private Thread clockwork;
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
@@ -123,6 +125,9 @@ public class Game extends JFrame {
 	private JPanel panelSpacer4;
 	private JImgPanel panelPicGold;
 	private JLabel lblGold;
+	private JLabel lblHours;
+	private JLabel lblClockSeparator;
+	private JLabel lblMinutes;
 	/**
 	 * Launch the application.
 	 */
@@ -260,68 +265,80 @@ public class Game extends JFrame {
 		panelOverview = new JPanel();
 		panelOverview.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelOverview, "cell 0 0,grow");
-		panelOverview.setLayout(new MigLayout("", "[48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px,leading][48px:n:48px,right][48px:n:48px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		panelOverview.setLayout(new MigLayout("", "[36px:n:36px,right][12px:n:12px,center][36px:n:36px,left][48px:n:48px][48px:n:48px,right][36px:n:36px][48px:n:48px][48px:n:48px,right][36px:n:36px][48px:n:48px,leading][48px:n:48px,right][36px:n:36px][48px:n:48px,leading][48px:n:48px,right][36px:n:36px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		
+		lblHours = new JLabel("00");
+		lblHours.setFont(overview);
+		panelOverview.add(lblHours, "cell 0 0");
+		
+		lblClockSeparator = new JLabel(":");
+		lblClockSeparator.setFont(overview);
+		panelOverview.add(lblClockSeparator, "cell 1 0");
+		
+		lblMinutes = new JLabel("00");
+		lblMinutes.setFont(overview);
+		panelOverview.add(lblMinutes, "cell 2 0");
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
 		panelPicWood.setToolTipText("WOOD");
 		panelPicWood.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicWood, "cell 0 0,grow");
+		panelOverview.add(panelPicWood, "cell 3 0,grow");
 		
 		lblStoreWood = new JLabel("0");
 		lblStoreWood.setFont(overview);
-		panelOverview.add(lblStoreWood, "cell 1 0");
+		panelOverview.add(lblStoreWood, "cell 4 0");
 		
 		panelSpacer1 = new JPanel();
 		panelSpacer1.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer1, "cell 2 0,grow");
+		panelOverview.add(panelSpacer1, "cell 5 0,grow");
 		
 		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
 		panelPicStone.setToolTipText("STONE");
 		panelPicStone.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicStone, "cell 3 0,grow");
+		panelOverview.add(panelPicStone, "cell 6 0,grow");
 		
 		lblStoreStone = new JLabel("0");
 		lblStoreStone.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreStone, "cell 4 0");
+		panelOverview.add(lblStoreStone, "cell 7 0");
 		
 		panelSpacer2 = new JPanel();
 		panelSpacer2.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer2, "cell 5 0,grow");
+		panelOverview.add(panelSpacer2, "cell 8 0,grow");
 		
 		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
 		panelPicSteel.setToolTipText("STEEL");
 		panelPicSteel.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicSteel, "cell 6 0,grow");
+		panelOverview.add(panelPicSteel, "cell 9 0,grow");
 		
 		lblStoreSteel = new JLabel("0");
 		lblStoreSteel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreSteel, "cell 7 0");
+		panelOverview.add(lblStoreSteel, "cell 10 0");
 		
 		panelSpacer3 = new JPanel();
 		panelSpacer3.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer3, "cell 8 0,grow");
+		panelOverview.add(panelSpacer3, "cell 11 0,grow");
 		
 		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
 		panelPicGlass.setToolTipText("GLASS");
 		panelPicGlass.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGlass, "cell 9 0,grow");
+		panelOverview.add(panelPicGlass, "cell 12 0,grow");
 		
 		lblStoreGlass = new JLabel("0");
 		lblStoreGlass.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreGlass, "cell 10 0");
+		panelOverview.add(lblStoreGlass, "cell 13 0");
 		
 		panelSpacer4 = new JPanel();
 		panelSpacer4.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer4, "cell 11 0,grow");
+		panelOverview.add(panelSpacer4, "cell 14 0,grow");
 		
 		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
 		panelPicGold.setToolTipText("GOLD");
 		panelPicGold.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGold, "cell 12 0,grow");
+		panelOverview.add(panelPicGold, "cell 15 0,grow");
 		
 		lblGold = new JLabel("10");
 		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblGold, "cell 13 0");
+		panelOverview.add(lblGold, "cell 16 0");
 		
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
@@ -621,6 +638,10 @@ public class Game extends JFrame {
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
+		cwGame = new Clockwork(lblHours, lblMinutes);
+		clockwork = new Thread(cwGame);
+		clockwork.start();
+		
 		setUpBuildCard();
 		setUpStorage();
 
@@ -845,7 +866,7 @@ public class Game extends JFrame {
 	public void setUpStorage()
 	{
 		storeWood = 30;
-		lblStoreWood.setText(String.valueOf(storeWood));
+		lblStoreWood.setText("30");
 		storeStone = 10;
 		lblStoreStone.setText(String.valueOf(storeStone));
 		storeSteel = 10;
