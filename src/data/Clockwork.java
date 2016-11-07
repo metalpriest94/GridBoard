@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 public class Clockwork implements Runnable {
 	private final int HOUR_DURATION = 30; //in seconds
 	private final int INTERVAL = 15;
+	private final int ticksPerSec = 5;
 	private JLabel labelH, labelM;
 	private int hours, minutes;
 	private StringBuilder strHours, strMinutes;
@@ -54,17 +55,20 @@ public class Clockwork implements Runnable {
 		{
 			try
 			{
-				Thread.sleep(1000 * HOUR_DURATION / (60 / INTERVAL));
+				for (int i = 0; i < ticksPerSec; i++)
+				{
+					Thread.sleep((1000 / ticksPerSec) * HOUR_DURATION / (60 / INTERVAL));
+					synchronized (this) 
+					{
+						forward(INTERVAL / ticksPerSec);
+					}
+				}
 			}
 			catch(InterruptedException ex)
 			{
-				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
+				break;
 			}
-			synchronized (this) 
-			{
-				forward(INTERVAL);
-				displayTime();
-			}
+			displayTime();
 		}
 	}
 }
