@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -111,6 +112,9 @@ public class Game extends JFrame {
 	private int storeSteel;
 	private int storeGlass;
 	private int storeGold;
+	
+	private int inhabs;
+	private int capacity;
 	
 	private final Font overview = new Font("Tahoma", Font.PLAIN, 24);
 	private JImgPanel panelPicStone;
@@ -349,35 +353,31 @@ public class Game extends JFrame {
 				int startX = panelGame.getCornerDragX() / panelGame.getTileSize() + panelGame.getVisibleCornerX() -1;
 				int startY = panelGame.getCornerDragY() / panelGame.getTileSize() + panelGame.getVisibleCornerY() -1;
 				
-					if(panelGame.isDragged())
+				if(panelGame.isDragged())
+				{
+					for(int x = startX; x < startX + panelGame.getDraggedTilesX(); x++)
 					{
-						for(int x = startX; x < startX + panelGame.getDraggedTilesX(); x++)
+						for(int y = startY; y < startY + panelGame.getDraggedTilesY(); y++)
 						{
-							for(int y = startY; y < startY + panelGame.getDraggedTilesY(); y++)
-							{
 
-							}
 						}
-						panelGame.setDragged(false);
 					}
-					else
-					{
+					panelGame.setDragged(false);
+				}
+				else
+				{
 
-					}
+				}
+				
+				if(activeCard.equals(cardBuild))
+				{
+					constructBuilding(panelSelectItem.getMapping()[panelSelectItem.getCurrentX()][panelSelectItem.getCurrentY()][1]);
+				}
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				panelGame.setStartDragX(panelGame.getPosX());
 				panelGame.setStartDragY(panelGame.getPosY()); 
-			}
-
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(activeCard.equals(cardBuild))
-				{
-					constructBuilding(panelSelectItem.getMapping()[panelSelectItem.getCurrentX()][panelSelectItem.getCurrentY()][1]);
-				}
 			}
 		});
 		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
@@ -638,12 +638,13 @@ public class Game extends JFrame {
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
-		cwGame = new Clockwork(lblHours, lblMinutes);
+		cwGame = new Clockwork(lblHours, lblMinutes, this);
 		clockwork = new Thread(cwGame);
 		clockwork.start();
 		
 		setUpBuildCard();
 		setUpStorage();
+		setUpLiving();
 
 		
 		caller.dispose();
@@ -702,17 +703,10 @@ public class Game extends JFrame {
 		else
 		{
 			if (panelGame.getTilesX() >= panelGame.getTilesY())
-			{
 				scale = size / panelGame.getTilesX();
-				System.out.println("!2");
-			}
 			else
-			{
 				scale = size / panelGame.getTilesY();
-				System.out.println("!3");
-			}
 		}
-		System.out.println(scale);
 		panelMiniMap.setTileSize(scale);
 	}
 	
@@ -863,6 +857,10 @@ public class Game extends JFrame {
 					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getStoreSideProduct());
 					panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
 					
+					if (each.getPurpose() == 1)
+						capacity += each.getCapacity();
+					
+					
 					if (each.getBuildResource1() == 102)
 						storeWood -= each.getAmountBuildResource1();
 					else if (each.getBuildResource2() == 102)	
@@ -903,7 +901,7 @@ public class Game extends JFrame {
 	public void setUpStorage()
 	{
 		storeWood = 30;
-		lblStoreWood.setText("30");
+		lblStoreWood.setText(String.valueOf(storeWood));
 		storeStone = 10;
 		lblStoreStone.setText(String.valueOf(storeStone));
 		storeSteel = 10;
@@ -913,6 +911,35 @@ public class Game extends JFrame {
 		storeGold = 10;
 		lblGold.setText(String.valueOf(storeGold));
 	}
-	
-
+	public void setUpLiving()
+	{
+		inhabs = 0;
+		capacity = 0;
+		for (int x = 0; x < panelGame.getTilesX(); x++)
+		{
+			for (int y= 0; y < panelGame.getTilesY(); y++)
+			{
+				capacity += panelGame.getMapping()[x][y][9]; 
+				inhabs += panelGame.getMapping()[x][y][10]; 
+			}
+		}
+	}
+	public void newTick()
+	{
+		Random r = new Random();
+		final int percentageBaseNewInhab = 4; 
+		{
+			int randomNewInhab = r.nextInt();
+			if (randomNewInhab < 0)
+				randomNewInhab *= -1;
+			int limit = 10000;
+			if (inhabs >= capacity)
+				limit *= 10;
+			int required = limit - (percentageBaseNewInhab * inhabs/2);
+			if (randomNewInhab%limit >= required)
+			{
+				inhabs++;
+			}
+		}
+	}
 }

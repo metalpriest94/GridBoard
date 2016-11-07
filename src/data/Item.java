@@ -294,7 +294,7 @@ public class Item {
 	public int translatePurposeToInt(String purpose)
 	{
 		int i = 0;
-		if(purpose.equals("living"))
+		if(purpose.equals("home"))
 			i = 1;
 		return i;
 	}

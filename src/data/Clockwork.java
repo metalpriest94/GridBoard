@@ -10,14 +10,25 @@ public class Clockwork implements Runnable {
 	private JLabel labelH, labelM;
 	private int hours, minutes;
 	private StringBuilder strHours, strMinutes;
+	private int continousTime = 0;
+	private Game base;
 	
 	
-	public Clockwork(JLabel hours, JLabel minutes)
+	public Clockwork(JLabel hours, JLabel minutes, Game caller)
 	{
 		this.labelH = hours;
 		this.labelM = minutes;
+		base = caller;
 	}
 	
+	public int getContinousTime() {
+		return continousTime;
+	}
+
+	public void setContinousTime(int continousTime) {
+		this.continousTime = continousTime;
+	}
+
 	public void setClock(int hours, int minutes)
 	{
 		this.hours = hours;
@@ -61,7 +72,9 @@ public class Clockwork implements Runnable {
 					synchronized (this) 
 					{
 						forward(INTERVAL / ticksPerSec);
+						continousTime++;
 					}
+					base.newTick();
 				}
 			}
 			catch(InterruptedException ex)
