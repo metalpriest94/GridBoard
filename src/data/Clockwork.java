@@ -7,18 +7,20 @@ public class Clockwork implements Runnable {
 	private final int HOUR_DURATION = 30; //in seconds
 	private final int INTERVAL = 15;
 	private final int ticksPerSec = 5;
-	private JLabel labelH, labelM;
-	private int hours, minutes;
-	private StringBuilder strHours, strMinutes;
+	private int speed = 1;
+	private JLabel labelD, labelH, labelM;
+	private int days = 1, hours, minutes;
+	private StringBuilder strDays, strHours, strMinutes;
 	private int continousTime = 0;
 	private Game base;
 	
 	
-	public Clockwork(JLabel hours, JLabel minutes, Game caller)
+	public Clockwork(JLabel days, JLabel hours, JLabel minutes, Game caller)
 	{
+		this.labelD = days;
 		this.labelH = hours;
 		this.labelM = minutes;
-		base = caller;
+		this.base = caller;
 	}
 	
 	public int getContinousTime() {
@@ -29,8 +31,17 @@ public class Clockwork implements Runnable {
 		this.continousTime = continousTime;
 	}
 
-	public void setClock(int hours, int minutes)
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public void setClock(int days, int hours, int minutes)
 	{
+		this.days = days;
 		this.hours = hours;
 		this.minutes = minutes;
 	}
@@ -44,17 +55,22 @@ public class Clockwork implements Runnable {
 			this.hours += 1;
 		}
 		while(this.hours >= 24)
+		{
 			this.hours -= 24;
+			this.days += 1;
+		}
 	}
 	
 	public void displayTime()
 	{
+		strDays = new StringBuilder("D. " + String.valueOf(this.days));
 		strHours = new StringBuilder(String.valueOf(this.hours));
 		strMinutes = new StringBuilder(String.valueOf(this.minutes));
 		if (strHours.length() == 1)
 			strHours.insert(0, 0);
 		if (strMinutes.length() == 1)
 			strMinutes.insert(0, 0);
+		labelD.setText(strDays.toString());
 		labelH.setText(strHours.toString());
 		labelM.setText(strMinutes.toString());
 	}
@@ -68,7 +84,7 @@ public class Clockwork implements Runnable {
 			{
 				for (int i = 0; i < ticksPerSec; i++)
 				{
-					Thread.sleep((1000 / ticksPerSec) * HOUR_DURATION / (60 / INTERVAL));
+					Thread.sleep(((1000/ speed) / ticksPerSec) * HOUR_DURATION / (60 / INTERVAL));
 					synchronized (this) 
 					{
 						forward(INTERVAL / ticksPerSec);

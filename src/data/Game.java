@@ -132,6 +132,10 @@ public class Game extends JFrame {
 	private JLabel lblHours;
 	private JLabel lblClockSeparator;
 	private JLabel lblMinutes;
+	private JButton btnSpeed;
+	
+	private final int maxSpeed = 4;
+	private JLabel lblDay;
 	/**
 	 * Launch the application.
 	 */
@@ -218,6 +222,22 @@ public class Game extends JFrame {
 			}
 		};
 		
+		AbstractAction plus = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				speedUp();
+			}
+		};
+		
+		AbstractAction minus = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				speedDown();
+			}
+		};
+		
 		AbstractAction escape = new AbstractAction(){
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -269,80 +289,102 @@ public class Game extends JFrame {
 		panelOverview = new JPanel();
 		panelOverview.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelOverview, "cell 0 0,grow");
-		panelOverview.setLayout(new MigLayout("", "[36px:n:36px,right][12px:n:12px,center][36px:n:36px,left][48px:n:48px][48px:n:48px,right][36px:n:36px][48px:n:48px][48px:n:48px,right][36px:n:36px][48px:n:48px,leading][48px:n:48px,right][36px:n:36px][48px:n:48px,leading][48px:n:48px,right][36px:n:36px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		panelOverview.setLayout(new MigLayout("", "[88px:n:88px][36px:n:36px,right][12px:n:12px,center][36px:n:36px,left][36px:n:36px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		
+		lblDay = new JLabel("D. 1");
+		lblDay.setFont(overview);
+		lblDay.setBackground(new Color(102, 153, 153));
+		panelOverview.add(lblDay, "cell 0 0,alignx center");
 		
 		lblHours = new JLabel("00");
 		lblHours.setFont(overview);
-		panelOverview.add(lblHours, "cell 0 0");
+		panelOverview.add(lblHours, "cell 1 0");
 		
 		lblClockSeparator = new JLabel(":");
 		lblClockSeparator.setFont(overview);
-		panelOverview.add(lblClockSeparator, "cell 1 0");
+		panelOverview.add(lblClockSeparator, "cell 2 0");
 		
 		lblMinutes = new JLabel("00");
 		lblMinutes.setFont(overview);
-		panelOverview.add(lblMinutes, "cell 2 0");
+		panelOverview.add(lblMinutes, "cell 3 0");
+		
+		btnSpeed = new JButton("1x");
+		btnSpeed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cwGame.getSpeed() >= maxSpeed)
+				{
+					for(int i = 0; i < maxSpeed -1 ;i++)
+						speedDown();
+				}
+				else
+					speedUp();
+			}
+		});
+
+		btnSpeed.setMargin(new Insets(2, 2, 2, 2));
+		btnSpeed.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelOverview.add(btnSpeed, "cell 4 0,grow");
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
 		panelPicWood.setToolTipText("WOOD");
 		panelPicWood.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicWood, "cell 3 0,grow");
+		panelOverview.add(panelPicWood, "cell 5 0,grow");
 		
 		lblStoreWood = new JLabel("0");
 		lblStoreWood.setFont(overview);
-		panelOverview.add(lblStoreWood, "cell 4 0");
+		panelOverview.add(lblStoreWood, "cell 6 0,alignx center");
 		
 		panelSpacer1 = new JPanel();
 		panelSpacer1.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer1, "cell 5 0,grow");
+		panelOverview.add(panelSpacer1, "cell 7 0,grow");
 		
 		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
 		panelPicStone.setToolTipText("STONE");
 		panelPicStone.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicStone, "cell 6 0,grow");
+		panelOverview.add(panelPicStone, "cell 8 0,grow");
 		
 		lblStoreStone = new JLabel("0");
 		lblStoreStone.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreStone, "cell 7 0");
+		panelOverview.add(lblStoreStone, "cell 9 0,alignx center");
 		
 		panelSpacer2 = new JPanel();
 		panelSpacer2.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer2, "cell 8 0,grow");
+		panelOverview.add(panelSpacer2, "cell 10 0,grow");
 		
 		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
 		panelPicSteel.setToolTipText("STEEL");
 		panelPicSteel.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicSteel, "cell 9 0,grow");
+		panelOverview.add(panelPicSteel, "cell 11 0,grow");
 		
 		lblStoreSteel = new JLabel("0");
 		lblStoreSteel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreSteel, "cell 10 0");
+		panelOverview.add(lblStoreSteel, "cell 12 0,alignx center");
 		
 		panelSpacer3 = new JPanel();
 		panelSpacer3.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer3, "cell 11 0,grow");
+		panelOverview.add(panelSpacer3, "cell 13 0,grow");
 		
 		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
 		panelPicGlass.setToolTipText("GLASS");
 		panelPicGlass.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGlass, "cell 12 0,grow");
+		panelOverview.add(panelPicGlass, "cell 14 0,grow");
 		
 		lblStoreGlass = new JLabel("0");
 		lblStoreGlass.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreGlass, "cell 13 0");
+		panelOverview.add(lblStoreGlass, "cell 15 0,alignx center");
 		
 		panelSpacer4 = new JPanel();
 		panelSpacer4.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer4, "cell 14 0,grow");
+		panelOverview.add(panelSpacer4, "cell 16 0,grow");
 		
 		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
 		panelPicGold.setToolTipText("GOLD");
 		panelPicGold.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGold, "cell 15 0,grow");
+		panelOverview.add(panelPicGold, "cell 17 0,grow");
 		
 		lblGold = new JLabel("10");
 		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblGold, "cell 16 0");
+		panelOverview.add(lblGold, "cell 18 0,alignx center");
 		
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
@@ -605,6 +647,8 @@ public class Game extends JFrame {
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, 0), "plus");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, 0), "minus");
 		
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
@@ -616,6 +660,8 @@ public class Game extends JFrame {
 		action.put("down", moveDown);
 		action.put("left", moveLeft);
 		action.put("right", moveRight);
+		action.put("plus", plus);
+		action.put("minus", minus);
 		action.put("escape", escape);
 		
 		action.put("upR", moveUpRelease);
@@ -638,7 +684,7 @@ public class Game extends JFrame {
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
-		cwGame = new Clockwork(lblHours, lblMinutes, this);
+		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
 		clockwork = new Thread(cwGame);
 		clockwork.start();
 		
@@ -924,6 +970,8 @@ public class Game extends JFrame {
 			}
 		}
 	}
+	
+	
 	public void newTick()
 	{
 		Random r = new Random();
@@ -942,4 +990,25 @@ public class Game extends JFrame {
 			}
 		}
 	}
+	
+	public void speedUp()
+	{
+		synchronized (cwGame) 
+		{
+			if (cwGame.getSpeed() < maxSpeed) 
+				cwGame.setSpeed(cwGame.getSpeed() + 1);
+		}
+		btnSpeed.setText(cwGame.getSpeed() + "x");
+	}
+	
+	public void speedDown()
+	{
+		synchronized (cwGame) 
+		{
+			if (cwGame.getSpeed() > 1) 	
+				cwGame.setSpeed(cwGame.getSpeed() - 1);
+		}
+		btnSpeed.setText(cwGame.getSpeed() + "x");
+	}
 }
+
