@@ -81,13 +81,13 @@ public class Game extends JFrame {
 	private JButton btnSaveQuit;
 	private JToggleButton tglbtnBuild;
 	private JToggleButton tglbtnInfo;
-	private JToggleButton tglbtnOptions;
+	private JToggleButton tglbtnStats;
 	private JPanel panelToolSelection;
 	private JPanel panelBuild;
 	private JPanel panelInfo;
-	private JPanel panelOptions;
+	private JPanel panelStats;
 	private JPanel panelStorage;
-	private JLabel lblOptions;
+	private JLabel lblStats;
 	private JLabel lblInfo;
 	private JLabel lblBuild;
 	private JLabel lblStorage;
@@ -95,7 +95,7 @@ public class Game extends JFrame {
 	private CardLayout toolsCard;
 	private final String cardBuild 	 = "cardBuild" ;
 	private final String cardInfo	 = "cardInfo";
-	private final String cardOptions = "cardOptions";
+	private final String cardStats 	 = "cardStats";
 	private final String cardStorage = "cardStorage";
 	private String activeCard = cardBuild; 
 	private JLabel lblPosition;
@@ -136,6 +136,8 @@ public class Game extends JFrame {
 	
 	private final int maxSpeed = 4;
 	private JLabel lblDay;
+	private JLabel lblInhabs;
+	private JLabel lblHousingSpace;
 	/**
 	 * Launch the application.
 	 */
@@ -491,7 +493,7 @@ public class Game extends JFrame {
 				toolsCard.show(panelTools, cardBuild);
 				tglbtnBuild.setSelected(true);
 				tglbtnInfo.setSelected(false);
-				tglbtnOptions.setSelected(false);
+				tglbtnStats.setSelected(false);
 				activeCard = cardBuild;
 
 			}
@@ -505,20 +507,20 @@ public class Game extends JFrame {
 				toolsCard.show(panelTools, cardInfo);
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(true);
-				tglbtnOptions.setSelected(false);
+				tglbtnStats.setSelected(false);
 				activeCard = cardInfo;
 			}
 		});
 		
-		tglbtnOptions = new JToggleButton("Options");
-		panelToolSelection.add(tglbtnOptions, "cell 2 0,growx");
-		tglbtnOptions.addActionListener(new ActionListener() {
+		tglbtnStats = new JToggleButton("Stats");
+		panelToolSelection.add(tglbtnStats, "cell 2 0,growx");
+		tglbtnStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, cardOptions);
+				toolsCard.show(panelTools, cardStats);
 				tglbtnBuild.setSelected(false);
 				tglbtnInfo.setSelected(false);
-				tglbtnOptions.setSelected(true);
-				activeCard = cardOptions;
+				tglbtnStats.setSelected(true);
+				activeCard = cardStats;
 			}
 		});
 		
@@ -578,13 +580,19 @@ public class Game extends JFrame {
 		lblItemname = new JLabel("ItemName");
 		panelInfo.add(lblItemname, "cell 0 2 2 1");
 		
-		panelOptions = new JPanel();
-		panelOptions.setBackground(new Color(102, 153, 153));
-		panelTools.add(panelOptions, cardOptions);
-		panelOptions.setLayout(new MigLayout("", "[]", "[]"));
+		panelStats = new JPanel();
+		panelStats.setBackground(new Color(102, 153, 153));
+		panelTools.add(panelStats, cardStats);
+		panelStats.setLayout(new MigLayout("", "[]", "[][][]"));
 		
-		lblOptions = new JLabel("Options");
-		panelOptions.add(lblOptions, "cell 0 0");
+		lblStats = new JLabel("Stats");
+		panelStats.add(lblStats, "cell 0 0");
+		
+		lblInhabs = new JLabel("Inhabitants: 0");
+		panelStats.add(lblInhabs, "cell 0 1");
+		
+		lblHousingSpace = new JLabel("Housing Space: 0");
+		panelStats.add(lblHousingSpace, "cell 0 2");
 		
 		panelStorage = new JPanel();
 		panelStorage.setBackground(new Color(102, 153, 153));
@@ -904,7 +912,10 @@ public class Game extends JFrame {
 					panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
 					
 					if (each.getPurpose() == 1)
+					{
 						capacity += each.getCapacity();
+						lblHousingSpace.setText("Housing Space: "+ capacity);
+					}
 					
 					
 					if (each.getBuildResource1() == 102)
@@ -967,6 +978,8 @@ public class Game extends JFrame {
 			{
 				capacity += panelGame.getMapping()[x][y][9]; 
 				inhabs += panelGame.getMapping()[x][y][10]; 
+				lblInhabs.setText("Inhabitants: "+ inhabs);
+				lblHousingSpace.setText("Housing Space: "+ capacity);
 			}
 		}
 	}
@@ -987,6 +1000,7 @@ public class Game extends JFrame {
 			if (randomNewInhab%limit >= required)
 			{
 				inhabs++;
+				lblInhabs.setText("Inhabitants: "+ inhabs);
 			}
 		}
 	}
