@@ -9,7 +9,7 @@ public class GridScroller implements Runnable {
 	private int positionX, positionY;
 	private final int edgeSize = 5;
 	private final int refresh = 25;
-	private boolean isInComponent = true;
+	private boolean isInComponent = false;
 	
 	final int baseZoomLevel = 3;
 	final int maxZoomLevel = 8;
