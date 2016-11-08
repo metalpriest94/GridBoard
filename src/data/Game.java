@@ -113,6 +113,9 @@ public class Game extends JFrame {
 	private int storeGlass;
 	private int storeGold;
 	
+	private int storeWater;
+	private int storeVegetables;
+	
 	private int inhabs;
 	private int capacity;
 	
@@ -967,6 +970,8 @@ public class Game extends JFrame {
 		lblStoreGlass.setText(String.valueOf(storeGlass));
 		storeGold = 10;
 		lblGold.setText(String.valueOf(storeGold));
+		storeWater = 20;
+		storeVegetables = 20;
 	}
 	public void setUpLiving()
 	{
@@ -988,7 +993,9 @@ public class Game extends JFrame {
 	public void newTick()
 	{
 		Random r = new Random();
-		final int percentageBaseNewInhab = 4; 
+		final int percentageBaseNewInhab = 4;
+		final int ticksPerDayInGame = cwGame.getTICKSPERSEC() * (60/cwGame.getINTERVAL()) * 24;
+		final int timeToConsume = 1700; //equals 17:00
 		{
 			int randomNewInhab = r.nextInt();
 			if (randomNewInhab < 0)
@@ -1003,6 +1010,16 @@ public class Game extends JFrame {
 				lblInhabs.setText("Inhabitants: "+ inhabs);
 			}
 		}
+		{
+			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToConsume / 2400)
+					consumeGoods();
+		}
+	}
+	
+	public void consumeGoods()
+	{
+		storeWater -= inhabs * 2;
+		storeVegetables -= inhabs * 2;
 	}
 	
 	public void speedUp()

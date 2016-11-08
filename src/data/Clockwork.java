@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class Clockwork implements Runnable {
 	private final int HOUR_DURATION = 30; //in seconds
 	private final int INTERVAL = 15;
-	private final int ticksPerSec = 5;
+	private final int TICKS_PER_SEC = 5;
 	private int speed = 1;
 	private JLabel labelD, labelH, labelM;
 	private int days = 1, hours, minutes;
@@ -38,12 +38,26 @@ public class Clockwork implements Runnable {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
+	
+	public int getTICKSPERSEC() {
+		return TICKS_PER_SEC;
+	}
+
+	public int getINTERVAL() {
+		return INTERVAL;
+	}
 
 	public void setClock(int days, int hours, int minutes)
 	{
 		this.days = days;
 		this.hours = hours;
 		this.minutes = minutes;
+	}
+	
+	public int[] getClock()
+	{
+		int[] time = new int[]{this.days, this.hours, this. minutes};
+		return time;
 	}
 	
 	public void forward(int minutes)
@@ -82,22 +96,23 @@ public class Clockwork implements Runnable {
 		{
 			try
 			{
-				for (int i = 0; i < ticksPerSec; i++)
+				for (int i = 0; i < TICKS_PER_SEC; i++)
 				{
-					Thread.sleep(((1000/ speed) / ticksPerSec) * HOUR_DURATION / (60 / INTERVAL));
+					Thread.sleep(((1000/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
 					synchronized (this) 
 					{
-						forward(INTERVAL / ticksPerSec);
+						forward(INTERVAL / TICKS_PER_SEC);
 						continousTime++;
 					}
 					base.newTick();
 				}
+				displayTime();
 			}
 			catch(InterruptedException ex)
 			{
 				break;
 			}
-			displayTime();
+			
 		}
 	}
 }
