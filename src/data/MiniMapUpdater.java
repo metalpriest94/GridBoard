@@ -33,16 +33,26 @@ public class MiniMapUpdater implements Runnable {
 	
 	public void updateMiniMap()
 	{
-		affected.setStartDragX(info.getVisibleCornerX()-1);
-		affected.setStartDragY(info.getVisibleCornerY()-1);
-		affected.setPosX(info.getVisibleCornerX() + info.getWidth()  / info.getTileSize() -1);
-		affected.setPosY(info.getVisibleCornerY() + info.getHeight() / info.getTileSize() -1);
+		int upperLeftX, upperLeftY, lowerRightX, lowerRightY;
+		upperLeftX= (info.getVisibleCornerX()-1) * affected.getTileSize();
+		upperLeftY= (info.getVisibleCornerY()-1) * affected.getTileSize();
+		affected.setStartDragX(upperLeftX);
+		affected.setStartDragY(upperLeftY);
+		
+		lowerRightX = (info.getVisibleCornerX() + info.getWidth()  / info.getTileSize() -1) * affected.getTileSize();
+		lowerRightY = (info.getVisibleCornerY() + info.getHeight() / info.getTileSize() -1) * affected.getTileSize();
+		if (lowerRightX > affected.getWidth())
+			lowerRightX = affected.getWidth();
+		if (lowerRightY > affected.getHeight())
+			lowerRightY = affected.getHeight();
+		affected.setPosX(lowerRightX);
+		affected.setPosY(lowerRightY);
 	}
 	
 	public void clickMiniMap(MouseEvent e)
 	{
-		int targetX = e.getX() - (info.getWidth() / 2) / info.getTileSize();
-		int targetY = e.getY() - (info.getHeight() / 2) / info.getTileSize();
+		int targetX = e.getX() /affected.getTileSize() - (info.getWidth() / 2) / info.getTileSize();
+		int targetY = e.getY() /affected.getTileSize()- (info.getHeight() / 2) / info.getTileSize();
 		
 		if(targetX <= 0)
 			targetX = 1;

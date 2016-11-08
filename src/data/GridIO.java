@@ -68,10 +68,13 @@ public class GridIO{
 					else;
 				}
 			}
-			fileWrite.write(mapDataSeparator);
-			fileWrite.newLine();
-			fileWrite.write(panelMap.getVisibleCornerX() + "/" + panelMap.getVisibleCornerY());
-			fileWrite.newLine();
+			if (isSav)
+			{
+				fileWrite.write(mapDataSeparator);
+				fileWrite.newLine();
+				fileWrite.write(panelMap.getVisibleCornerX() + "/" + panelMap.getVisibleCornerY());
+				fileWrite.newLine();
+			}
 		}
 		catch (IOException ex)
 		{

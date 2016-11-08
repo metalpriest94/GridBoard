@@ -273,7 +273,7 @@ public class Game extends JFrame {
 		contentPane.setBorder(null);
 		contentPane.setBackground(new Color(153, 204, 204));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[398.00,grow][256:n:256,grow]", "[][256:n:256,grow][][361.00,grow]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256,grow]", "[][256:n:256,grow][][361.00,grow]"));
 		
 		panelGame = new JGridPanel(4,4,16);
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
