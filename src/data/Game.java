@@ -93,17 +93,23 @@ public class Game extends JFrame {
 	private JLabel lblStorage;
 	
 	private CardLayout toolsCard;
+	private CardLayout topBarCard;
 	private final String cardBuild 	 = "cardBuild" ;
 	private final String cardInfo	 = "cardInfo";
 	private final String cardStats 	 = "cardStats";
 	private final String cardStorage = "cardStorage";
+	private final String cardResources = "cardResources";
+	private final String cardTime = "cardTime";
+	private final String cardIndicators = "cardIndicators";
+	
 	private String activeCard = cardBuild; 
 	private JLabel lblPosition;
 	private JLabel lblTilename;
 	private JLabel lblItemname;
 	private JScrollPane scrollPane;
 	private JGridPanel panelSelectItem;
-	private JPanel panelOverview;
+	private JPanel panelResources;
+	private JPanel panelTopBar;
 	private JImgPanel panelPicWood;
 	private JLabel lblStoreWood;
 	
@@ -141,6 +147,14 @@ public class Game extends JFrame {
 	private JLabel lblDay;
 	private JLabel lblInhabs;
 	private JLabel lblHousingSpace;
+	private JPanel panelTime;
+	private JPanel panelIndicators;
+	private JButton btnBackInd;
+	private JButton btnNextInd;
+	private JButton btnBackTime;
+	private JButton btnNextTime;
+	private JButton btnBackRes;
+	private JButton btnNextRes;
 	/**
 	 * Launch the application.
 	 */
@@ -278,7 +292,7 @@ public class Game extends JFrame {
 		contentPane.setBorder(null);
 		contentPane.setBackground(new Color(153, 204, 204));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256,grow]", "[][256:n:256,grow][][361.00,grow]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256]", "[][256:n:256,grow][][361.00,grow]"));
 		
 		panelGame = new JGridPanel(4,4,16);
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
@@ -291,27 +305,67 @@ public class Game extends JFrame {
 			}
 		});
 		
-		panelOverview = new JPanel();
-		panelOverview.setBackground(new Color(102, 153, 153));
-		contentPane.add(panelOverview, "cell 0 0,grow");
-		panelOverview.setLayout(new MigLayout("", "[88px:n:88px][36px:n:36px,right][12px:n:12px,center][36px:n:36px,left][36px:n:36px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right]", "[grow,center]"));
+		panelTopBar = new JPanel();
+		panelTopBar.setBackground(new Color(102, 153, 153));
+		contentPane.add(panelTopBar, "cell 0 0,grow");
+		panelTopBar.setLayout(new CardLayout(0, 0));
+		topBarCard = (CardLayout)panelTopBar.getLayout(); 
 		
-		lblDay = new JLabel("D. 1");
+		panelResources = new JPanel();
+		panelResources.setBackground(new Color(102, 153, 153));
+		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
+		panelTopBar.add(panelResources, cardResources);
+		
+		panelTime = new JPanel();
+		panelTime.setBackground(new Color(102, 153, 153));
+		panelTopBar.add(panelTime, cardTime);
+		panelTime.setLayout(new MigLayout("", "[40px:n:40px][48px:n:196px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
+		
+		panelIndicators = new JPanel();
+		panelIndicators.setBackground(new Color(102, 153, 153));
+		panelIndicators.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
+		panelTopBar.add(panelIndicators, cardIndicators);
+		
+		btnBackInd = new JButton("<");
+		btnBackInd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardTime);
+			}
+		});
+		panelIndicators.add(btnBackInd, "cell 0 0,alignx left,growy");
+		
+		btnNextInd = new JButton(">");
+		btnNextInd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardResources);
+			}
+		});
+		panelIndicators.add(btnNextInd, "cell 15 0,alignx right,growy");
+		
+		btnBackTime = new JButton("<");
+		btnBackTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardResources);
+			}
+		});
+		panelTime.add(btnBackTime, "cell 0 0,alignx left,growy");
+		
+		lblDay = new JLabel("Day 1");
 		lblDay.setFont(overview);
 		lblDay.setBackground(new Color(102, 153, 153));
-		panelOverview.add(lblDay, "cell 0 0,alignx center");
+		panelTime.add(lblDay, "cell 1 0,alignx center");
 		
 		lblHours = new JLabel("00");
 		lblHours.setFont(overview);
-		panelOverview.add(lblHours, "cell 1 0");
+		panelTime.add(lblHours, "cell 2 0");
 		
 		lblClockSeparator = new JLabel(":");
 		lblClockSeparator.setFont(overview);
-		panelOverview.add(lblClockSeparator, "cell 2 0");
+		panelTime.add(lblClockSeparator, "cell 3 0");
 		
 		lblMinutes = new JLabel("00");
 		lblMinutes.setFont(overview);
-		panelOverview.add(lblMinutes, "cell 3 0");
+		panelTime.add(lblMinutes, "cell 4 0");
 		
 		btnSpeed = new JButton("1x");
 		btnSpeed.addActionListener(new ActionListener() {
@@ -328,68 +382,84 @@ public class Game extends JFrame {
 
 		btnSpeed.setMargin(new Insets(2, 2, 2, 2));
 		btnSpeed.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelOverview.add(btnSpeed, "cell 4 0,grow");
+		panelTime.add(btnSpeed, "cell 5 0,grow");
+		
+		btnBackRes = new JButton("<");
+		btnBackRes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardIndicators);
+			}
+		});
+		panelResources.add(btnBackRes, "cell 0 0,alignx left,growy");
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
 		panelPicWood.setToolTipText("WOOD");
 		panelPicWood.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicWood, "cell 5 0,grow");
+		panelResources.add(panelPicWood, "cell 1 0,grow");
 		
 		lblStoreWood = new JLabel("0");
 		lblStoreWood.setFont(overview);
-		panelOverview.add(lblStoreWood, "cell 6 0,alignx center");
+		panelResources.add(lblStoreWood, "cell 2 0,alignx center");
 		
 		panelSpacer1 = new JPanel();
 		panelSpacer1.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer1, "cell 7 0,grow");
+		panelResources.add(panelSpacer1, "cell 3 0,grow");
 		
 		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
 		panelPicStone.setToolTipText("STONE");
 		panelPicStone.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicStone, "cell 8 0,grow");
+		panelResources.add(panelPicStone, "cell 4 0,grow");
 		
 		lblStoreStone = new JLabel("0");
 		lblStoreStone.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreStone, "cell 9 0,alignx center");
+		panelResources.add(lblStoreStone, "cell 5 0,alignx center");
 		
 		panelSpacer2 = new JPanel();
 		panelSpacer2.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer2, "cell 10 0,grow");
+		panelResources.add(panelSpacer2, "cell 6 0,grow");
 		
 		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
 		panelPicSteel.setToolTipText("STEEL");
 		panelPicSteel.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicSteel, "cell 11 0,grow");
+		panelResources.add(panelPicSteel, "cell 7 0,grow");
 		
 		lblStoreSteel = new JLabel("0");
 		lblStoreSteel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreSteel, "cell 12 0,alignx center");
+		panelResources.add(lblStoreSteel, "cell 8 0,alignx center");
 		
 		panelSpacer3 = new JPanel();
 		panelSpacer3.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer3, "cell 13 0,grow");
+		panelResources.add(panelSpacer3, "cell 9 0,grow");
 		
 		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
 		panelPicGlass.setToolTipText("GLASS");
 		panelPicGlass.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGlass, "cell 14 0,grow");
+		panelResources.add(panelPicGlass, "cell 10 0,grow");
 		
 		lblStoreGlass = new JLabel("0");
 		lblStoreGlass.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblStoreGlass, "cell 15 0,alignx center");
+		panelResources.add(lblStoreGlass, "cell 11 0,alignx center");
 		
 		panelSpacer4 = new JPanel();
 		panelSpacer4.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelSpacer4, "cell 16 0,grow");
+		panelResources.add(panelSpacer4, "cell 12 0,grow");
 		
 		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
 		panelPicGold.setToolTipText("GOLD");
 		panelPicGold.setBackground(new Color(102, 153, 153));
-		panelOverview.add(panelPicGold, "cell 17 0,grow");
+		panelResources.add(panelPicGold, "cell 13 0,grow");
 		
 		lblGold = new JLabel("10");
 		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelOverview.add(lblGold, "cell 18 0,alignx center");
+		panelResources.add(lblGold, "cell 14 0,alignx center");
+		
+		btnNextRes = new JButton(">");
+		btnNextRes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardTime);
+			}
+		});
+		panelResources.add(btnNextRes, "cell 15 0,alignx right,growy");
 		
 		panelGame.setTileSize(52);
 		panelGame.setBackground(new Color(153, 204, 204));
@@ -696,6 +766,15 @@ public class Game extends JFrame {
 		miniMapUpdate.start();
 		
 		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
+		
+		btnNextTime = new JButton(">");
+		btnNextTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardIndicators);
+			}
+		});
+		panelTime.add(btnNextTime, "cell 6 0,alignx right,growy");
+
 		clockwork = new Thread(cwGame);
 		clockwork.start();
 		

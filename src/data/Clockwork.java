@@ -77,7 +77,7 @@ public class Clockwork implements Runnable {
 	
 	public void displayTime()
 	{
-		strDays = new StringBuilder("D. " + String.valueOf(this.days));
+		strDays = new StringBuilder("Day " + String.valueOf(this.days));
 		strHours = new StringBuilder(String.valueOf(this.hours));
 		strMinutes = new StringBuilder(String.valueOf(this.minutes));
 		if (strHours.length() == 1)
