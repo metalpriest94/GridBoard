@@ -125,6 +125,8 @@ public class Game extends JFrame {
 	private int inhabs;
 	private int capacity;
 	
+	private double happiness;
+	
 	private final Font overview = new Font("Tahoma", Font.PLAIN, 24);
 	private JImgPanel panelPicStone;
 	private JImgPanel panelPicSteel;
@@ -155,6 +157,8 @@ public class Game extends JFrame {
 	private JButton btnNextTime;
 	private JButton btnBackRes;
 	private JButton btnNextRes;
+	private JLabel lblHappiness;
+	private JImgPanel panelPicHappiness;
 	/**
 	 * Launch the application.
 	 */
@@ -340,6 +344,15 @@ public class Game extends JFrame {
 				topBarCard.show(panelTopBar, cardResources);
 			}
 		});
+		
+		panelPicHappiness = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "happiness.png");
+		panelPicHappiness.setToolTipText("HAPPINESS");
+		panelPicHappiness.setBackground(new Color(102, 153, 153));
+		panelIndicators.add(panelPicHappiness, "cell 1 0,grow");
+		
+		lblHappiness = new JLabel("70");
+		lblHappiness.setFont(overview);
+		panelIndicators.add(lblHappiness, "cell 2 0");
 		panelIndicators.add(btnNextInd, "cell 15 0,alignx right,growy");
 		
 		btnBackTime = new JButton("<");
@@ -781,7 +794,7 @@ public class Game extends JFrame {
 		setUpBuildCard();
 		setUpStorage();
 		setUpLiving();
-
+		happiness = 70;
 		
 		caller.dispose();
 	}
@@ -1096,10 +1109,38 @@ public class Game extends JFrame {
 	}
 	
 	public void consumeGoods()
-	{
-		storeWater -= inhabs * 2;
-		storeVegetables -= inhabs * 2;
+	{				
+		if (storeWater / (inhabs * 2) >= 1)
+		{
+			happiness = happiness + 2;
+			storeWater -= inhabs * 2;
+		}
+		else
+		{
+			happiness = happiness - (5 * (1 - (storeWater / (inhabs * 2.0))));
+			storeWater = 0;
+		}
+		
+		if (storeVegetables / (inhabs * 2) >= 1)
+		{
+			happiness = happiness + 2;
+			storeVegetables -= inhabs * 2;
+		}
+		else
+		{
+			happiness = happiness - (5 * (1 - (storeVegetables / (inhabs * 2.0))));
+			storeVegetables = 0;
+		}
+
+		if (happiness > 100)
+			happiness = 100;
+		else if (happiness < 0)
+			happiness = 0;
+		Double happy = new Double(happiness);
+		lblHappiness.setText(String.valueOf(happy.intValue()));
 	}
+	
+	
 	
 	public void speedUp()
 	{
