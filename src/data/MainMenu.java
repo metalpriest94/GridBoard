@@ -198,12 +198,18 @@ public class MainMenu extends JFrame {
 			}
 		});
 		btnStart.setFont(menuFont);
+		btnStart.setEnabled(false);
 		panelNew.add(btnStart, "cell 1 0,grow");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		panelNew.add(scrollPane, "cell 0 1 2 1,grow");
 		
 		listMaps = new JList();
+		listMaps.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				btnStart.setEnabled(true);
+			}
+		});
 		listMaps.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		listMaps.setFont(menuFont);
 		scrollPane.setViewportView(listMaps);
