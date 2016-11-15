@@ -98,7 +98,7 @@ public class Clockwork implements Runnable {
 			{
 				for (int i = 0; i < TICKS_PER_SEC; i++)
 				{
-					Thread.sleep(((1000/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
+					Thread.sleep(((50/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
 					synchronized (this) 
 					{
 						forward(INTERVAL / TICKS_PER_SEC);

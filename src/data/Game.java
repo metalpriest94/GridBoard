@@ -159,6 +159,23 @@ public class Game extends JFrame {
 	private JButton btnNextRes;
 	private JLabel lblHappiness;
 	private JImgPanel panelPicHappiness;
+	private JScrollPane scrollPaneStorage;
+	private JPanel panelStorageItems;
+	private JPanel panelStorageSpacer;
+	private JImgPanel panelStorageWood;
+	private JLabel lblStorageWood;
+	private JImgPanel panelStorageStone;
+	private JLabel lblStorageStone;
+	private JImgPanel panelStorageSteel;
+	private JLabel lblStorageSteel;
+	private JImgPanel panelStorageGlass;
+	private JLabel lblStorageGlass;
+	private JImgPanel panelStorageWater;
+	private JLabel lblStorageWater;
+	private JImgPanel panelStorageVegetables;
+	private JLabel lblStorageVegetables;
+	private JImgPanel panelStorageGold;
+	private JLabel lblStorageGold;
 	/**
 	 * Launch the application.
 	 */
@@ -683,10 +700,65 @@ public class Game extends JFrame {
 		panelStorage = new JPanel();
 		panelStorage.setBackground(new Color(102, 153, 153));
 		panelTools.add(panelStorage, cardStorage);
-		panelStorage.setLayout(new MigLayout("", "[]", "[]"));
+		panelStorage.setLayout(new MigLayout("", "[grow,fill]", "[][grow]"));
 		
-		lblStorage = new JLabel("Storage");
-		panelStorage.add(lblStorage, "cell 0 0");
+		lblStorageStone = new JLabel("Storage");
+		panelStorage.add(lblStorageStone, "cell 0 0");
+		
+		scrollPaneStorage = new JScrollPane();
+		scrollPaneStorage.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelStorage.add(scrollPaneStorage, "cell 0 1,grow");
+		
+		panelStorageItems = new JPanel();
+		panelStorageItems.setBackground(new Color(102, 153, 153));
+		scrollPaneStorage.setViewportView(panelStorageItems);
+		panelStorageItems.setLayout(new MigLayout("", "[32px:n:32px][40px:n:40px,right][grow][32px:n:32px][40px:n:40px,right]", "[32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px,grow]"));
+		
+		panelStorageWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
+		panelStorageItems.add(panelStorageWood, "cell 0 0,grow");
+		
+		lblStorageWood = new JLabel("0");
+		panelStorageItems.add(lblStorageWood, "cell 1 0");
+		
+		panelStorageSpacer = new JPanel();
+		panelStorageSpacer.setBackground(new Color(102, 153, 153));
+		panelStorageItems.add(panelStorageSpacer, "cell 2 0 1 2,grow");
+		
+		panelStorageStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
+		panelStorageItems.add(panelStorageStone, "cell 3 0,grow");
+		
+		lblStorageStone = new JLabel("0");
+		panelStorageItems.add(lblStorageStone, "cell 4 0");
+		
+		panelStorageSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
+		panelStorageItems.add(panelStorageSteel, "cell 0 1,grow");
+		
+		lblStorageSteel = new JLabel("0");
+		panelStorageItems.add(lblStorageSteel, "cell 1 1");
+		
+		panelStorageGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
+		panelStorageItems.add(panelStorageGlass, "cell 3 1,grow");
+		
+		lblStorageGlass = new JLabel("0");
+		panelStorageItems.add(lblStorageGlass, "cell 4 1");
+		
+		panelStorageWater = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.jpg");
+		panelStorageItems.add(panelStorageWater, "cell 0 2,grow");
+		
+		lblStorageWater = new JLabel("0");
+		panelStorageItems.add(lblStorageWater, "cell 1 2");
+		
+		panelStorageVegetables = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.jpg");
+		panelStorageItems.add(panelStorageVegetables, "cell 3 2,grow");
+		
+		lblStorageVegetables = new JLabel("0");
+		panelStorageItems.add(lblStorageVegetables, "cell 4 2");
+		
+		panelStorageGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
+		panelStorageItems.add(panelStorageGold, "cell 0 3,grow");
+		
+		lblStorageGold = new JLabel("0");
+		panelStorageItems.add(lblStorageGold, "cell 1 3");
 		
 		panelQuit = new JPanel();
 		panelQuit.setBackground(new Color(102, 153, 153));
@@ -1053,17 +1125,26 @@ public class Game extends JFrame {
 	public void setUpStorage()
 	{
 		storeWood = 30;
-		lblStoreWood.setText(String.valueOf(storeWood));
 		storeStone = 10;
-		lblStoreStone.setText(String.valueOf(storeStone));
 		storeSteel = 10;
-		lblStoreSteel.setText(String.valueOf(storeSteel));
 		storeGlass = 10;
-		lblStoreGlass.setText(String.valueOf(storeGlass));
 		storeGold = 10;
-		lblGold.setText(String.valueOf(storeGold));
 		storeWater = 20;
 		storeVegetables = 20;
+
+		lblStorageWood.setText(String.valueOf(storeWood));
+		lblStorageStone.setText(String.valueOf(storeStone));
+		lblStorageSteel.setText(String.valueOf(storeSteel));
+		lblStorageGlass.setText(String.valueOf(storeGlass));
+		lblStorageGold.setText(String.valueOf(storeGold));
+		lblStorageWater.setText(String.valueOf(storeWater));
+		lblStorageVegetables.setText(String.valueOf(storeVegetables));
+		
+		lblStoreWood.setText(String.valueOf(storeWood));
+		lblStoreStone.setText(String.valueOf(storeStone));
+		lblStoreSteel.setText(String.valueOf(storeSteel));
+		lblStoreGlass.setText(String.valueOf(storeGlass));
+		lblGold.setText(String.valueOf(storeGold));
 	}
 	public void setUpLiving()
 	{
@@ -1138,6 +1219,8 @@ public class Game extends JFrame {
 			happiness = 0;
 		Double happy = new Double(happiness);
 		lblHappiness.setText(String.valueOf(happy.intValue()));
+		lblStorageWater.setText(String.valueOf(storeWater));
+		lblStorageVegetables.setText(String.valueOf(storeVegetables));
 	}
 	
 	
