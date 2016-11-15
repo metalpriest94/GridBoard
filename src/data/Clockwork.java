@@ -24,11 +24,7 @@ public class Clockwork implements Runnable {
 	}
 	
 	public int getContinousTime() {
-		return continousTime;
-	}
-
-	public void setContinousTime(int continousTime) {
-		this.continousTime = continousTime;
+		return this.continousTime;
 	}
 
 	public int getSpeed() {
@@ -47,11 +43,13 @@ public class Clockwork implements Runnable {
 		return INTERVAL;
 	}
 
-	public void setClock(int days, int hours, int minutes)
+	public void setClock(int continousTime)
 	{
-		this.days = days;
-		this.hours = hours;
-		this.minutes = minutes;
+		this.continousTime = continousTime;		
+		this.days = continousTime    / (TICKS_PER_SEC * (60/INTERVAL) * 24) + 1;
+		this.hours = (continousTime   % (TICKS_PER_SEC * (60/INTERVAL) * 24)) / (TICKS_PER_SEC * (60/INTERVAL));
+		this.minutes = continousTime % (TICKS_PER_SEC * (60/INTERVAL)) / TICKS_PER_SEC * INTERVAL;
+		displayTime();
 	}
 	
 	public int[] getClock()
@@ -98,7 +96,7 @@ public class Clockwork implements Runnable {
 			{
 				for (int i = 0; i < TICKS_PER_SEC; i++)
 				{
-					Thread.sleep(((50/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
+					Thread.sleep(((1000/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
 					synchronized (this) 
 					{
 						forward(INTERVAL / TICKS_PER_SEC);

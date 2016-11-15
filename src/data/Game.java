@@ -176,6 +176,39 @@ public class Game extends JFrame {
 	private JLabel lblStorageVegetables;
 	private JImgPanel panelStorageGold;
 	private JLabel lblStorageGold;
+	
+	
+	public GridIO getGioGame() {
+		return gioGame;
+	}
+
+
+	public GridScroller getGsGame() {
+		return gsGame;
+	}
+
+
+	public MiniMapUpdater getMmuGame() {
+		return mmuGame;
+	}
+
+	public Clockwork getCwGame() {
+		return cwGame;
+	}
+	
+	public ArrayList<Integer> getStorage()
+	{
+		ArrayList<Integer> storage = new ArrayList<Integer>();
+		storage.add(storeWood);
+		storage.add(storeStone);
+		storage.add(storeSteel);
+		storage.add(storeGlass);
+		storage.add(storeWater);
+		storage.add(storeVegetables);
+		storage.add(storeGold);
+		return storage;
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -379,6 +412,14 @@ public class Game extends JFrame {
 			}
 		});
 		panelTime.add(btnBackTime, "cell 0 0,alignx left,growy");
+		
+		btnNextTime = new JButton(">");
+		btnNextTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				topBarCard.show(panelTopBar, cardIndicators);
+			}
+		});
+		panelTime.add(btnNextTime, "cell 6 0,alignx right,growy");
 		
 		lblDay = new JLabel("Day 1");
 		lblDay.setFont(overview);
@@ -836,6 +877,7 @@ public class Game extends JFrame {
 		action.put("rightR", moveRightRelease);	
 		
 		panelGame.setDoubleBuffered(true);
+		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
 		if(isNewGame)
 			callMap(file, false);
 		else
@@ -850,31 +892,22 @@ public class Game extends JFrame {
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
-		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
-		
-		btnNextTime = new JButton(">");
-		btnNextTime.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				topBarCard.show(panelTopBar, cardIndicators);
-			}
-		});
-		panelTime.add(btnNextTime, "cell 6 0,alignx right,growy");
-
-		clockwork = new Thread(cwGame);
-		clockwork.start();
-		
 		setUpBuildCard();
-		setUpStorage();
+		if (isNewGame)
+			setUpStorage();
 		setUpLiving();
 		happiness = 70;
 		
 		caller.dispose();
+		
+		clockwork = new Thread(cwGame);
+		clockwork.start();
 	}
 	
 	public void callMap(String name, boolean isNewGame)
 	{
 
-		gioGame = new GridIO(panelGame, allTiles, allItems);
+		gioGame = new GridIO(panelGame, allTiles, allItems, this);
 		allTiles = gioGame.createTileList();
 		allItems = gioGame.createItemList(false);
 		constructableItems = gioGame.createItemList(true);
@@ -884,7 +917,7 @@ public class Game extends JFrame {
 	
 	public void designMiniMap(int detail, int scale)
 	{
-		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allItems);
+		GridIO gioMiniMap = new GridIO(panelMiniMap, allTiles, allItems, this);
 		gioMiniMap.newMap(panelGame.getTilesX()/detail, panelGame.getTilesY()/detail);
 		if (panelGame.getTilesX() >= panelGame.getTilesY())
 		{
@@ -1122,6 +1155,20 @@ public class Game extends JFrame {
 		}
 		panelGame.repaint();
 	}	
+	
+	public void setUpStorage(int[] storage)
+	{
+		storeWood = storage[0];
+		storeStone = storage[1];
+		storeSteel = storage[2];
+		storeGlass = storage[3];
+		storeWater = storage[4];
+		storeVegetables = storage[5];
+		storeGold = storage[6];
+		
+		displayStorage();
+	}
+	
 	public void setUpStorage()
 	{
 		storeWood = 30;
@@ -1131,7 +1178,12 @@ public class Game extends JFrame {
 		storeGold = 10;
 		storeWater = 20;
 		storeVegetables = 20;
-
+		
+		displayStorage();
+	}
+	
+	public void displayStorage()
+	{
 		lblStorageWood.setText(String.valueOf(storeWood));
 		lblStorageStone.setText(String.valueOf(storeStone));
 		lblStorageSteel.setText(String.valueOf(storeSteel));
@@ -1145,6 +1197,7 @@ public class Game extends JFrame {
 		lblStoreSteel.setText(String.valueOf(storeSteel));
 		lblStoreGlass.setText(String.valueOf(storeGlass));
 		lblGold.setText(String.valueOf(storeGold));
+		
 	}
 	public void setUpLiving()
 	{

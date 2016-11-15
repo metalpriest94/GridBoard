@@ -18,6 +18,8 @@ public class GridIO{
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
+	
+	private Game game;
 	private final String mapDataSeparator = "---";
 	
 	//Variables required by load() and readMap(isLastLine)
@@ -26,6 +28,14 @@ public class GridIO{
 	private int lastY, nextY;
 
 	private ArrayList<Item> constructableItems;
+	
+	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems, Game caller)
+	{
+		panelMap = jgridpanel;
+		allTiles = listmaptiles;
+		allItems = listitems;
+		game = caller;
+	}
 	
 	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems)
 	{
@@ -74,6 +84,14 @@ public class GridIO{
 				fileWrite.newLine();
 				fileWrite.write(panelMap.getVisibleCornerX() + "/" + panelMap.getVisibleCornerY());
 				fileWrite.newLine();
+				fileWrite.write(String.valueOf(game.getCwGame().getContinousTime()));
+				fileWrite.newLine();
+				ArrayList<Integer> storage = game.getStorage();
+				for (int i = 0; i < storage.size(); i++)
+				{
+					fileWrite.write(storage.get(i) + "/");
+				}
+				fileWrite.newLine();
 			}
 		}
 		catch (IOException ex)
@@ -117,10 +135,23 @@ public class GridIO{
 					readMap(false); //is not the last line of map-File
 				}
 				readMap(true); //is the last line of map-File
-				nextLineContent = fileRead.readLine(); //Line after mapDataSeparator ("---")
+				nextLineContent = fileRead.readLine(); //gets visible area
 				nextSplitData = nextLineContent.split("/");
 				panelMap.setVisibleCornerX(Integer.parseInt(nextSplitData[0]));
 				panelMap.setVisibleCornerY(Integer.parseInt(nextSplitData[1]));
+				
+				nextLineContent = fileRead.readLine(); //gets in-game time
+				game.getCwGame().setClock(Integer.parseInt(nextLineContent));
+				
+				nextLineContent = fileRead.readLine(); //gets storage area
+				nextSplitData = nextLineContent.split("/");
+				int[] storage = new int[nextSplitData.length];
+				for(int i = 0; i < storage.length; i++)
+				{
+					storage[i] = Integer.parseInt(nextSplitData[i]);
+				}
+				game.setUpStorage(storage);
+				
 				panelMap.repaint();
 			}
 			else
