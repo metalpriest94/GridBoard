@@ -13,9 +13,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,12 +30,19 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
 	
-	private final Font menuFont = new Font("Tahoma", Font.BOLD, 30);
+	private final String basicFont = "Tahoma";
+	private final Font menuFont = new Font(basicFont, Font.BOLD, 30);
+	private final Font subFont = new Font(basicFont, Font.BOLD, 24);
+	private final Font optionFont = new Font(basicFont, Font.PLAIN, 24);;
+	private final Color basicBackground = new Color(153, 204, 204);
+	
 	private DefaultListModel<String> modelSavs = new DefaultListModel<String>();
 	private DefaultListModel<String> modelMaps = new DefaultListModel<String>();
 	
@@ -42,8 +51,15 @@ public class MainMenu extends JFrame {
 	private final String cardNew = "new";
 	private final String cardLoad = "load";
 	private final String cardLoadingScreen = "loading";
+	private final String cardSettings = "settings";
 	private JList<String> listSavs;
 	private JList<String> listMaps;
+	private final ButtonGroup radioButtonsWindowMode = new ButtonGroup();
+	private final ButtonGroup radioButtonsMusic = new ButtonGroup();
+	private JRadioButton rdbtnFullscreen;
+	private JRadioButton rdbtnWindow;
+	private JRadioButton rdbtnMusicOn;
+	private JRadioButton rdbtnMusicOff;
 
 	/**
 	 * Launch the application.
@@ -54,7 +70,7 @@ public class MainMenu extends JFrame {
 				try {
 					MainMenu frame = new MainMenu();
 					frame.setVisible(true);
-					frame.setExtendedState(MAXIMIZED_BOTH);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,17 +83,19 @@ public class MainMenu extends JFrame {
 	 */
 	public MainMenu() {
 		setUndecorated(true);
+		setExtendedState(MAXIMIZED_BOTH);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(153, 204, 204));
+		contentPane.setBackground(new Color(102, 153, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		menuCards = ((CardLayout)contentPane.getLayout());
 		
 		JPanel panelMain =  new JPanel();
-		panelMain.setBackground(new Color(153, 204, 204));
+		panelMain.setBackground(basicBackground);
 		contentPane.add(panelMain, cardMain);
 		panelMain.setLayout(new MigLayout("", "[117px,grow]", "[45px,grow][96px:n:96px][96px:n:96px][96px:n:96px][96px:n:96px]"));
 		
@@ -102,13 +120,14 @@ public class MainMenu extends JFrame {
 		});
 		btnLoadGame.setFont(menuFont);
 		
-		JButton btnOptions = new JButton("Options (coming soon)");
-		panelMain.add(btnOptions, "cell 0 3,grow");
-		btnOptions.addActionListener(new ActionListener() {
+		JButton btnSettings = new JButton("Settings");
+		panelMain.add(btnSettings, "cell 0 3,grow");
+		btnSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuCards.show(contentPane, cardSettings);
 			}
 		});
-		btnOptions.setFont(menuFont);
+		btnSettings.setFont(menuFont);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -121,7 +140,7 @@ public class MainMenu extends JFrame {
 
 		
 		JPanel panelLoad = new JPanel();
-		panelLoad.setBackground(new Color(153, 204, 204));
+		panelLoad.setBackground(basicBackground);
 		contentPane.add(panelLoad, cardLoad);
 		panelLoad.setLayout(new MigLayout("", "[][117px,grow][]", "[96px:n:96px][45px,grow]"));
 		
@@ -177,7 +196,7 @@ public class MainMenu extends JFrame {
 		panelLoadingScreen.add(lblLoadingScreen, "cell 0 0,alignx center,aligny center");
 		
 		JPanel panelNew = new JPanel();
-		panelNew.setBackground(new Color(153, 204, 204));
+		panelNew.setBackground(basicBackground);
 		contentPane.add(panelNew, cardNew);
 		panelNew.setLayout(new MigLayout("", "[][grow,fill]", "[96px:n:96px][grow]"));
 		
@@ -215,6 +234,80 @@ public class MainMenu extends JFrame {
 		scrollPane.setViewportView(listMaps);
 		listMaps.setModel(modelMaps);
 		
+		JPanel panelSettings = new JPanel();
+		panelSettings.setBackground(basicBackground);
+		contentPane.add(panelSettings, cardSettings);
+		panelSettings.setLayout(new MigLayout("", "[][24px:n:24px,fill][120px:n:120px][120px:n:120px,grow][120px:n:120px][120px:n:120px][120px:n:120px][grow]", "[96px:n:96px][][][][][]"));
+		
+		JButton btnBackSettings = new JButton("<--");
+		btnBackSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuCards.show(contentPane, cardMain);
+				readSettings();
+			}
+		});
+		btnBackSettings.setFont(menuFont);
+		panelSettings.add(btnBackSettings, "cell 0 0,growy");
+		
+		JButton btnApplySettings = new JButton("Apply Settings");
+		btnApplySettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				applySettings();
+			}
+		});
+		btnApplySettings.setFont(menuFont);
+		panelSettings.add(btnApplySettings, "cell 1 0 7 1,growy");
+		
+		JLabel lblVideo = new JLabel("Video");
+		lblVideo.setFont(menuFont);
+		panelSettings.add(lblVideo, "cell 0 1 3 1");
+		
+		JLabel lblAudio = new JLabel("Audio");
+		lblAudio.setFont(menuFont);
+		panelSettings.add(lblAudio, "cell 3 1 2 1");
+		
+		JLabel lblGameplay = new JLabel("Gameplay");
+		lblGameplay.setFont(menuFont);
+		panelSettings.add(lblGameplay, "cell 5 1 2 1");
+		
+		JLabel lblWindowMode = new JLabel("Window Mode");
+		lblWindowMode.setFont(subFont);
+		panelSettings.add(lblWindowMode, "cell 0 2 3 1");
+		
+		JLabel lblMusic = new JLabel("Music");
+		lblMusic.setFont(subFont);
+		panelSettings.add(lblMusic, "cell 3 2 2 1");
+		
+		rdbtnFullscreen = new JRadioButton("Fullscreen");
+		rdbtnFullscreen.setSelected(true);
+		rdbtnFullscreen.setBackground(basicBackground);
+		rdbtnFullscreen.setFont(optionFont);
+		radioButtonsWindowMode.add(rdbtnFullscreen);
+		panelSettings.add(rdbtnFullscreen, "cell 0 3 3 1");
+		
+		rdbtnMusicOn = new JRadioButton("On");
+		rdbtnMusicOn.setSelected(true);
+		rdbtnMusicOn.setBackground(basicBackground);
+		radioButtonsMusic.add(rdbtnMusicOn);
+		rdbtnMusicOn.setFont(optionFont);
+		panelSettings.add(rdbtnMusicOn, "cell 3 3 2 1");
+		
+		rdbtnWindow = new JRadioButton("Window");
+		rdbtnWindow.setBackground(basicBackground);
+		rdbtnWindow.setFont(optionFont);
+		radioButtonsWindowMode.add(rdbtnWindow);
+		panelSettings.add(rdbtnWindow, "cell 0 4 3 1");
+		
+		rdbtnMusicOff = new JRadioButton("Off");
+		rdbtnMusicOff.setBackground(basicBackground);
+		radioButtonsMusic.add(rdbtnMusicOff);
+		rdbtnMusicOff.setFont(optionFont);
+		panelSettings.add(rdbtnMusicOff, "cell 3 4 2 1");
+		
+		JLabel lblMoreComingSoon = new JLabel("more coming soon...");
+		panelSettings.add(lblMoreComingSoon, "cell 0 5 3 1");
+		
+		readSettings();
 		findSavs();
 		findMaps();
 	}
@@ -265,5 +358,104 @@ public class MainMenu extends JFrame {
 	public void load()
 	{
 		Game.main(false, listSavs.getSelectedValue().toString(), this);
+	}
+	
+	public void applySettings()
+	{
+		BufferedWriter configWrite = null;
+		try
+		{
+			configWrite = new BufferedWriter(new FileWriter("src" + File.separator + "config" + File.separator + "settings.config"));
+			{//VideoSettings
+				if (rdbtnFullscreen.isSelected())
+					setExtendedState(MAXIMIZED_BOTH);
+				else
+					setExtendedState(NORMAL);
+				configWrite.write(String.valueOf(rdbtnFullscreen.isSelected()));
+				configWrite.newLine();
+			}
+			
+			{//AudioSettings
+				configWrite.write(String.valueOf(rdbtnMusicOn.isSelected()));
+			}
+			
+			{//GameplaySettings
+				
+			}
+		}
+		catch (IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "Critical Exception: Cannot save settings!");
+		}
+		finally
+		{
+			try
+			{
+				if (configWrite != null)
+				{
+					configWrite.close();
+				}
+			}
+			catch(IOException ex)
+			{
+				JOptionPane.showMessageDialog(null, "Critical Exception: Cannot save settings!");
+			}
+		}	
+	}
+	public void readSettings()
+	{
+		BufferedReader configRead = null;
+		String data = null;
+		try
+		{
+			{//VideoSettings
+				configRead = new BufferedReader(new FileReader("src" + File.separator + "config" + File.separator + "settings.config"));
+				data = configRead.readLine();
+				if (Boolean.parseBoolean(data))
+				{
+					setExtendedState(MAXIMIZED_BOTH);
+					rdbtnFullscreen.setSelected(true);
+				}
+				else
+				{
+					setExtendedState(NORMAL);
+					rdbtnWindow.setSelected(true);
+				}
+			}
+			
+			{//AudioSettings
+				data = configRead.readLine();
+				if (Boolean.parseBoolean(data))
+				{
+					rdbtnMusicOn.setSelected(true);
+				}
+				else
+				{
+					rdbtnMusicOff.setSelected(true);
+				}
+			}
+			
+			{//GameplaySettings
+				
+			}
+		}
+		catch (IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "Critical Exception: Cannot read settings!");
+		}
+		finally
+		{
+			try
+			{
+				if (configRead != null)
+				{
+					configRead.close();
+				}
+			}
+			catch(IOException ex)
+			{
+				JOptionPane.showMessageDialog(null, "Critical Exception: Cannot read settings!");
+			}
+		}	
 	}
 }

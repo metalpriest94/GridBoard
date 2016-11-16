@@ -218,7 +218,6 @@ public class Game extends JFrame {
 				try {
 					Game frame = new Game(isNewGame, file, caller);
 					frame.setVisible(true);
-					frame.setExtendedState(MAXIMIZED_BOTH);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -877,6 +876,8 @@ public class Game extends JFrame {
 		action.put("rightR", moveRightRelease);	
 		
 		panelGame.setDoubleBuffered(true);
+		readSettings();
+		
 		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
 		if(isNewGame)
 			callMap(file, false);
@@ -1312,6 +1313,57 @@ public class Game extends JFrame {
 				cwGame.setSpeed(cwGame.getSpeed() - 1);
 		}
 		btnSpeed.setText(cwGame.getSpeed() + "x");
+	}
+	
+	public void readSettings()
+	{
+		BufferedReader configRead = null;
+		String data = null;
+		try
+		{
+			{//VideoSettings
+				configRead = new BufferedReader(new FileReader("src" + File.separator + "config" + File.separator + "settings.config"));
+				data = configRead.readLine();
+				if (Boolean.parseBoolean(data))
+					setExtendedState(MAXIMIZED_BOTH);
+				else
+					setExtendedState(NORMAL);
+			}
+			
+			{//AudioSettings
+				data = configRead.readLine();
+				if (Boolean.parseBoolean(data))
+				{
+
+				}
+				else
+				{
+
+				}
+			}
+			
+			{//GameplaySettings
+				
+			}
+		}
+		catch (IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "Critical Exception: Cannot read settings!");
+		}
+		finally
+		{
+			try
+			{
+				if (configRead != null)
+				{
+					configRead.close();
+				}
+			}
+			catch(IOException ex)
+			{
+				JOptionPane.showMessageDialog(null, "Critical Exception: Cannot read settings!");
+			}
+		}	
 	}
 }
 
