@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 
 public class MiniMapUpdater implements Runnable {
 	private JGridPanel affected, info;
+	private int itemColor = (255*256*256) + (191*256) + (31);
 	public MiniMapUpdater(JGridPanel miniMap, JGridPanel wholeMap)
 	{
 		affected = miniMap;
@@ -47,6 +48,17 @@ public class MiniMapUpdater implements Runnable {
 			lowerRightY = affected.getHeight();
 		affected.setPosX(lowerRightX);
 		affected.setPosY(lowerRightY);
+		
+		for(int x=0; x < info.getTilesX();x++)
+		{
+			for(int y=0; y < info.getTilesY();y++)
+			{
+				if(info.getMapping()[x][y][4] !=0)
+				{
+					affected.getMapping()[x][y][0] = itemColor;
+				}
+			}
+		}
 	}
 	
 	public void clickMiniMap(MouseEvent e)
@@ -66,5 +78,9 @@ public class MiniMapUpdater implements Runnable {
 
 		info.setVisibleCornerX(targetX);
 		info.setVisibleCornerY(targetY);
+	}
+	public void changeItemColor(int r, int g, int b)
+	{
+		itemColor = (r*256*256) + (g*256) + (b);
 	}
 }
