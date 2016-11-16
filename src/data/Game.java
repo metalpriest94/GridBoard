@@ -1222,11 +1222,12 @@ public class Game extends JFrame {
 		final int percentageBaseNewInhab = 4;
 		final int ticksPerDayInGame = cwGame.getTICKSPERSEC() * (60/cwGame.getINTERVAL()) * 24;
 		final int timeToConsume = 1700; //equals 17:00
+		final int timeToCheckLiving = 600;
 		{
 			int randomNewInhab = r.nextInt();
 			if (randomNewInhab < 0)
 				randomNewInhab *= -1;
-			int limit = 10000;
+			int limit = 10000;			//determines likeliness of an inhab being born
 			if (inhabs >= capacity)
 				limit *= 10;
 			int required = limit - (percentageBaseNewInhab * inhabs/2);
@@ -1238,7 +1239,9 @@ public class Game extends JFrame {
 		}
 		{
 			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToConsume / 2400)
-					consumeGoods();
+				consumeGoods();
+			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToCheckLiving / 2400)
+				checkHousingSpace();
 		}
 	}
 	
@@ -1251,7 +1254,7 @@ public class Game extends JFrame {
 		}
 		else
 		{
-			happiness = happiness - (5 * (1 - (storeWater / (inhabs * 2.0))));
+			happiness = happiness + 2 - (5 * (1 - (storeWater / (inhabs * 2.0))));
 			storeWater = 0;
 		}
 		
@@ -1262,7 +1265,7 @@ public class Game extends JFrame {
 		}
 		else
 		{
-			happiness = happiness - (5 * (1 - (storeVegetables / (inhabs * 2.0))));
+			happiness = happiness + 2 - (5 * (1 - (storeVegetables / (inhabs * 2.0))));
 			storeVegetables = 0;
 		}
 
@@ -1276,6 +1279,19 @@ public class Game extends JFrame {
 		lblStorageVegetables.setText(String.valueOf(storeVegetables));
 	}
 	
+	public void checkHousingSpace()
+	{
+		if(inhabs > capacity)
+		{
+			happiness = happiness + 2 - (20 * (1 - (storeVegetables / (inhabs * 2.0))));
+		}
+		else
+		{
+			happiness = happiness + 2;
+		}
+		Double happy = new Double(happiness);
+		lblHappiness.setText(String.valueOf(happy.intValue()));
+	}
 	
 	
 	public void speedUp()
