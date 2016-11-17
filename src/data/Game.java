@@ -297,6 +297,54 @@ public class Game extends JFrame {
 				gsGame.setKeyRight(false);
 			}
 		};
+
+		AbstractAction keyE = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				topBarCard.show(panelTopBar, cardIndicators);
+			}
+		};
+		
+		AbstractAction keyR = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				topBarCard.show(panelTopBar, cardResources);
+			}
+		};
+		
+		AbstractAction keyT = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				topBarCard.show(panelTopBar, cardTime);
+			}
+		};
+		
+		AbstractAction keyY = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				toggleBuild();
+			}
+		};
+		
+		AbstractAction keyX = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				toggleInfo();
+			}
+		};
+		
+		AbstractAction keyC = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				toggleStats();
+			}
+		};
 		
 		AbstractAction plus = new AbstractAction(){
 			@Override
@@ -312,7 +360,7 @@ public class Game extends JFrame {
 			{
 				speedDown();
 			}
-		};
+		};		
 		
 		AbstractAction escape = new AbstractAction(){
 			@Override
@@ -646,12 +694,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnBuild, "cell 0 0,growx");
 		tglbtnBuild.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, cardBuild);
-				tglbtnBuild.setSelected(true);
-				tglbtnInfo.setSelected(false);
-				tglbtnStats.setSelected(false);
-				activeCard = cardBuild;
-
+				toggleBuild();
 			}
 		});
 		tglbtnBuild.setSelected(true);
@@ -660,11 +703,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnInfo, "cell 1 0,growx");
 		tglbtnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, cardInfo);
-				tglbtnBuild.setSelected(false);
-				tglbtnInfo.setSelected(true);
-				tglbtnStats.setSelected(false);
-				activeCard = cardInfo;
+				toggleInfo();
 			}
 		});
 		
@@ -672,11 +711,7 @@ public class Game extends JFrame {
 		panelToolSelection.add(tglbtnStats, "cell 2 0,growx");
 		tglbtnStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toolsCard.show(panelTools, cardStats);
-				tglbtnBuild.setSelected(false);
-				tglbtnInfo.setSelected(false);
-				tglbtnStats.setSelected(true);
-				activeCard = cardStats;
+				toggleStats();
 			}
 		});
 		
@@ -860,32 +895,60 @@ public class Game extends JFrame {
 		ActionMap action = panelGame.getActionMap();
 		
 	
-		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");		
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "up_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "down_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "left");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "left_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "right");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "right_alt");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "globals");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), "resources");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0), "time");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, 0), "build");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0), "info");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "stats");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, 0), "plus");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, 0), "minus");
 		
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "upR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "upR_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "downR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "downR_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "leftR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "leftR_alt");
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "rightR");
+		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "rightR_alt");
 		
 		
 		action.put("up", moveUp);
+		action.put("up_alt", moveUp);
 		action.put("down", moveDown);
+		action.put("down_alt", moveDown);
 		action.put("left", moveLeft);
+		action.put("left_alt", moveLeft);
 		action.put("right", moveRight);
+		action.put("right_alt", moveRight);
+		action.put("globals", keyE);
+		action.put("resources", keyR);
+		action.put("time", keyT);
+		action.put("build", keyY);
+		action.put("info", keyX);
+		action.put("stats", keyC);
 		action.put("plus", plus);
 		action.put("minus", minus);
 		action.put("escape", escape);
 		
 		action.put("upR", moveUpRelease);
+		action.put("upR_alt", moveUpRelease);
 		action.put("downR", moveDownRelease);
+		action.put("downR_alt", moveDownRelease);
 		action.put("leftR", moveLeftRelease);
+		action.put("leftR_alt", moveLeftRelease);
 		action.put("rightR", moveRightRelease);	
+		action.put("rightR_alt", moveRightRelease);	
 		readSettings();
 		
 		panelGame.setDoubleBuffered(true);
@@ -1375,5 +1438,32 @@ public class Game extends JFrame {
 				JOptionPane.showMessageDialog(null, "Critical Exception: Cannot read settings!");
 			}
 		}	
+	}
+	
+	public void toggleBuild()
+	{
+		toolsCard.show(panelTools, cardBuild);
+		tglbtnBuild.setSelected(true);
+		tglbtnInfo.setSelected(false);
+		tglbtnStats.setSelected(false);
+		activeCard = cardBuild;
+	}
+	
+	public void toggleInfo()
+	{
+		toolsCard.show(panelTools, cardInfo);
+		tglbtnBuild.setSelected(false);
+		tglbtnInfo.setSelected(true);
+		tglbtnStats.setSelected(false);
+		activeCard = cardInfo;
+	}
+	
+	public void toggleStats()
+	{
+		toolsCard.show(panelTools, cardStats);
+		tglbtnBuild.setSelected(false);
+		tglbtnInfo.setSelected(false);
+		tglbtnStats.setSelected(true);
+		activeCard = cardStats;
 	}
 }
