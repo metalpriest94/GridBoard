@@ -94,6 +94,8 @@ public class Game extends JFrame {
 	
 	private CardLayout toolsCard;
 	private CardLayout topBarCard;
+	private final String cardGame 	 = "cardGame" ;
+	private final String cardResearch= "cardResearch";
 	private final String cardBuild 	 = "cardBuild" ;
 	private final String cardInfo	 = "cardInfo";
 	private final String cardStats 	 = "cardStats";
@@ -177,6 +179,7 @@ public class Game extends JFrame {
 	private JImgPanel panelStorageGold;
 	private JLabel lblStorageGold;
 	private JPanel panelMain;
+	private JPanel panelResearch;
 	
 	
 	public GridIO getGioGame() {
@@ -353,7 +356,7 @@ public class Game extends JFrame {
 		panelMain.setLayout(new CardLayout(0, 0));
 		
 		panelGame = new JGridPanel(4,4,16);
-		panelMain.add(panelGame, "name_2310428232176");
+		panelMain.add(panelGame, cardGame);
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
@@ -439,6 +442,11 @@ public class Game extends JFrame {
 		});
 		panelGame.setShowGrid(false);
 		
+		panelResearch = new JPanel();
+		panelResearch.setBackground(new Color(153, 204, 204));
+		panelMain.add(panelResearch, cardResearch);
+		panelResearch.setLayout(new MigLayout("", "[]", "[]"));
+		
 		panelTopBar = new JPanel();
 		panelTopBar.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelTopBar, "cell 0 0,grow");
@@ -447,13 +455,13 @@ public class Game extends JFrame {
 		
 		panelResources = new JPanel();
 		panelResources.setBackground(new Color(102, 153, 153));
-		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][][48px:n:48px,right][grow]", "[grow,center]"));
+		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
 		panelTopBar.add(panelResources, cardResources);
 		
 		panelTime = new JPanel();
 		panelTime.setBackground(new Color(102, 153, 153));
 		panelTopBar.add(panelTime, cardTime);
-		panelTime.setLayout(new MigLayout("", "[40px:n:40px][48px:n:196px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
+		panelTime.setLayout(new MigLayout("", "[40px:n:40px][48px:n:196px][48px:n:48px,right][12px:n:12px,center][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
 		
 		panelIndicators = new JPanel();
 		panelIndicators.setBackground(new Color(102, 153, 153));
@@ -602,7 +610,7 @@ public class Game extends JFrame {
 		
 		lblGold = new JLabel("10");
 		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelResources.add(lblGold, "cell 15 0,alignx center");
+		panelResources.add(lblGold, "cell 14 0,alignx center");
 		
 		btnNextRes = new JButton(">");
 		btnNextRes.addActionListener(new ActionListener() {
@@ -610,7 +618,7 @@ public class Game extends JFrame {
 				topBarCard.show(panelTopBar, cardTime);
 			}
 		});
-		panelResources.add(btnNextRes, "cell 16 0,alignx right,growy");
+		panelResources.add(btnNextRes, "cell 15 0,alignx right,growy");
 		
 		panelMiniMap = new JGridPanel(panelGame.getTilesX()/4, panelGame.getTilesY()/4, 1);
 		panelMiniMap.addMouseMotionListener(new MouseMotionAdapter() {
@@ -628,10 +636,6 @@ public class Game extends JFrame {
 				mmuGame.clickMiniMap(e);
 			}
 		});
-		
-		
-		
-		
 		
 		panelToolSelection = new JPanel();
 		panelToolSelection.setBackground(new Color(102, 153, 153));
@@ -1373,4 +1377,3 @@ public class Game extends JFrame {
 		}	
 	}
 }
-
