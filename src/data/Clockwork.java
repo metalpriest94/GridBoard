@@ -48,7 +48,7 @@ public class Clockwork implements Runnable {
 		this.continousTime = continousTime;		
 		this.days = continousTime    / (TICKS_PER_SEC * (60/INTERVAL) * 24) + 1;
 		this.hours = (continousTime   % (TICKS_PER_SEC * (60/INTERVAL) * 24)) / (TICKS_PER_SEC * (60/INTERVAL));
-		this.minutes = continousTime % (TICKS_PER_SEC * (60/INTERVAL)) / TICKS_PER_SEC * INTERVAL;
+		this.minutes = continousTime % (TICKS_PER_SEC * (60/INTERVAL)) * (INTERVAL / TICKS_PER_SEC) ;
 		displayTime();
 	}
 	
@@ -77,7 +77,7 @@ public class Clockwork implements Runnable {
 	{
 		strDays = new StringBuilder("Day " + String.valueOf(this.days));
 		strHours = new StringBuilder(String.valueOf(this.hours));
-		strMinutes = new StringBuilder(String.valueOf(this.minutes));
+		strMinutes = new StringBuilder(String.valueOf(this.minutes / 15 * 15));
 		if (strHours.length() == 1)
 			strHours.insert(0, 0);
 		if (strMinutes.length() == 1)
@@ -94,7 +94,7 @@ public class Clockwork implements Runnable {
 		{
 			try
 			{
-				for (int i = 0; i < TICKS_PER_SEC; i++)
+				for (int i = continousTime%5; i < TICKS_PER_SEC; i++)
 				{
 					Thread.sleep(((1000/ speed) / TICKS_PER_SEC) * HOUR_DURATION / (60 / INTERVAL));
 					synchronized (this) 

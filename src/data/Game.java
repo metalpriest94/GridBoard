@@ -181,6 +181,8 @@ public class Game extends JFrame {
 	private JPanel panelMain;
 	private JPanel panelResearch;
 	
+	private String saveFile;
+	
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -372,7 +374,7 @@ public class Game extends JFrame {
 					showExitMenu();
 			}
 		};
-		
+		saveFile = file;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1096, 621);
 		contentPane = new JPanel();
@@ -867,7 +869,7 @@ public class Game extends JFrame {
 					gsGame.zoomOut(panelGame.getWidth() / 2, panelGame.getHeight() / 2);
 				while (gsGame.getZoomLevel() < gsGame.baseZoomLevel)
 					gsGame.zoomIn(panelGame.getWidth() / 2, panelGame.getHeight() / 2);
-				gioGame.save("test", true);
+				gioGame.save(saveFile, true);
 				dispose();
 				MainMenu.main(null);
 			}
