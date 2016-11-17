@@ -176,6 +176,7 @@ public class Game extends JFrame {
 	private JLabel lblStorageVegetables;
 	private JImgPanel panelStorageGold;
 	private JLabel lblStorageGold;
+	private JPanel panelMain;
 	
 	
 	public GridIO getGioGame() {
@@ -347,7 +348,12 @@ public class Game extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256]", "[][256:n:256,grow][][361.00,grow]"));
 		
+		panelMain = new JPanel();
+		contentPane.add(panelMain, "cell 0 1 1 3,grow");
+		panelMain.setLayout(new CardLayout(0, 0));
+		
 		panelGame = new JGridPanel(4,4,16);
+		panelMain.add(panelGame, "name_2310428232176");
 		FlowLayout flowLayout_1 = (FlowLayout) panelGame.getLayout();
 		panelGame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
@@ -358,6 +364,81 @@ public class Game extends JFrame {
 			}
 		});
 		
+		panelGame.setTileSize(52);
+		panelGame.setBackground(new Color(153, 204, 204));
+		panelGame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int startX = panelGame.getCornerDragX() / panelGame.getTileSize() + panelGame.getVisibleCornerX() -1;
+				int startY = panelGame.getCornerDragY() / panelGame.getTileSize() + panelGame.getVisibleCornerY() -1;
+				
+				if(panelGame.isDragged())
+				{
+					for(int x = startX; x < startX + panelGame.getDraggedTilesX(); x++)
+					{
+						for(int y = startY; y < startY + panelGame.getDraggedTilesY(); y++)
+						{
+
+						}
+					}
+					panelGame.setDragged(false);
+				}
+				else
+				{
+
+				}
+				
+				if(activeCard.equals(cardBuild))
+				{
+					constructBuilding(panelSelectItem.getMapping()[panelSelectItem.getCurrentX()][panelSelectItem.getCurrentY()][1]);
+				}
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				panelGame.setStartDragX(panelGame.getPosX());
+				panelGame.setStartDragY(panelGame.getPosY()); 
+			}
+		});
+		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				String tile = null, item = null;
+				panelGame.setDragged(false);
+				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
+				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
+				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
+				for (MapTile each:allTiles)
+				{
+					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][1])
+					{
+						tile = each.getName().substring(4);
+						break;
+					}
+		
+				}
+				for (Item each:allItems)
+				{
+					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][4])
+					{
+						item = each.getName();
+						break;
+					}
+		
+				}
+				lblTilename.setText(tile);
+				lblItemname.setText(item);
+			}
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				panelGame.setDragged(true);
+				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
+				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
+				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
+				repaint();
+			}
+		});
+		panelGame.setShowGrid(false);
+		
 		panelTopBar = new JPanel();
 		panelTopBar.setBackground(new Color(102, 153, 153));
 		contentPane.add(panelTopBar, "cell 0 0,grow");
@@ -366,7 +447,7 @@ public class Game extends JFrame {
 		
 		panelResources = new JPanel();
 		panelResources.setBackground(new Color(102, 153, 153));
-		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
+		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][][48px:n:48px,right][grow]", "[grow,center]"));
 		panelTopBar.add(panelResources, cardResources);
 		
 		panelTime = new JPanel();
@@ -521,7 +602,7 @@ public class Game extends JFrame {
 		
 		lblGold = new JLabel("10");
 		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelResources.add(lblGold, "cell 14 0,alignx center");
+		panelResources.add(lblGold, "cell 15 0,alignx center");
 		
 		btnNextRes = new JButton(">");
 		btnNextRes.addActionListener(new ActionListener() {
@@ -529,83 +610,7 @@ public class Game extends JFrame {
 				topBarCard.show(panelTopBar, cardTime);
 			}
 		});
-		panelResources.add(btnNextRes, "cell 15 0,alignx right,growy");
-		
-		panelGame.setTileSize(52);
-		panelGame.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelGame, "cell 0 1 1 3,grow");
-		panelGame.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				int startX = panelGame.getCornerDragX() / panelGame.getTileSize() + panelGame.getVisibleCornerX() -1;
-				int startY = panelGame.getCornerDragY() / panelGame.getTileSize() + panelGame.getVisibleCornerY() -1;
-				
-				if(panelGame.isDragged())
-				{
-					for(int x = startX; x < startX + panelGame.getDraggedTilesX(); x++)
-					{
-						for(int y = startY; y < startY + panelGame.getDraggedTilesY(); y++)
-						{
-
-						}
-					}
-					panelGame.setDragged(false);
-				}
-				else
-				{
-
-				}
-				
-				if(activeCard.equals(cardBuild))
-				{
-					constructBuilding(panelSelectItem.getMapping()[panelSelectItem.getCurrentX()][panelSelectItem.getCurrentY()][1]);
-				}
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				panelGame.setStartDragX(panelGame.getPosX());
-				panelGame.setStartDragY(panelGame.getPosY()); 
-			}
-		});
-		panelGame.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				String tile = null, item = null;
-				panelGame.setDragged(false);
-				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
-				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
-				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
-				for (MapTile each:allTiles)
-				{
-					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][1])
-					{
-						tile = each.getName().substring(4);
-						break;
-					}
-		
-				}
-				for (Item each:allItems)
-				{
-					if(Integer.parseInt(each.getID()) == panelGame.getMapping()[panelGame.getCurrentX()][panelGame.getCurrentY()][4])
-					{
-						item = each.getName();
-						break;
-					}
-		
-				}
-				lblTilename.setText(tile);
-				lblItemname.setText(item);
-			}
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				panelGame.setDragged(true);
-				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
-				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
-				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
-				repaint();
-			}
-		});
-		panelGame.setShowGrid(false);
+		panelResources.add(btnNextRes, "cell 16 0,alignx right,growy");
 		
 		panelMiniMap = new JGridPanel(panelGame.getTilesX()/4, panelGame.getTilesY()/4, 1);
 		panelMiniMap.addMouseMotionListener(new MouseMotionAdapter() {
@@ -623,6 +628,10 @@ public class Game extends JFrame {
 				mmuGame.clickMiniMap(e);
 			}
 		});
+		
+		
+		
+		
 		
 		panelToolSelection = new JPanel();
 		panelToolSelection.setBackground(new Color(102, 153, 153));
@@ -843,10 +852,9 @@ public class Game extends JFrame {
 		});
 		lblExit1.setVisible(false);	
 		
-		
-		
 		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap action = panelGame.getActionMap();
+		
 	
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");		
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "down");
@@ -874,9 +882,12 @@ public class Game extends JFrame {
 		action.put("downR", moveDownRelease);
 		action.put("leftR", moveLeftRelease);
 		action.put("rightR", moveRightRelease);	
+		readSettings();
 		
 		panelGame.setDoubleBuffered(true);
-		readSettings();
+		
+		gsGame = new GridScroller(panelGame, contentPane);
+		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		
 		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
 		if(isNewGame)
@@ -884,12 +895,8 @@ public class Game extends JFrame {
 		else
 			callMap(file, true);
 		designMiniMap(miniMapDetail, miniMapScale);
-		
-		gsGame = new GridScroller(panelGame, contentPane);
 		gridScroll = new Thread(gsGame);
 		gridScroll.start();
-		
-		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
 		
