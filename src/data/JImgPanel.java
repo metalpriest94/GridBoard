@@ -15,6 +15,11 @@ public class JImgPanel extends JPanel {
 	public JImgPanel(String path)
 	{
 		super();
+		setImage(path);
+	}
+	
+	public void setImage(String path)
+	{
 		try
 		{
 			this.image = ImageIO.read(new File(path));
@@ -23,6 +28,7 @@ public class JImgPanel extends JPanel {
 		{
 			ex.printStackTrace();
 		}
+		this.repaint();
 	}
 	
 	public void paintComponent(Graphics g)

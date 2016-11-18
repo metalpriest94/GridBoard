@@ -533,7 +533,7 @@ public class Game extends JFrame {
 			}
 		});
 		
-		panelPicHappiness = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "happiness.png");
+		panelPicHappiness = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "happiness3.png");
 		panelPicHappiness.setToolTipText("HAPPINESS");
 		panelPicHappiness.setBackground(new Color(102, 153, 153));
 		panelIndicators.add(panelPicHappiness, "cell 1 0,grow");
@@ -1350,10 +1350,11 @@ public class Game extends JFrame {
 			happiness = 100;
 		else if (happiness < 0)
 			happiness = 0;
-		Double happy = new Double(happiness);
-		lblHappiness.setText(String.valueOf(happy.intValue()));
+		
+		
 		lblStorageWater.setText(String.valueOf(storeWater));
 		lblStorageVegetables.setText(String.valueOf(storeVegetables));
+		showHappiness(happiness);
 	}
 	
 	public void checkHousingSpace()
@@ -1366,10 +1367,27 @@ public class Game extends JFrame {
 		{
 			happiness = happiness + 2;
 		}
-		Double happy = new Double(happiness);
-		lblHappiness.setText(String.valueOf(happy.intValue()));
+		showHappiness(happiness);
 	}
 	
+	public void showHappiness(double happiness)
+	{
+		int level;
+		System.out.println(happiness);
+		Double happy = new Double(happiness);
+		lblHappiness.setText(String.valueOf(happy.intValue()));
+		if (happiness >= 90)
+			level = 5;
+		else if(happiness >= 70)
+			level = 4;
+		else if(happiness >= 50)
+			level = 3;
+		else if(happiness >= 25)
+			level = 2;
+		else
+			level = 1;
+		panelPicHappiness.setImage("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "happiness" + level +".png");
+	}
 	
 	public void speedUp()
 	{
@@ -1468,4 +1486,5 @@ public class Game extends JFrame {
 		tglbtnStats.setSelected(true);
 		activeCard = cardStats;
 	}
+	
 }
