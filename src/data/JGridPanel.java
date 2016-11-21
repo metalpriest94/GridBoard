@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.io.Serializable;
 
 import javax.swing.JPanel;
@@ -79,6 +80,8 @@ public class JGridPanel extends JPanel implements Serializable{
 		tilesY = sizeY;
 		isInitialMapping = true;
 		prepareMapping(sizeX, sizeY, properties);
+		setDoubleBuffered(true);
+		Toolkit.getDefaultToolkit().sync();
 		
 	}
 	
