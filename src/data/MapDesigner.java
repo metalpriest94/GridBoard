@@ -95,9 +95,13 @@ public class MapDesigner extends JFrame {
 	private JTextField txtJumpY;
 	private JButton btnJump;
 	private GridIO gio; 
-	private JLabel lblItemModifier1;
-	private JTextField txtItemModifier1;
+	private JLabel lblCapacity;
+	private JTextField txtCapacity;
 	private JButton btnApplyAsStandard;
+	private JLabel lblUsed;
+	private JTextField txtUsed;
+	private JLabel lblSelectedItem;
+	private JButton btnApply;
 
 	/**
 	 * Launch the application.
@@ -162,6 +166,37 @@ public class MapDesigner extends JFrame {
 							assignItem(panelMap.getCurrentX(), panelMap.getCurrentY(), true);
 						else if(rdbtnRemoveItem.isSelected())
 							assignItem(panelMap.getCurrentX(), panelMap.getCurrentY(), false);
+						else if(rdbtnConfigureItem.isSelected())
+						{
+							for (Item each:allItems)
+							{
+								if(Integer.parseInt(each.getID()) == panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][4])
+								{
+									lblSelectedItem.setText(each.getName() + " - " +  panelMap.getCurrentX() + " / " + panelMap.getCurrentY());
+									break;
+								}
+					
+							}
+							
+							if(panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][5] == 1)
+							{	
+								txtCapacity.setText(String.valueOf(panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][9]));
+								txtUsed.setText(String.valueOf(panelMap.getMapping()[panelMap.getCurrentX()][panelMap.getCurrentY()][10]));
+								lblCapacity.setEnabled(false);
+								lblUsed.setEnabled(true);
+								txtCapacity.setEnabled(false);
+								txtUsed.setEnabled(true);
+							}
+							else
+							{
+								txtCapacity.setText("");
+								txtUsed.setText("");
+								lblCapacity.setEnabled(false);
+								lblUsed.setEnabled(false);
+								txtCapacity.setEnabled(false);
+								txtUsed.setEnabled(false);
+							}
+						}
 					}
 			}
 			@Override
@@ -251,7 +286,7 @@ public class MapDesigner extends JFrame {
 		panelTools = new JPanel();
 		panelTools.setBackground(new Color(153, 204, 204));
 		contentPane.add(panelTools, "cell 3 1,grow");
-		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][][119.00][][grow]", "[][][][][20.00][20.00][][][][][][]"));
+		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][]"));
 		
 		lblGlobalInformation = new JLabel("Global Information");
 		lblGlobalInformation.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -390,18 +425,29 @@ public class MapDesigner extends JFrame {
 		
 		rdbtnConfigureItem = new JRadioButton("Configure Item");
 		rdbtnConfigureItem.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
+			public void stateChanged(ChangeEvent e) {
 				if (rdbtnConfigureItem.isSelected())
 				{
-					lblItemModifier1.setVisible(true);
-					lblItemModifier1.setText("Info");
-					txtItemModifier1.setVisible(true);
+					lblSelectedItem.setVisible(true);
+					lblCapacity.setVisible(true);
+					lblUsed.setVisible(true);
+					txtCapacity.setVisible(true);
+					txtUsed.setVisible(true);
+					btnApply.setVisible(true);
 				}
 				else
 				{
-					lblItemModifier1.setVisible(false);
-					txtItemModifier1.setVisible(false);
+					lblSelectedItem.setVisible(false);
+					lblCapacity.setVisible(false);
+					lblUsed.setVisible(false);
+					txtCapacity.setVisible(false);
+					txtUsed.setVisible(false);
+					btnApply.setVisible(false);
 				}
+				lblCapacity.setEnabled(false);
+				lblUsed.setEnabled(false);
+				txtCapacity.setEnabled(false);
+				txtUsed.setEnabled(false);
 			}
 		});
 		buttonGroup.add(rdbtnConfigureItem);
@@ -510,16 +556,53 @@ public class MapDesigner extends JFrame {
 		});
 		panelTools.add(btnJump, "cell 3 8,growx");
 		
-		lblItemModifier1 = new JLabel("Info");
-		panelTools.add(lblItemModifier1, "cell 4 11");
+		lblSelectedItem = new JLabel("Item");
+		lblSelectedItem.setVisible(false);
+		panelTools.add(lblSelectedItem, "cell 4 11 2 1");
 		
-		txtItemModifier1 = new JTextField();
-		panelTools.add(txtItemModifier1, "cell 5 11,growx");
-		txtItemModifier1.setColumns(10);
+		lblCapacity = new JLabel("Capacity");
+		panelTools.add(lblCapacity, "cell 4 12");
+		
+		txtCapacity = new JTextField();
+		panelTools.add(txtCapacity, "cell 5 12,growx");
+		txtCapacity.setColumns(10);
+		
+		lblUsed = new JLabel("Used");
+		lblUsed.setVisible(false);
+		panelTools.add(lblUsed, "cell 4 13,alignx left");
+		
+		txtUsed = new JTextField();
+		txtUsed.setVisible(false);
+		panelTools.add(txtUsed, "cell 5 13,growx");
+		txtUsed.setColumns(10);
+		
+		btnApply = new JButton("Apply");
+		btnApply.setVisible(false);
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try
+				{
+					if(Integer.parseInt(txtUsed.getText()) > Integer.parseInt(txtCapacity.getText()))
+					{
+						JOptionPane.showMessageDialog(null, "The 'Used' value may not exceed the 'Capacity' value.");
+						txtUsed.setText(txtCapacity.getText());
+					}
+				}
+				catch(NumberFormatException ex)
+				{
+					txtUsed.setText("0");
+				}
+				int activeX = Integer.parseInt(lblSelectedItem.getText().split("-")[1].split("/")[0].trim());
+				int activeY = Integer.parseInt(lblSelectedItem.getText().split("-")[1].split("/")[1].trim());
+
+				panelMap.applyProperty(activeX, activeY, 10, Integer.parseInt(txtUsed.getText()));
+			}
+		});
+		panelTools.add(btnApply, "cell 5 14,growx");
 		contentPane.add(btnDown, "cell 1 2,growx");
 		
-		lblItemModifier1.setVisible(false);
-		txtItemModifier1.setVisible(false);
+		lblCapacity.setVisible(false);
+		txtCapacity.setVisible(false);
 		
 		readConfig();
 		gio = new GridIO(panelMap, allTiles, allItems);
