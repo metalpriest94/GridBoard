@@ -199,7 +199,6 @@ public class GridScroller implements Runnable {
 				if(awaitZoomOut)
 					zoomOut(affected.getPosX(), affected.getPosY());
 				
-				affected.repaint();
 			}
 			try
 			{
