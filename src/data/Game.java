@@ -55,9 +55,12 @@ public class Game extends JFrame {
 	private GridScroller gsGame;
 	private MiniMapUpdater mmuGame;
 	private Clockwork cwGame;
+	private PanelAnimator paGame;
 	private Thread gridScroll;
 	private Thread miniMapUpdate;
 	private Thread clockwork;
+	private Thread animator;
+	
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
@@ -487,7 +490,6 @@ public class Game extends JFrame {
 				panelGame.setPosX(e.getX() / panelGame.getTileSize() * panelGame.getTileSize() );
 				panelGame.setPosY(e.getY() / panelGame.getTileSize() * panelGame.getTileSize() );
 				lblPosition.setText("- X: "+ panelGame.getCurrentX() +" | Y: "+ panelGame.getCurrentY());
-				repaint();
 			}
 		});
 		panelGame.setShowGrid(false);
@@ -746,7 +748,6 @@ public class Game extends JFrame {
 				panelSelectItem.setDragged(false);
 				panelSelectItem.setPosX(e.getX() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
 				panelSelectItem.setPosY(e.getY() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() ); 
-				panelSelectItem.repaint();
 			}
 		});
 		
@@ -957,6 +958,7 @@ public class Game extends JFrame {
 		
 		gsGame = new GridScroller(panelGame, contentPane);
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
+		paGame = new PanelAnimator(panelGame, 25);
 		
 		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
 		if(isNewGame)
@@ -968,6 +970,8 @@ public class Game extends JFrame {
 		gridScroll.start();
 		miniMapUpdate = new Thread(mmuGame);
 		miniMapUpdate.start();
+		animator = new Thread(paGame);
+		animator.start();
 		
 		setUpBuildCard();
 		if (isNewGame)
@@ -1230,7 +1234,6 @@ public class Game extends JFrame {
 				}
 			}
 		}
-		panelGame.repaint();
 	}	
 	
 	public void setUpStorage(int[] storage)
@@ -1373,7 +1376,6 @@ public class Game extends JFrame {
 	public void showHappiness(double happiness)
 	{
 		int level;
-		System.out.println(happiness);
 		Double happy = new Double(happiness);
 		lblHappiness.setText(String.valueOf(happy.intValue()));
 		if (happiness >= 90)

@@ -2,6 +2,8 @@ package data;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
 public class MiniMapUpdater implements Runnable {
 	private JGridPanel affected, info;
 	private int itemColor = (255*256*256) + (191*256) + (31);
@@ -19,7 +21,6 @@ public class MiniMapUpdater implements Runnable {
 			{
 				updateMiniMap();				
 				affected.repaint();
-				info.repaint();
 			}
 			try
 			{
@@ -27,7 +28,7 @@ public class MiniMapUpdater implements Runnable {
 			}
 			catch(InterruptedException ex)
 			{
-				
+				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
 			}
 		}
 	}

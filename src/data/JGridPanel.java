@@ -81,8 +81,6 @@ public class JGridPanel extends JPanel implements Serializable{
 		isInitialMapping = true;
 		prepareMapping(sizeX, sizeY, properties);
 		setDoubleBuffered(true);
-		Toolkit.getDefaultToolkit().sync();
-		
 	}
 	
 	// Setter + Getter -------------------------------------------------------------------------------------------------------
