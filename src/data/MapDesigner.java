@@ -739,14 +739,14 @@ public class MapDesigner extends JFrame {
 	{
 		boolean hasNoPlain = true, hasNoDesert = true, hasNoSwamp = true, hasNoSnow = true;
 		modelAnalyze.clear();
+		if(panelMap.getTilesX() < 32 || panelMap.getTilesY() < 32)
+			modelAnalyze.addElement("Map is very small. It should be at least 32x32 tiles large.");
 		for(int x = 0; x < panelMap.getTilesX(); x++)
 		{
 			for(int y = 0; y < panelMap.getTilesY(); y++)
 			{
-				if(panelMap.getMapping()[x][y][1] == 0)
-				{
+				if(panelMap.getMapping()[x][y][1] == 0 && modelAnalyze.size() < 100000)
 					modelAnalyze.addElement("Tile missing at (" + (x+1) + "|" + (y+1) + ")" );
-				}
 				else if (panelMap.getMapping()[x][y][1] == 1)
 					hasNoPlain = false;
 				else if (panelMap.getMapping()[x][y][1] == 2)
@@ -757,16 +757,21 @@ public class MapDesigner extends JFrame {
 					hasNoSnow = false;
 			}
 		}
-		if(hasNoPlain)
-			modelAnalyze.addElement("Map does not contain any plain.");
-		if(hasNoDesert)
-			modelAnalyze.addElement("Map does not contain any desert.");
-		if(hasNoSwamp)
-			modelAnalyze.addElement("Map does not contain any swamp.");
-		if(hasNoSnow)
-			modelAnalyze.addElement("Map does not contain any snow.");
+		if (modelAnalyze.size() < 100000)
+		{
+			if(hasNoPlain)
+				modelAnalyze.addElement("Map does not contain any plain.");
+			if(hasNoDesert)
+				modelAnalyze.addElement("Map does not contain any desert.");
+			if(hasNoSwamp)
+				modelAnalyze.addElement("Map does not contain any swamp.");
+			if(hasNoSnow)
+				modelAnalyze.addElement("Map does not contain any snow.");
+		}
 		
-		if (modelAnalyze.size() > 0)
+		if (modelAnalyze.size() >= 100000)
+			modelAnalyze.add(0, "Number of incidents: 99999+" );
+		else if (modelAnalyze.size() > 0)
 			modelAnalyze.add(0, "Number of incidents: " + modelAnalyze.size());
 		else
 			modelAnalyze.addElement("No incidents found.");
