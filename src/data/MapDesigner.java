@@ -41,6 +41,8 @@ import data.GridIO;
 import data.Utilities;
 
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class MapDesigner extends JFrame {
 
@@ -63,8 +65,8 @@ public class MapDesigner extends JFrame {
 	private JButton btnResize;
 	private JLabel lblTileSize;
 	private JTextField txtTileSize;
-	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPaneItems;
+	private JScrollPane scrollPaneTiles;
 	private JList<String> listItems;
 	private JList<String> listTiles;
 	private JRadioButton rdbtnPlaceMaptile;
@@ -102,6 +104,7 @@ public class MapDesigner extends JFrame {
 	private JTextField txtUsed;
 	private JLabel lblSelectedItem;
 	private JButton btnApply;
+	private JLabel lblCanContainItems;
 
 	/**
 	 * Launch the application.
@@ -286,7 +289,7 @@ public class MapDesigner extends JFrame {
 		panelTools = new JPanel();
 		panelTools.setBackground(new Color(153, 204, 204));
 		contentPane.add(panelTools, "cell 3 1,grow");
-		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][]"));
+		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][][]"));
 		
 		lblGlobalInformation = new JLabel("Global Information");
 		lblGlobalInformation.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -311,20 +314,53 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtFileName, "cell 1 1,growx");
 		txtFileName.setColumns(10);
 		
+		lblCanContainItems = new JLabel("MapTile - Info");
+		lblCanContainItems.setVisible(false);
+		panelTools.add(lblCanContainItems, "cell 4 5 2 1");
+		
+		lblSelectedItem = new JLabel("Item");
+		lblSelectedItem.setVisible(false);
+		panelTools.add(lblSelectedItem, "cell 4 12");
+		
 		rdbtnPlaceMaptile = new JRadioButton("Place MapTile");
+		rdbtnPlaceMaptile.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (rdbtnPlaceMaptile.isSelected())
+				{
+					lblCanContainItems.setVisible(true);
+					lblSelectedItem.setVisible(false);
+				}
+				else
+					lblCanContainItems.setVisible(false);
+			}
+		});
 		rdbtnPlaceMaptile.setSelected(true);
 		rdbtnPlaceMaptile.setBackground(new Color(153, 204, 204));
 		buttonGroup.add(rdbtnPlaceMaptile);
 		panelTools.add(rdbtnPlaceMaptile, "cell 2 1 2 1");
 		
-		scrollPane_1 = new JScrollPane();
-		panelTools.add(scrollPane_1, "cell 4 1 2 4,grow");
+		scrollPaneTiles = new JScrollPane();
+		panelTools.add(scrollPaneTiles, "cell 4 1 2 4,grow");
 		
 		listTiles = new JList<String>();
+		listTiles.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				String canContainItem = "Cannot contain Items";
+				for (MapTile each:allTiles)
+				{
+					if (listTiles.getSelectedValue().equals(each.getName()))
+					{
+						if(each.canCarryItem())
+							canContainItem = "Can contain an Item";
+					}
+				}
+				lblCanContainItems.setText(listTiles.getSelectedValue() + " - " + canContainItem);
+			}
+		});
 		listTiles.setVisibleRowCount(6);
 		listTiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listTiles.setModel(modelMapTiles);
-		scrollPane_1.setViewportView(listTiles);
+		scrollPaneTiles.setViewportView(listTiles);
 		
 		lblTileSize = new JLabel("Tile Size");
 		panelTools.add(lblTileSize, "cell 6 1,alignx trailing");
@@ -356,6 +392,12 @@ public class MapDesigner extends JFrame {
 		panelTools.add(btnSave, "cell 1 2,growx");
 		
 		rdbtnPlaceItem = new JRadioButton("Place Item");
+		rdbtnPlaceItem.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (rdbtnConfigureItem.isSelected() || rdbtnRemoveItem.isSelected() || rdbtnPlaceItem.isSelected())
+					lblSelectedItem.setVisible(true);
+			}
+		});
 		rdbtnPlaceItem.setBackground(new Color(153, 204, 204));
 		buttonGroup.add(rdbtnPlaceItem);
 		panelTools.add(rdbtnPlaceItem, "cell 2 2 2 1");
@@ -380,6 +422,13 @@ public class MapDesigner extends JFrame {
 		panelTools.add(btnLoad, "cell 1 3,growx");
 		
 		rdbtnRemoveItem = new JRadioButton("Remove Item");
+		rdbtnRemoveItem.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (rdbtnConfigureItem.isSelected() || rdbtnRemoveItem.isSelected() || rdbtnPlaceItem.isSelected())
+					lblSelectedItem.setVisible(true);
+				
+			}
+		});
 		rdbtnRemoveItem.setBackground(new Color(153, 204, 204));
 		buttonGroup.add(rdbtnRemoveItem);
 		panelTools.add(rdbtnRemoveItem, "cell 2 3 2 1");
@@ -426,9 +475,10 @@ public class MapDesigner extends JFrame {
 		rdbtnConfigureItem = new JRadioButton("Configure Item");
 		rdbtnConfigureItem.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				if (rdbtnConfigureItem.isSelected() || rdbtnRemoveItem.isSelected() || rdbtnPlaceItem.isSelected())
+					lblSelectedItem.setVisible(true);
 				if (rdbtnConfigureItem.isSelected())
 				{
-					lblSelectedItem.setVisible(true);
 					lblCapacity.setVisible(true);
 					lblUsed.setVisible(true);
 					txtCapacity.setVisible(true);
@@ -437,7 +487,6 @@ public class MapDesigner extends JFrame {
 				}
 				else
 				{
-					lblSelectedItem.setVisible(false);
 					lblCapacity.setVisible(false);
 					lblUsed.setVisible(false);
 					txtCapacity.setVisible(false);
@@ -468,6 +517,7 @@ public class MapDesigner extends JFrame {
 				gio.newMap(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
 			}
 		});
+		
 		panelTools.add(btnNew, "cell 1 6,growx");
 		
 		txtJumpX = new JTextField();
@@ -483,10 +533,6 @@ public class MapDesigner extends JFrame {
 				repaint();
 			}
 		});
-		
-		lblItems = new JLabel("Items");
-		lblItems.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelTools.add(lblItems, "cell 4 6 2 1,aligny bottom");
 		panelTools.add(btnResize, "cell 1 7,growx");
 		
 		lblJumpX = new JLabel("X");
@@ -500,13 +546,23 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtJumpY, "cell 3 7,growx");
 		txtJumpY.setColumns(10);
 		
-		scrollPane = new JScrollPane();
-		panelTools.add(scrollPane, "cell 4 7 2 4,grow");
+		lblItems = new JLabel("Items");
+		lblItems.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panelTools.add(lblItems, "cell 4 7,aligny bottom");
+		
+		scrollPaneItems = new JScrollPane();
+		panelTools.add(scrollPaneItems, "cell 4 8 2 4,grow");
 		
 		listItems = new JList<String>();
+		listItems.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if (rdbtnPlaceItem.isSelected() || rdbtnRemoveItem.isSelected())
+					selectedItem();
+			}
+		});
 		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listItems.setModel(modelItems);
-		scrollPane.setViewportView(listItems);
+		scrollPaneItems.setViewportView(listItems);
 		
 		btnJump = new JButton("Jump");
 		btnJump.addActionListener(new ActionListener() {
@@ -556,26 +612,6 @@ public class MapDesigner extends JFrame {
 		});
 		panelTools.add(btnJump, "cell 3 8,growx");
 		
-		lblSelectedItem = new JLabel("Item");
-		lblSelectedItem.setVisible(false);
-		panelTools.add(lblSelectedItem, "cell 4 11 2 1");
-		
-		lblCapacity = new JLabel("Capacity");
-		panelTools.add(lblCapacity, "cell 4 12");
-		
-		txtCapacity = new JTextField();
-		panelTools.add(txtCapacity, "cell 5 12,growx");
-		txtCapacity.setColumns(10);
-		
-		lblUsed = new JLabel("Used");
-		lblUsed.setVisible(false);
-		panelTools.add(lblUsed, "cell 4 13,alignx left");
-		
-		txtUsed = new JTextField();
-		txtUsed.setVisible(false);
-		panelTools.add(txtUsed, "cell 5 13,growx");
-		txtUsed.setColumns(10);
-		
 		btnApply = new JButton("Apply");
 		btnApply.setVisible(false);
 		btnApply.addActionListener(new ActionListener() {
@@ -598,11 +634,27 @@ public class MapDesigner extends JFrame {
 				panelMap.applyProperty(activeX, activeY, 10, Integer.parseInt(txtUsed.getText()));
 			}
 		});
-		panelTools.add(btnApply, "cell 5 14,growx");
-		contentPane.add(btnDown, "cell 1 2,growx");
+		
+		txtUsed = new JTextField();
+		txtUsed.setVisible(false);
+		
+		lblUsed = new JLabel("Used");
+		lblUsed.setVisible(false);
+		
+		lblCapacity = new JLabel("Capacity");
+		panelTools.add(lblCapacity, "cell 4 13");
 		
 		lblCapacity.setVisible(false);
+		
+		txtCapacity = new JTextField();
+		panelTools.add(txtCapacity, "cell 5 13,growx");
+		txtCapacity.setColumns(10);
 		txtCapacity.setVisible(false);
+		panelTools.add(lblUsed, "cell 4 14,alignx left");
+		panelTools.add(txtUsed, "cell 5 14,growx");
+		txtUsed.setColumns(10);
+		panelTools.add(btnApply, "cell 5 15,growx");
+		contentPane.add(btnDown, "cell 1 2,growx");
 		
 		readConfig();
 		gio = new GridIO(panelMap, allTiles, allItems);
@@ -655,7 +707,14 @@ public class MapDesigner extends JFrame {
 		}
 		
 	}
-	
+	public void selectedItem()
+	{
+		for(Item each: allItems)
+		{
+			if(each.getName().equals(listItems.getSelectedValue()))
+				lblSelectedItem.setText(each.getName());
+		}
+	}
 	
 	public void assignTile(int x, int y)
 	{
