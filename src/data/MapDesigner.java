@@ -78,6 +78,7 @@ public class MapDesigner extends JFrame {
 	private ArrayList<MapTile> allTiles;
 	private DefaultListModel<String> modelItems = new DefaultListModel<String>();
 	private ArrayList<Item> allItems;
+	private DefaultListModel<String> modelAnalyze = new DefaultListModel<String>();
 	private JLabel lblCurrentPos;
 	private JRadioButton rdbtnConfigureItem;
 	private JTextField txtFileName;
@@ -105,6 +106,9 @@ public class MapDesigner extends JFrame {
 	private JLabel lblSelectedItem;
 	private JButton btnApply;
 	private JLabel lblCanContainItems;
+	private JButton btnAnalyze;
+	private JScrollPane scrollPaneAnalyze;
+	private JList listAnalyze;
 
 	/**
 	 * Launch the application.
@@ -288,8 +292,8 @@ public class MapDesigner extends JFrame {
 		
 		panelTools = new JPanel();
 		panelTools.setBackground(new Color(153, 204, 204));
-		contentPane.add(panelTools, "cell 3 1,grow");
-		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][][]"));
+		contentPane.add(panelTools, "cell 3 1 1 2,grow");
+		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][][][][grow]"));
 		
 		lblGlobalInformation = new JLabel("Global Information");
 		lblGlobalInformation.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -654,6 +658,21 @@ public class MapDesigner extends JFrame {
 		panelTools.add(txtUsed, "cell 5 14,growx");
 		txtUsed.setColumns(10);
 		panelTools.add(btnApply, "cell 5 15,growx");
+		
+		btnAnalyze = new JButton("Analyze");
+		btnAnalyze.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				analyzeMap();
+			}
+		});
+		panelTools.add(btnAnalyze, "cell 1 16,grow");
+		
+		scrollPaneAnalyze = new JScrollPane();
+		panelTools.add(scrollPaneAnalyze, "cell 2 16 6 2,grow");
+		
+		listAnalyze = new JList();
+		scrollPaneAnalyze.setViewportView(listAnalyze);
+		listAnalyze.setModel(modelAnalyze);
 		contentPane.add(btnDown, "cell 1 2,growx");
 		
 		readConfig();
@@ -714,6 +733,43 @@ public class MapDesigner extends JFrame {
 			if(each.getName().equals(listItems.getSelectedValue()))
 				lblSelectedItem.setText(each.getName());
 		}
+	}
+	
+	public void analyzeMap()
+	{
+		boolean hasNoPlain = true, hasNoDesert = true, hasNoSwamp = true, hasNoSnow = true;
+		modelAnalyze.clear();
+		for(int x = 0; x < panelMap.getTilesX(); x++)
+		{
+			for(int y = 0; y < panelMap.getTilesY(); y++)
+			{
+				if(panelMap.getMapping()[x][y][1] == 0)
+				{
+					modelAnalyze.addElement("Tile missing at (" + (x+1) + "|" + (y+1) + ")" );
+				}
+				else if (panelMap.getMapping()[x][y][1] == 1)
+					hasNoPlain = false;
+				else if (panelMap.getMapping()[x][y][1] == 2)
+					hasNoDesert = false;
+				else if (panelMap.getMapping()[x][y][1] == 3)
+					hasNoSwamp = false;
+				else if (panelMap.getMapping()[x][y][1] == 4)
+					hasNoSnow = false;
+			}
+		}
+		if(hasNoPlain)
+			modelAnalyze.addElement("Map does not contain any plain.");
+		if(hasNoDesert)
+			modelAnalyze.addElement("Map does not contain any desert.");
+		if(hasNoSwamp)
+			modelAnalyze.addElement("Map does not contain any swamp.");
+		if(hasNoSnow)
+			modelAnalyze.addElement("Map does not contain any snow.");
+		
+		if (modelAnalyze.size() > 0)
+			modelAnalyze.add(0, "Number of incidents: " + modelAnalyze.size());
+		else
+			modelAnalyze.addElement("No incidents found.");
 	}
 	
 	public void assignTile(int x, int y)
