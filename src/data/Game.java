@@ -603,7 +603,7 @@ public class Game extends JFrame {
 		});
 		panelResources.add(btnBackRes, "cell 0 0,alignx left,growy");
 		
-		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
+		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
 		panelPicWood.setToolTipText("WOOD");
 		panelPicWood.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelPicWood, "cell 1 0,grow");
@@ -616,7 +616,7 @@ public class Game extends JFrame {
 		panelSpacer1.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelSpacer1, "cell 3 0,grow");
 		
-		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
+		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
 		panelPicStone.setToolTipText("STONE");
 		panelPicStone.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelPicStone, "cell 4 0,grow");
@@ -629,7 +629,7 @@ public class Game extends JFrame {
 		panelSpacer2.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelSpacer2, "cell 6 0,grow");
 		
-		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
+		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
 		panelPicSteel.setToolTipText("STEEL");
 		panelPicSteel.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelPicSteel, "cell 7 0,grow");
@@ -642,7 +642,7 @@ public class Game extends JFrame {
 		panelSpacer3.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelSpacer3, "cell 9 0,grow");
 		
-		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
+		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
 		panelPicGlass.setToolTipText("GLASS");
 		panelPicGlass.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelPicGlass, "cell 10 0,grow");
@@ -655,7 +655,7 @@ public class Game extends JFrame {
 		panelSpacer4.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelSpacer4, "cell 12 0,grow");
 		
-		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
+		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
 		panelPicGold.setToolTipText("GOLD");
 		panelPicGold.setBackground(new Color(102, 153, 153));
 		panelResources.add(panelPicGold, "cell 13 0,grow");
@@ -805,7 +805,7 @@ public class Game extends JFrame {
 		scrollPaneStorage.setViewportView(panelStorageItems);
 		panelStorageItems.setLayout(new MigLayout("", "[32px:n:32px][40px:n:40px,right][grow][32px:n:32px][40px:n:40px,right]", "[32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px,grow]"));
 		
-		panelStorageWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.jpg");
+		panelStorageWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
 		panelStorageItems.add(panelStorageWood, "cell 0 0,grow");
 		
 		lblStorageWood = new JLabel("0");
@@ -815,37 +815,37 @@ public class Game extends JFrame {
 		panelStorageSpacer.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageSpacer, "cell 2 0 1 2,grow");
 		
-		panelStorageStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.jpg");
+		panelStorageStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
 		panelStorageItems.add(panelStorageStone, "cell 3 0,grow");
 		
 		lblStorageStone = new JLabel("0");
 		panelStorageItems.add(lblStorageStone, "cell 4 0");
 		
-		panelStorageSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.jpg");
+		panelStorageSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
 		panelStorageItems.add(panelStorageSteel, "cell 0 1,grow");
 		
 		lblStorageSteel = new JLabel("0");
 		panelStorageItems.add(lblStorageSteel, "cell 1 1");
 		
-		panelStorageGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.jpg");
+		panelStorageGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
 		panelStorageItems.add(panelStorageGlass, "cell 3 1,grow");
 		
 		lblStorageGlass = new JLabel("0");
 		panelStorageItems.add(lblStorageGlass, "cell 4 1");
 		
-		panelStorageWater = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.jpg");
+		panelStorageWater = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.png");
 		panelStorageItems.add(panelStorageWater, "cell 0 2,grow");
 		
 		lblStorageWater = new JLabel("0");
 		panelStorageItems.add(lblStorageWater, "cell 1 2");
 		
-		panelStorageVegetables = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.jpg");
+		panelStorageVegetables = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "vegetables.png");
 		panelStorageItems.add(panelStorageVegetables, "cell 3 2,grow");
 		
 		lblStorageVegetables = new JLabel("0");
 		panelStorageItems.add(lblStorageVegetables, "cell 4 2");
 		
-		panelStorageGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.jpg");
+		panelStorageGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
 		panelStorageItems.add(panelStorageGold, "cell 0 3,grow");
 		
 		lblStorageGold = new JLabel("0");
@@ -1473,7 +1473,7 @@ public class Game extends JFrame {
 	
 	public void toggleInfo()
 	{
-		toolsCard.show(panelTools, cardInfo);
+		toolsCard.show(panelTools, cardStorage);
 		tglbtnBuild.setSelected(false);
 		tglbtnInfo.setSelected(true);
 		tglbtnStats.setSelected(false);
