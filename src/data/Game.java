@@ -118,14 +118,58 @@ public class Game extends JFrame {
 	private JImgPanel panelPicWood;
 	private JLabel lblStoreWood;
 	
+	private int techLevel;
+	
+	private int storeWater;
+	private int storeVegetables;
+	private int storeClothes;
+	private int storeShoes;
+	
+	private int storeMilk;
+	private int storeMeat;
+	private int storeMedicine;
+	private int storeCoal;
+	private int storeHoney;
+	private int storeOrnaments;
+	
+	private int storeBeer;
+	private int storeFruits;
+	private int storeHorses;
+	private int storeBread;
+	private int storeTobacco;
+	private int storePerfume;
+	private int storeCheese;
+	private int storeCocoa;
+	
+	private int storeIcewine;
+	private int storeCake;
+	private int storeDeer;
+	private int storeChocolates;
+	private int storePistols;
+	private int storeLiquor;
+	private int storeBooks;
+	private int storeJewelry;
+	private int storeSalmon;
+	private int storeCoffee;
+	
 	private int storeWood;
 	private int storeStone;
 	private int storeSteel;
 	private int storeGlass;
+	private int storeSand;
+	private int storeWool;
+	private int storeLeather;
+	private int storeMarshweed;
+	private int storeGrain;
+	private int storeHops;
+	private int storeCocoabeans;
+	private int storeRawChocolate;
+	private int storeIceflowers;
+	private int storeBarrels;
+	private int storePaper;
 	private int storeGold;
-	
-	private int storeWater;
-	private int storeVegetables;
+	private int storeIronOre;
+	private int storeGoldOre;
 	
 	private int inhabs;
 	private int capacity;
@@ -806,6 +850,7 @@ public class Game extends JFrame {
 		panelStorageItems.setLayout(new MigLayout("", "[32px:n:32px][40px:n:40px,right][grow][32px:n:32px][40px:n:40px,right]", "[32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px,grow]"));
 		
 		panelStorageWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
+		panelStorageWood.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageWood, "cell 0 0,grow");
 		
 		lblStorageWood = new JLabel("0");
@@ -816,36 +861,42 @@ public class Game extends JFrame {
 		panelStorageItems.add(panelStorageSpacer, "cell 2 0 1 2,grow");
 		
 		panelStorageStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
+		panelStorageStone.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageStone, "cell 3 0,grow");
 		
 		lblStorageStone = new JLabel("0");
 		panelStorageItems.add(lblStorageStone, "cell 4 0");
 		
 		panelStorageSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
+		panelStorageSteel.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageSteel, "cell 0 1,grow");
 		
 		lblStorageSteel = new JLabel("0");
 		panelStorageItems.add(lblStorageSteel, "cell 1 1");
 		
 		panelStorageGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
+		panelStorageGlass.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageGlass, "cell 3 1,grow");
 		
 		lblStorageGlass = new JLabel("0");
 		panelStorageItems.add(lblStorageGlass, "cell 4 1");
 		
 		panelStorageWater = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.png");
+		panelStorageWater.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageWater, "cell 0 2,grow");
 		
 		lblStorageWater = new JLabel("0");
 		panelStorageItems.add(lblStorageWater, "cell 1 2");
 		
 		panelStorageVegetables = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "vegetables.png");
+		panelStorageVegetables.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageVegetables, "cell 3 2,grow");
 		
 		lblStorageVegetables = new JLabel("0");
 		panelStorageItems.add(lblStorageVegetables, "cell 4 2");
 		
 		panelStorageGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
+		panelStorageGold.setBackground(new Color(102, 153, 153));
 		panelStorageItems.add(panelStorageGold, "cell 0 3,grow");
 		
 		lblStorageGold = new JLabel("0");
@@ -978,6 +1029,7 @@ public class Game extends JFrame {
 			setUpStorage();
 		setUpLiving();
 		happiness = 70;
+		techLevel = 1;
 		
 		caller.dispose();
 		
@@ -1256,8 +1308,52 @@ public class Game extends JFrame {
 		storeSteel = 10;
 		storeGlass = 10;
 		storeGold = 10;
+		
 		storeWater = 20;
 		storeVegetables = 20;
+		storeClothes = 0;
+		storeShoes = 0;
+		
+		storeMilk = 0;
+		storeMeat = 0;
+		storeMedicine = 0;
+		storeCoal = 0;
+		storeHoney = 0;
+		storeOrnaments = 0;
+		
+		storeBeer = 0;
+		storeFruits = 0;
+		storeHorses = 0;
+		storeBread = 0;
+		storeTobacco = 0;
+		storePerfume = 0;
+		storeCheese = 0;
+		storeCocoa = 0;
+		
+		storeIcewine = 0;
+		storeCake = 0;
+		storeDeer = 0;
+		storeChocolates = 0;
+		storePistols = 0;
+		storeLiquor = 0;
+		storeBooks = 0;
+		storeJewelry = 0;
+		storeSalmon = 0;
+		storeCoffee = 0;
+		
+		storeSand = 0;
+		storeWool = 0;
+		storeLeather = 0;
+		storeMarshweed = 0;
+		storeGrain = 0;
+		storeHops = 0;
+		storeCocoabeans = 0;
+		storeRawChocolate = 0;
+		storeIceflowers = 0;
+		storeBarrels = 0;
+		storePaper = 0;
+		storeIronOre = 0;
+		storeGoldOre = 0;
 		
 		displayStorage();
 	}
@@ -1327,33 +1423,331 @@ public class Game extends JFrame {
 	
 	public void consumeGoods()
 	{				
-		if (storeWater / (inhabs * 2) >= 1)
+		if (techLevel >= 1)
 		{
-			happiness = happiness + 2;
-			storeWater -= inhabs * 2;
-		}
-		else
-		{
-			happiness = happiness + 2 - (5 * (1 - (storeWater / (inhabs * 2.0))));
-			storeWater = 0;
+			if (storeWater / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeWater -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeWater / (inhabs * 2.0))));
+				storeWater = 0;
+			}
+			
+			if (storeVegetables / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeVegetables -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeVegetables / (inhabs * 2.0))));
+				storeVegetables = 0;
+			}
+			
+			if (storeClothes / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeClothes -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeClothes / (inhabs * 2.0))));
+				storeClothes = 0;
+			}
+			
+			if (storeShoes / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeShoes -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeShoes / (inhabs * 2.0))));
+				storeShoes = 0;
+			}
+
 		}
 		
-		if (storeVegetables / (inhabs * 2) >= 1)
-		{
-			happiness = happiness + 2;
-			storeVegetables -= inhabs * 2;
+		if (techLevel >= 2)
+		{	
+			if (storeMilk / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeMilk -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeMilk / (inhabs * 2.0))));
+				storeMilk = 0;
+			}
+			
+			if (storeMeat / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeMeat -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeMeat / (inhabs * 2.0))));
+				storeMeat = 0;
+			}
+			
+			if (storeMedicine / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeMedicine -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeMedicine / (inhabs * 2.0))));
+				storeMedicine = 0;
+			}
+			
+			if (storeCoal / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeCoal -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeCoal / (inhabs * 2.0))));
+				storeCoal = 0;
+			}
+			
+			if (storeHoney / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeHoney -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeHoney / (inhabs * 2.0))));
+				storeHoney = 0;
+			}
+			
+			if (storeOrnaments / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeOrnaments -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeOrnaments / (inhabs * 2.0))));
+				storeOrnaments = 0;
+			}
 		}
-		else
+		
+		if (techLevel >= 3)
 		{
-			happiness = happiness + 2 - (5 * (1 - (storeVegetables / (inhabs * 2.0))));
-			storeVegetables = 0;
+			if (storeBeer / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeBeer -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeBeer / (inhabs * 2.0))));
+				storeBeer = 0;
+			}
+			
+			if (storeFruits / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeFruits -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeFruits / (inhabs * 2.0))));
+				storeFruits = 0;
+			}
+			
+			if (storeHorses / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeHorses -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeHorses / (inhabs * 2.0))));
+				storeHorses = 0;
+			}
+			
+			if (storeBread / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeBread -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeBread / (inhabs * 2.0))));
+				storeBread = 0;
+			}
+			
+			if (storeTobacco / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeTobacco -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeTobacco / (inhabs * 2.0))));
+				storeTobacco = 0;
+			}
+			
+			if (storePerfume / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storePerfume -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storePerfume / (inhabs * 2.0))));
+				storePerfume = 0;
+			}
+			
+			if (storeCheese / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeCheese -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeCheese / (inhabs * 2.0))));
+				storeCheese = 0;
+			}
+			
+			if (storeCocoa / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeCocoa -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeCocoa / (inhabs * 2.0))));
+				storeCocoa = 0;
+			}
+		}
+		
+		if (techLevel >= 4)
+		{
+			if (storeIcewine / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeIcewine -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeIcewine / (inhabs * 2.0))));
+				storeIcewine = 0;
+			}
+			
+			if (storeCake / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeCake -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeCake / (inhabs * 2.0))));
+				storeCake = 0;
+			}
+			
+			if (storeDeer / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeDeer -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeDeer / (inhabs * 2.0))));
+				storeDeer = 0;
+			}
+			
+			if (storeChocolates / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeChocolates -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeChocolates / (inhabs * 2.0))));
+				storeChocolates = 0;
+			}
+			
+			if (storePistols / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storePistols -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storePistols / (inhabs * 2.0))));
+				storePistols = 0;
+			}
+			
+			if (storeLiquor / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeLiquor -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeLiquor / (inhabs * 2.0))));
+				storeLiquor = 0;
+			}
+			
+			if (storeBooks / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeBooks -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeBooks / (inhabs * 2.0))));
+				storeBooks = 0;
+			}
+			
+			if (storeJewelry / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeJewelry -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeJewelry / (inhabs * 2.0))));
+				storeJewelry = 0;
+			}
+			
+			if (storeSalmon / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeSalmon -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeSalmon / (inhabs * 2.0))));
+				storeSalmon = 0;
+			}
+			
+			if (storeCoffee / (inhabs * 2) >= 1)
+			{
+				happiness = happiness + 2;
+				storeCoffee -= inhabs * 2;
+			}
+			else
+			{
+				happiness = happiness + 2 - (5 * (1 - (storeCoffee / (inhabs * 2.0))));
+				storeCoffee = 0;
+			}
 		}
 
 		if (happiness > 100)
 			happiness = 100;
 		else if (happiness < 0)
 			happiness = 0;
-		
 		
 		lblStorageWater.setText(String.valueOf(storeWater));
 		lblStorageVegetables.setText(String.valueOf(storeVegetables));
@@ -1473,7 +1867,7 @@ public class Game extends JFrame {
 	
 	public void toggleInfo()
 	{
-		toolsCard.show(panelTools, cardStorage);
+		toolsCard.show(panelTools, cardInfo);
 		tglbtnBuild.setSelected(false);
 		tglbtnInfo.setSelected(true);
 		tglbtnStats.setSelected(false);
