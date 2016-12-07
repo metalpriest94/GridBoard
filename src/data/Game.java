@@ -1312,12 +1312,13 @@ public class Game extends JFrame {
 		storeWater = 20;
 		storeVegetables = 20;
 		storeClothes = 0;
-		storeShoes = 0;
+		storeCoal = 0;
+		
 		
 		storeMilk = 0;
 		storeMeat = 0;
 		storeMedicine = 0;
-		storeCoal = 0;
+		storeShoes = 0;
 		storeHoney = 0;
 		storeOrnaments = 0;
 		
@@ -1458,16 +1459,17 @@ public class Game extends JFrame {
 				storeClothes = 0;
 			}
 			
-			if (storeShoes / (inhabs * 2) >= 1)
+			if (storeCoal / (inhabs * 2) >= 1)
 			{
 				happiness = happiness + 2;
-				storeShoes -= inhabs * 2;
+				storeCoal -= inhabs * 2;
 			}
 			else
 			{
-				happiness = happiness + 2 - (5 * (1 - (storeShoes / (inhabs * 2.0))));
-				storeShoes = 0;
+				happiness = happiness + 2 - (5 * (1 - (storeCoal / (inhabs * 2.0))));
+				storeCoal = 0;
 			}
+			
 
 		}
 		
@@ -1506,15 +1508,15 @@ public class Game extends JFrame {
 				storeMedicine = 0;
 			}
 			
-			if (storeCoal / (inhabs * 2) >= 1)
+			if (storeShoes / (inhabs * 2) >= 1)
 			{
 				happiness = happiness + 2;
-				storeCoal -= inhabs * 2;
+				storeShoes -= inhabs * 2;
 			}
 			else
 			{
-				happiness = happiness + 2 - (5 * (1 - (storeCoal / (inhabs * 2.0))));
-				storeCoal = 0;
+				happiness = happiness + 2 - (5 * (1 - (storeShoes / (inhabs * 2.0))));
+				storeShoes = 0;
 			}
 			
 			if (storeHoney / (inhabs * 2) >= 1)
