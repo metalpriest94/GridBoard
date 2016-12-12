@@ -46,6 +46,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -61,6 +62,8 @@ public class Game extends JFrame {
 	private Thread clockwork;
 	private Thread animator;
 	
+	private final Color basicBackground = new Color(255, 219, 153);
+	private final Color darkBackground = new Color(229, 194, 137);
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
@@ -282,6 +285,7 @@ public class Game extends JFrame {
 	 * Create the frame.
 	 */
 	public Game(boolean isNewGame, String file, JFrame caller) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources" + File.separator + "images" + File.separator + "game" + File.separator + "icon.png"));
 		setUndecorated(true);
 		AbstractAction moveUp = new AbstractAction(){
 			@Override
@@ -444,7 +448,7 @@ public class Game extends JFrame {
 		contentPane.setAlignmentY(0.0f);
 		contentPane.setAlignmentX(0.0f);
 		contentPane.setBorder(null);
-		contentPane.setBackground(new Color(153, 204, 204));
+		contentPane.setBackground(basicBackground);
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256]", "[][256:n:256,grow][][361.00,grow]"));
 		
@@ -465,7 +469,7 @@ public class Game extends JFrame {
 		});
 		
 		panelGame.setTileSize(52);
-		panelGame.setBackground(new Color(153, 204, 204));
+		panelGame.setBackground(basicBackground);
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -539,28 +543,28 @@ public class Game extends JFrame {
 		panelGame.setShowGrid(false);
 		
 		panelResearch = new JPanel();
-		panelResearch.setBackground(new Color(153, 204, 204));
+		panelResearch.setBackground(basicBackground);
 		panelMain.add(panelResearch, cardResearch);
 		panelResearch.setLayout(new MigLayout("", "[]", "[]"));
 		
 		panelTopBar = new JPanel();
-		panelTopBar.setBackground(new Color(102, 153, 153));
+		panelTopBar.setBackground(darkBackground);
 		contentPane.add(panelTopBar, "cell 0 0,grow");
 		panelTopBar.setLayout(new CardLayout(0, 0));
 		topBarCard = (CardLayout)panelTopBar.getLayout(); 
 		
 		panelResources = new JPanel();
-		panelResources.setBackground(new Color(102, 153, 153));
+		panelResources.setBackground(darkBackground);
 		panelResources.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
 		panelTopBar.add(panelResources, cardResources);
 		
 		panelTime = new JPanel();
-		panelTime.setBackground(new Color(102, 153, 153));
+		panelTime.setBackground(darkBackground);
 		panelTopBar.add(panelTime, cardTime);
 		panelTime.setLayout(new MigLayout("", "[40px:n:40px][48px:n:196px][48px:n:48px,right][12px:n:12px,center][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
 		
 		panelIndicators = new JPanel();
-		panelIndicators.setBackground(new Color(102, 153, 153));
+		panelIndicators.setBackground(darkBackground);
 		panelIndicators.setLayout(new MigLayout("", "[40px:n:40px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px,leading][48px:n:48px,right][12px:n:12px][48px:n:48px][48px:n:48px,right][grow]", "[grow,center]"));
 		panelTopBar.add(panelIndicators, cardIndicators);
 		
@@ -581,7 +585,7 @@ public class Game extends JFrame {
 		
 		panelPicHappiness = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "happiness3.png");
 		panelPicHappiness.setToolTipText("HAPPINESS");
-		panelPicHappiness.setBackground(new Color(102, 153, 153));
+		panelPicHappiness.setBackground(darkBackground);
 		panelIndicators.add(panelPicHappiness, "cell 1 0,grow");
 		
 		lblHappiness = new JLabel("70");
@@ -607,7 +611,7 @@ public class Game extends JFrame {
 		
 		lblDay = new JLabel("Day 1");
 		lblDay.setFont(overview);
-		lblDay.setBackground(new Color(102, 153, 153));
+		lblDay.setBackground(darkBackground);
 		panelTime.add(lblDay, "cell 1 0,alignx center");
 		
 		lblHours = new JLabel("00");
@@ -649,7 +653,7 @@ public class Game extends JFrame {
 		
 		panelPicWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
 		panelPicWood.setToolTipText("WOOD");
-		panelPicWood.setBackground(new Color(102, 153, 153));
+		panelPicWood.setBackground(darkBackground);
 		panelResources.add(panelPicWood, "cell 1 0,grow");
 		
 		lblStoreWood = new JLabel("0");
@@ -657,12 +661,12 @@ public class Game extends JFrame {
 		panelResources.add(lblStoreWood, "cell 2 0,alignx center");
 		
 		panelSpacer1 = new JPanel();
-		panelSpacer1.setBackground(new Color(102, 153, 153));
+		panelSpacer1.setBackground(darkBackground);
 		panelResources.add(panelSpacer1, "cell 3 0,grow");
 		
 		panelPicStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
 		panelPicStone.setToolTipText("STONE");
-		panelPicStone.setBackground(new Color(102, 153, 153));
+		panelPicStone.setBackground(darkBackground);
 		panelResources.add(panelPicStone, "cell 4 0,grow");
 		
 		lblStoreStone = new JLabel("0");
@@ -670,12 +674,12 @@ public class Game extends JFrame {
 		panelResources.add(lblStoreStone, "cell 5 0,alignx center");
 		
 		panelSpacer2 = new JPanel();
-		panelSpacer2.setBackground(new Color(102, 153, 153));
+		panelSpacer2.setBackground(darkBackground);
 		panelResources.add(panelSpacer2, "cell 6 0,grow");
 		
 		panelPicSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
 		panelPicSteel.setToolTipText("STEEL");
-		panelPicSteel.setBackground(new Color(102, 153, 153));
+		panelPicSteel.setBackground(darkBackground);
 		panelResources.add(panelPicSteel, "cell 7 0,grow");
 		
 		lblStoreSteel = new JLabel("0");
@@ -683,12 +687,12 @@ public class Game extends JFrame {
 		panelResources.add(lblStoreSteel, "cell 8 0,alignx center");
 		
 		panelSpacer3 = new JPanel();
-		panelSpacer3.setBackground(new Color(102, 153, 153));
+		panelSpacer3.setBackground(darkBackground);
 		panelResources.add(panelSpacer3, "cell 9 0,grow");
 		
 		panelPicGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
 		panelPicGlass.setToolTipText("GLASS");
-		panelPicGlass.setBackground(new Color(102, 153, 153));
+		panelPicGlass.setBackground(darkBackground);
 		panelResources.add(panelPicGlass, "cell 10 0,grow");
 		
 		lblStoreGlass = new JLabel("0");
@@ -696,12 +700,12 @@ public class Game extends JFrame {
 		panelResources.add(lblStoreGlass, "cell 11 0,alignx center");
 		
 		panelSpacer4 = new JPanel();
-		panelSpacer4.setBackground(new Color(102, 153, 153));
+		panelSpacer4.setBackground(darkBackground);
 		panelResources.add(panelSpacer4, "cell 12 0,grow");
 		
 		panelPicGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
 		panelPicGold.setToolTipText("GOLD");
-		panelPicGold.setBackground(new Color(102, 153, 153));
+		panelPicGold.setBackground(darkBackground);
 		panelResources.add(panelPicGold, "cell 13 0,grow");
 		
 		lblGold = new JLabel("10");
@@ -723,7 +727,7 @@ public class Game extends JFrame {
 				mmuGame.clickMiniMap(e);
 			}
 		});
-		panelMiniMap.setBackground(new Color(102, 153, 153));
+		panelMiniMap.setBackground(darkBackground);
 		FlowLayout flowLayout = (FlowLayout) panelMiniMap.getLayout();
 		flowLayout.setAlignOnBaseline(true);
 		panelMiniMap.addMouseListener(new MouseAdapter() {
@@ -734,7 +738,7 @@ public class Game extends JFrame {
 		});
 		
 		panelToolSelection = new JPanel();
-		panelToolSelection.setBackground(new Color(102, 153, 153));
+		panelToolSelection.setBackground(darkBackground);
 		contentPane.add(panelToolSelection, "cell 1 2,grow");
 		panelToolSelection.setLayout(new MigLayout("", "[grow][grow][grow]", "[][]"));
 		
@@ -765,13 +769,13 @@ public class Game extends JFrame {
 		
 		panelTools = new JPanel();
 		panelTools.setBorder(null);
-		panelTools.setBackground(new Color(102, 153, 153));
+		panelTools.setBackground(darkBackground);
 		contentPane.add(panelTools, "cell 1 3,grow");
 		panelTools.setLayout(new CardLayout(0, 0));
 		toolsCard = ((CardLayout)panelTools.getLayout());
 		
 		panelBuild = new JPanel();
-		panelBuild.setBackground(new Color(102, 153, 153));
+		panelBuild.setBackground(darkBackground);
 		panelTools.add(panelBuild, cardBuild);
 		panelBuild.setLayout(new MigLayout("", "[grow]", "[][grow]"));
 		
@@ -792,17 +796,18 @@ public class Game extends JFrame {
 				panelSelectItem.setDragged(false);
 				panelSelectItem.setPosX(e.getX() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() );
 				panelSelectItem.setPosY(e.getY() / panelSelectItem.getTileSize() * panelSelectItem.getTileSize() ); 
+				panelSelectItem.repaint();
 			}
 		});
 		
 		
-		panelSelectItem.setBackground(new Color(102, 153, 153));
+		panelSelectItem.setBackground(darkBackground);
 		
 		scrollPane.setViewportView(panelSelectItem);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(panelSelectItem.getTileSize());
 				
 		panelInfo = new JPanel();
-		panelInfo.setBackground(new Color(102, 153, 153));
+		panelInfo.setBackground(darkBackground);
 		panelTools.add(panelInfo, cardInfo);
 		panelInfo.setLayout(new MigLayout("", "[][grow]", "[][][]"));
 		
@@ -819,7 +824,7 @@ public class Game extends JFrame {
 		panelInfo.add(lblItemname, "cell 0 2 2 1");
 		
 		panelStats = new JPanel();
-		panelStats.setBackground(new Color(102, 153, 153));
+		panelStats.setBackground(darkBackground);
 		panelTools.add(panelStats, cardStats);
 		panelStats.setLayout(new MigLayout("", "[]", "[][][]"));
 		
@@ -833,7 +838,7 @@ public class Game extends JFrame {
 		panelStats.add(lblHousingSpace, "cell 0 2");
 		
 		panelStorage = new JPanel();
-		panelStorage.setBackground(new Color(102, 153, 153));
+		panelStorage.setBackground(darkBackground);
 		panelTools.add(panelStorage, cardStorage);
 		panelStorage.setLayout(new MigLayout("", "[grow,fill]", "[][grow]"));
 		
@@ -845,65 +850,65 @@ public class Game extends JFrame {
 		panelStorage.add(scrollPaneStorage, "cell 0 1,grow");
 		
 		panelStorageItems = new JPanel();
-		panelStorageItems.setBackground(new Color(102, 153, 153));
+		panelStorageItems.setBackground(darkBackground);
 		scrollPaneStorage.setViewportView(panelStorageItems);
 		panelStorageItems.setLayout(new MigLayout("", "[32px:n:32px][40px:n:40px,right][grow][32px:n:32px][40px:n:40px,right]", "[32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px,grow]"));
 		
 		panelStorageWood = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
-		panelStorageWood.setBackground(new Color(102, 153, 153));
+		panelStorageWood.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageWood, "cell 0 0,grow");
 		
 		lblStorageWood = new JLabel("0");
 		panelStorageItems.add(lblStorageWood, "cell 1 0");
 		
 		panelStorageSpacer = new JPanel();
-		panelStorageSpacer.setBackground(new Color(102, 153, 153));
+		panelStorageSpacer.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageSpacer, "cell 2 0 1 2,grow");
 		
 		panelStorageStone = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
-		panelStorageStone.setBackground(new Color(102, 153, 153));
+		panelStorageStone.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageStone, "cell 3 0,grow");
 		
 		lblStorageStone = new JLabel("0");
 		panelStorageItems.add(lblStorageStone, "cell 4 0");
 		
 		panelStorageSteel = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
-		panelStorageSteel.setBackground(new Color(102, 153, 153));
+		panelStorageSteel.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageSteel, "cell 0 1,grow");
 		
 		lblStorageSteel = new JLabel("0");
 		panelStorageItems.add(lblStorageSteel, "cell 1 1");
 		
 		panelStorageGlass = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
-		panelStorageGlass.setBackground(new Color(102, 153, 153));
+		panelStorageGlass.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageGlass, "cell 3 1,grow");
 		
 		lblStorageGlass = new JLabel("0");
 		panelStorageItems.add(lblStorageGlass, "cell 4 1");
 		
 		panelStorageWater = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.png");
-		panelStorageWater.setBackground(new Color(102, 153, 153));
+		panelStorageWater.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageWater, "cell 0 2,grow");
 		
 		lblStorageWater = new JLabel("0");
 		panelStorageItems.add(lblStorageWater, "cell 1 2");
 		
 		panelStorageVegetables = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "vegetables.png");
-		panelStorageVegetables.setBackground(new Color(102, 153, 153));
+		panelStorageVegetables.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageVegetables, "cell 3 2,grow");
 		
 		lblStorageVegetables = new JLabel("0");
 		panelStorageItems.add(lblStorageVegetables, "cell 4 2");
 		
 		panelStorageGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
-		panelStorageGold.setBackground(new Color(102, 153, 153));
+		panelStorageGold.setBackground(darkBackground);
 		panelStorageItems.add(panelStorageGold, "cell 0 3,grow");
 		
 		lblStorageGold = new JLabel("0");
 		panelStorageItems.add(lblStorageGold, "cell 1 3");
 		
 		panelQuit = new JPanel();
-		panelQuit.setBackground(new Color(102, 153, 153));
+		panelQuit.setBackground(darkBackground);
 		contentPane.add(panelQuit, "cell 1 0,grow");
 		panelQuit.setLayout(new MigLayout("", "[grow][grow][grow]", "[][][]"));
 		
@@ -1143,7 +1148,7 @@ public class Game extends JFrame {
 		{
 			for(int y = 0; y < panelSelectItem.getMapping()[0].length; y++)
 			{
-				panelSelectItem.applyProperty(x, y, 0, (102 *256*256 + 155 *256 + 155));
+				panelSelectItem.applyProperty(x, y, 0, (229 *256*256 + 194 *256 + 137));
 			}
 		}
 	}

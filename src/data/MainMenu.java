@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import java.awt.Toolkit;
 
 public class MainMenu extends JFrame {
 
@@ -41,7 +42,8 @@ public class MainMenu extends JFrame {
 	private final Font menuFont = new Font(basicFont, Font.BOLD, 30);
 	private final Font subFont = new Font(basicFont, Font.BOLD, 24);
 	private final Font optionFont = new Font(basicFont, Font.PLAIN, 24);;
-	private final Color basicBackground = new Color(153, 204, 204);
+	private final Color basicBackground = new Color(255, 219, 153);
+	private final Color darkBackground = new Color(229, 194, 137);
 	
 	private DefaultListModel<String> modelSavs = new DefaultListModel<String>();
 	private DefaultListModel<String> modelMaps = new DefaultListModel<String>();
@@ -60,6 +62,7 @@ public class MainMenu extends JFrame {
 	private JRadioButton rdbtnWindow;
 	private JRadioButton rdbtnMusicOn;
 	private JRadioButton rdbtnMusicOff;
+	private JImgPanel panelLogo;
 
 	/**
 	 * Launch the application.
@@ -82,13 +85,14 @@ public class MainMenu extends JFrame {
 	 * Create the frame.
 	 */
 	public MainMenu() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources" + File.separator + "images" + File.separator + "game" + File.separator + "icon.png"));
 		setUndecorated(true);
 		setExtendedState(MAXIMIZED_BOTH);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(102, 153, 153));
+		contentPane.setBackground(darkBackground);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
@@ -99,8 +103,9 @@ public class MainMenu extends JFrame {
 		contentPane.add(panelMain, cardMain);
 		panelMain.setLayout(new MigLayout("", "[117px,grow]", "[45px,grow][96px:n:96px][96px:n:96px][96px:n:96px][96px:n:96px]"));
 		
-		JLabel lblLoad = new JLabel("Space for upcoming logo");
-		panelMain.add(lblLoad, "cell 0 0,alignx center,aligny top");
+		panelLogo = new JImgPanel("resources" + File.separator + "images" + File.separator + "game" + File.separator + "logo.png");
+		panelLogo.setBackground(basicBackground);
+		panelMain.add(panelLogo, "cell 0 0,grow");
 		
 		JButton btnNewGame = new JButton("New Game");
 		panelMain.add(btnNewGame, "cell 0 1,grow");

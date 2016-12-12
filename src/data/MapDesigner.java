@@ -46,6 +46,9 @@ import javax.swing.event.ListSelectionEvent;
 
 public class MapDesigner extends JFrame {
 
+	private final Color basicBackground = new Color(255, 219, 153);
+	private final Color darkBackground = new Color(229, 194, 137);
+	
 	private JPanel contentPane;
 	private JGridPanel panelMap;
 	private JButton btnUp;
@@ -137,7 +140,7 @@ public class MapDesigner extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 940, 623);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(153, 204, 204));
+		contentPane.setBackground(basicBackground);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][grow][][]", "[][grow][]"));
@@ -291,7 +294,7 @@ public class MapDesigner extends JFrame {
 		});
 		
 		panelTools = new JPanel();
-		panelTools.setBackground(new Color(153, 204, 204));
+		panelTools.setBackground(basicBackground);
 		contentPane.add(panelTools, "cell 3 1 1 2,grow");
 		panelTools.setLayout(new MigLayout("", "[][85.00][-14.00][54.00,grow][64.00][119.00,grow][][grow]", "[][][][][20.00][20.00][][][][][][][][][][][][grow]"));
 		
@@ -339,7 +342,7 @@ public class MapDesigner extends JFrame {
 			}
 		});
 		rdbtnPlaceMaptile.setSelected(true);
-		rdbtnPlaceMaptile.setBackground(new Color(153, 204, 204));
+		rdbtnPlaceMaptile.setBackground(basicBackground);
 		buttonGroup.add(rdbtnPlaceMaptile);
 		panelTools.add(rdbtnPlaceMaptile, "cell 2 1 2 1");
 		
@@ -402,7 +405,7 @@ public class MapDesigner extends JFrame {
 					lblSelectedItem.setVisible(true);
 			}
 		});
-		rdbtnPlaceItem.setBackground(new Color(153, 204, 204));
+		rdbtnPlaceItem.setBackground(basicBackground);
 		buttonGroup.add(rdbtnPlaceItem);
 		panelTools.add(rdbtnPlaceItem, "cell 2 2 2 1");
 		
@@ -420,7 +423,7 @@ public class MapDesigner extends JFrame {
 				repaint();
 			}
 		});
-		chckbxShowGrid.setBackground(new Color(153, 204, 204));
+		chckbxShowGrid.setBackground(basicBackground);
 		chckbxShowGrid.setSelected(true);
 		panelTools.add(chckbxShowGrid, "cell 7 2");
 		panelTools.add(btnLoad, "cell 1 3,growx");
@@ -433,7 +436,7 @@ public class MapDesigner extends JFrame {
 				
 			}
 		});
-		rdbtnRemoveItem.setBackground(new Color(153, 204, 204));
+		rdbtnRemoveItem.setBackground(basicBackground);
 		buttonGroup.add(rdbtnRemoveItem);
 		panelTools.add(rdbtnRemoveItem, "cell 2 3 2 1");
 		
@@ -504,7 +507,7 @@ public class MapDesigner extends JFrame {
 			}
 		});
 		buttonGroup.add(rdbtnConfigureItem);
-		rdbtnConfigureItem.setBackground(new Color(153, 204, 204));
+		rdbtnConfigureItem.setBackground(basicBackground);
 		panelTools.add(rdbtnConfigureItem, "cell 2 4 2 1");
 		
 		lblHeight = new JLabel("Height");
