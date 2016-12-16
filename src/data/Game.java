@@ -247,6 +247,14 @@ public class Game extends JFrame {
 	private JLabel lblTrading;
 	private JLabel lblTotal;
 	private JLabel lblTotalIncome;
+	private JImgPanel panelImgWestBuy;
+	private JImgPanel panelImgEastBuy;
+	private JImgPanel panelImgSouthBuy;
+	private JImgPanel panelImgNorthBuy;
+	private JImgPanel panelImgWestSell;
+	private JImgPanel panelImgEastSell;
+	private JImgPanel panelImgSouthSell;
+	private JImgPanel panelImgNorthSell;
 	
 	
 	public GridIO getGioGame() {
@@ -636,7 +644,7 @@ public class Game extends JFrame {
 		panelTrade = new JPanel();
 		panelTrade.setBackground(basicBackground);
 		panelMain.add(panelTrade, cardTrade);
-		panelTrade.setLayout(new MigLayout("", "[32px:n:32px,grow][][][][]", "[][][32px:n:32px,grow][32px:n:32px][32px:n:32px][32px:n:32px][][]"));
+		panelTrade.setLayout(new MigLayout("", "[32px:n:32px][][32px:n:32px][32px:n:32px][]", "[][][32px:n:32px,grow][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][][]"));
 		
 		lblTrading = new JLabel("Trading");
 		lblTrading.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -659,22 +667,71 @@ public class Game extends JFrame {
 		panelTrade.add(lblIncome, "cell 4 1");
 		
 		panelImgWest = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagWest.png");
+		panelImgWest.setToolTipText("ARBORIA (WEST)");
+		panelImgWest.setBackground(darkBackground);
 		panelTrade.add(panelImgWest, "cell 0 2,grow");
 		
+		panelImgWestBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "medicine.png");
+		panelImgWestBuy.setToolTipText("MEDICINE");
+		panelImgWestBuy.setBackground(darkBackground);
+		panelTrade.add(panelImgWestBuy, "cell 2 3,grow");
+		
+		panelImgWestSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "honey.png");
+		panelImgWestSell.setToolTipText("HONEY");
+		panelImgWestSell.setBackground(darkBackground);
+		panelTrade.add(panelImgWestSell, "cell 3 4,grow");
+		
 		panelImgEast = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagEast.png");
-		panelTrade.add(panelImgEast, "cell 0 3,grow");
+		panelImgEast.setToolTipText("HUA (EAST)");
+		panelImgEast.setBackground(darkBackground);
+		panelTrade.add(panelImgEast, "cell 0 5,grow");
+		
+		panelImgEastBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ornaments.png");
+		panelImgEastBuy.setToolTipText("ORNAMENTS");
+		panelImgEastBuy.setBackground(darkBackground);
+		panelTrade.add(panelImgEastBuy, "cell 2 6,grow");
+		
+		panelImgEastSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "tobacco.png");
+		panelImgEastSell.setToolTipText("TOBACCO");
+		panelImgEastSell.setBackground(darkBackground);
+		panelTrade.add(panelImgEastSell, "cell 3 7,grow");
 		
 		panelImgSouth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagSouth.png");
-		panelTrade.add(panelImgSouth, "cell 0 4,grow");
+		panelImgSouth.setToolTipText("EEGIS (SOUTH)");
+		panelImgSouth.setBackground(darkBackground);
+		panelTrade.add(panelImgSouth, "cell 0 8,grow");
+		
+		panelImgSouthBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "perfume.png");
+		panelImgSouthBuy.setToolTipText("PERFUME");
+		panelImgSouthBuy.setBackground(darkBackground);
+		panelTrade.add(panelImgSouthBuy, "cell 2 9,grow");
+		
+		panelImgSouthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coffee.png");
+		panelImgSouthSell.setToolTipText("COFFEE");
+		panelImgSouthSell.setBackground(darkBackground);
+		panelTrade.add(panelImgSouthSell, "cell 3 10,grow");
 		
 		panelImgNorth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagNorth.png");
-		panelTrade.add(panelImgNorth, "cell 0 5,grow");
+		panelImgNorth.setToolTipText("GOREHEIM (NORTH)");
+		panelImgNorth.setBackground(darkBackground);
+		panelTrade.add(panelImgNorth, "cell 0 11,grow");
+		
+		panelImgNorthBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "liquor.png");
+		panelImgNorthBuy.setToolTipText("LIQUOR");
+		panelImgNorthBuy.setBackground(darkBackground);
+		panelTrade.add(panelImgNorthBuy, "cell 2 12,grow");
+		
+		panelImgNorthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "salmon.png");
+		panelImgNorthSell.setToolTipText("SALMON");
+		panelImgNorthSell.setBackground(darkBackground);
+		panelTrade.add(panelImgNorthSell, "cell 3 13,grow");
 		
 		lblTotal = new JLabel("Total");
-		panelTrade.add(lblTotal, "cell 4 6");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblTotal, "cell 4 14");
 		
 		lblTotalIncome = new JLabel("");
-		panelTrade.add(lblTotalIncome, "cell 4 7");
+		panelTrade.add(lblTotalIncome, "cell 4 15");
 		
 		panelTopBar = new JPanel();
 		panelTopBar.setBackground(darkBackground);
@@ -845,6 +902,7 @@ public class Game extends JFrame {
 		btnNextRes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				topBarCard.show(panelTopBar, cardTime);
+				mainCard.show(panelMain, cardTrade);
 			}
 		});
 		panelResources.add(btnNextRes, "cell 15 0,alignx right,growy");
