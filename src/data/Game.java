@@ -255,6 +255,23 @@ public class Game extends JFrame {
 	private JImgPanel panelImgEastSell;
 	private JImgPanel panelImgSouthSell;
 	private JImgPanel panelImgNorthSell;
+	private JLabel lblIncomeWBuy;
+	private JLabel lblIncomeWSell;
+	private JLabel lblIncomeEBuy;
+	private JLabel lblIncomeESell;
+	private JLabel lblIncomeSBuy;
+	private JLabel lblIncomeSSell;
+	private JLabel lblIncomeNBuy;
+	private JLabel lblIncomeNSell;
+	private JImgPanel panelImgTotolGold;
+	private JTextField textFieldWBuy;
+	private JTextField textFieldWSell;
+	private JTextField textFieldEBuy;
+	private JTextField textFieldESell;
+	private JTextField textFieldSBuy;
+	private JTextField textFieldSSell;
+	private JTextField textFieldNBuy;
+	private JTextField textFieldNSell;
 	
 	
 	public GridIO getGioGame() {
@@ -644,7 +661,7 @@ public class Game extends JFrame {
 		panelTrade = new JPanel();
 		panelTrade.setBackground(basicBackground);
 		panelMain.add(panelTrade, cardTrade);
-		panelTrade.setLayout(new MigLayout("", "[32px:n:32px][][32px:n:32px][32px:n:32px][]", "[][][32px:n:32px,grow][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][][]"));
+		panelTrade.setLayout(new MigLayout("", "[32px:n:32px][][32px:n:32px][32px:n:32px,grow][32px:n:32px][32px:n:32px,grow][][32px:n:32px]", "[][][32px:n:32px,grow][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][][32px:n:32px,grow]"));
 		
 		lblTrading = new JLabel("Trading");
 		lblTrading.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -656,15 +673,15 @@ public class Game extends JFrame {
 		
 		lblBuy = new JLabel("Buy");
 		lblBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblBuy, "flowx,cell 2 1");
+		panelTrade.add(lblBuy, "flowx,cell 2 1 2 1");
 		
 		lblSell = new JLabel("Sell");
 		lblSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblSell, "cell 3 1");
+		panelTrade.add(lblSell, "cell 4 1 2 1");
 		
 		lblIncome = new JLabel("Income");
 		lblIncome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncome, "cell 4 1");
+		panelTrade.add(lblIncome, "cell 6 1,alignx right");
 		
 		panelImgWest = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagWest.png");
 		panelImgWest.setToolTipText("ARBORIA (WEST)");
@@ -676,10 +693,28 @@ public class Game extends JFrame {
 		panelImgWestBuy.setBackground(darkBackground);
 		panelTrade.add(panelImgWestBuy, "cell 2 3,grow");
 		
+		textFieldWBuy = new JTextField();
+		textFieldWBuy.setText("0");
+		panelTrade.add(textFieldWBuy, "cell 3 3,growx");
+		textFieldWBuy.setColumns(10);
+		
+		lblIncomeWBuy = new JLabel("-0");
+		lblIncomeWBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeWBuy, "cell 6 3,alignx right");
+		
 		panelImgWestSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "honey.png");
 		panelImgWestSell.setToolTipText("HONEY");
 		panelImgWestSell.setBackground(darkBackground);
-		panelTrade.add(panelImgWestSell, "cell 3 4,grow");
+		panelTrade.add(panelImgWestSell, "cell 4 4,grow");
+		
+		textFieldWSell = new JTextField();
+		textFieldWSell.setText("0");
+		textFieldWSell.setColumns(10);
+		panelTrade.add(textFieldWSell, "cell 5 4,growx");
+		
+		lblIncomeWSell = new JLabel("+0");
+		lblIncomeWSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeWSell, "cell 6 4,alignx right");
 		
 		panelImgEast = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagEast.png");
 		panelImgEast.setToolTipText("HUA (EAST)");
@@ -691,10 +726,28 @@ public class Game extends JFrame {
 		panelImgEastBuy.setBackground(darkBackground);
 		panelTrade.add(panelImgEastBuy, "cell 2 6,grow");
 		
+		textFieldEBuy = new JTextField();
+		textFieldEBuy.setText("0");
+		textFieldEBuy.setColumns(10);
+		panelTrade.add(textFieldEBuy, "cell 3 6,growx");
+		
+		lblIncomeEBuy = new JLabel("-0");
+		lblIncomeEBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeEBuy, "cell 6 6,alignx right");
+		
 		panelImgEastSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "tobacco.png");
 		panelImgEastSell.setToolTipText("TOBACCO");
 		panelImgEastSell.setBackground(darkBackground);
-		panelTrade.add(panelImgEastSell, "cell 3 7,grow");
+		panelTrade.add(panelImgEastSell, "cell 4 7,grow");
+		
+		textFieldESell = new JTextField();
+		textFieldESell.setText("0");
+		textFieldESell.setColumns(10);
+		panelTrade.add(textFieldESell, "cell 5 7,growx");
+		
+		lblIncomeESell = new JLabel("+0");
+		lblIncomeESell.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeESell, "cell 6 7,alignx right");
 		
 		panelImgSouth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagSouth.png");
 		panelImgSouth.setToolTipText("EEGIS (SOUTH)");
@@ -706,10 +759,28 @@ public class Game extends JFrame {
 		panelImgSouthBuy.setBackground(darkBackground);
 		panelTrade.add(panelImgSouthBuy, "cell 2 9,grow");
 		
+		textFieldSBuy = new JTextField();
+		textFieldSBuy.setText("0");
+		textFieldSBuy.setColumns(10);
+		panelTrade.add(textFieldSBuy, "cell 3 9,growx");
+		
+		lblIncomeSBuy = new JLabel("-0");
+		lblIncomeSBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeSBuy, "cell 6 9,alignx right");
+		
 		panelImgSouthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coffee.png");
 		panelImgSouthSell.setToolTipText("COFFEE");
 		panelImgSouthSell.setBackground(darkBackground);
-		panelTrade.add(panelImgSouthSell, "cell 3 10,grow");
+		panelTrade.add(panelImgSouthSell, "cell 4 10,grow");
+		
+		textFieldSSell = new JTextField();
+		textFieldSSell.setText("0");
+		textFieldSSell.setColumns(10);
+		panelTrade.add(textFieldSSell, "cell 5 10,growx");
+		
+		lblIncomeSSell = new JLabel("+0");
+		lblIncomeSSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeSSell, "cell 6 10,alignx right");
 		
 		panelImgNorth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagNorth.png");
 		panelImgNorth.setToolTipText("GOREHEIM (NORTH)");
@@ -721,17 +792,41 @@ public class Game extends JFrame {
 		panelImgNorthBuy.setBackground(darkBackground);
 		panelTrade.add(panelImgNorthBuy, "cell 2 12,grow");
 		
+		textFieldNBuy = new JTextField();
+		textFieldNBuy.setText("0");
+		textFieldNBuy.setColumns(10);
+		panelTrade.add(textFieldNBuy, "cell 3 12,growx");
+		
+		lblIncomeNBuy = new JLabel("-0");
+		lblIncomeNBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeNBuy, "cell 6 12,alignx right");
+		
 		panelImgNorthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "salmon.png");
 		panelImgNorthSell.setToolTipText("SALMON");
 		panelImgNorthSell.setBackground(darkBackground);
-		panelTrade.add(panelImgNorthSell, "cell 3 13,grow");
+		panelTrade.add(panelImgNorthSell, "cell 4 13,grow");
+		
+		textFieldNSell = new JTextField();
+		textFieldNSell.setText("0");
+		textFieldNSell.setColumns(10);
+		panelTrade.add(textFieldNSell, "cell 5 13,growx");
+		
+		lblIncomeNSell = new JLabel("+0");
+		lblIncomeNSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblIncomeNSell, "cell 6 13,alignx right");
 		
 		lblTotal = new JLabel("Total");
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblTotal, "cell 4 14");
+		panelTrade.add(lblTotal, "cell 6 14,alignx right");
 		
-		lblTotalIncome = new JLabel("");
-		panelTrade.add(lblTotalIncome, "cell 4 15");
+		lblTotalIncome = new JLabel("+0");
+		lblTotalIncome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblTotalIncome, "cell 6 15,alignx right");
+		
+		panelImgTotolGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
+		panelImgTotolGold.setToolTipText("SALMON");
+		panelImgTotolGold.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgTotolGold, "cell 7 15,grow");
 		
 		panelTopBar = new JPanel();
 		panelTopBar.setBackground(darkBackground);
