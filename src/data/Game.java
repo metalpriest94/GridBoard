@@ -236,8 +236,6 @@ public class Game extends JFrame {
 	
 	private String saveFile;
 	private JPanel panelTrade;
-	private JLabel lblBuy;
-	private JLabel lblSell;
 	private JLabel lblNation;
 	private JLabel lblIncome;
 	private JImgPanel panelImgWest;
@@ -247,14 +245,23 @@ public class Game extends JFrame {
 	private JLabel lblTrading;
 	private JLabel lblTotal;
 	private JLabel lblTotalIncome;
-	private JImgPanel panelImgWestBuy;
-	private JImgPanel panelImgEastBuy;
-	private JImgPanel panelImgSouthBuy;
-	private JImgPanel panelImgNorthBuy;
-	private JImgPanel panelImgWestSell;
-	private JImgPanel panelImgEastSell;
-	private JImgPanel panelImgSouthSell;
-	private JImgPanel panelImgNorthSell;
+	private JLabel lblBuyW;
+	private JLabel lblBuyE;
+	private JLabel lblBuyS;
+	private JLabel lblBuyN;
+	private JLabel lblSellW;
+	private JLabel lblSellE;
+	private JLabel lblSellS;
+	private JLabel lblSellN;
+	private JImgPanel panelImgWestBuy1;
+	private JImgPanel panelImgEastBuy1;
+	private JImgPanel panelImgSouthBuy1;
+	private JImgPanel panelImgNorthBuy1;
+	private JImgPanel panelImgWestSell1;
+	private JImgPanel panelImgEastSell1;
+	private JImgPanel panelImgSouthSell1;
+	private JImgPanel panelImgNorthSell1;
+
 	private JLabel lblIncomeWBuy;
 	private JLabel lblIncomeWSell;
 	private JLabel lblIncomeEBuy;
@@ -264,14 +271,79 @@ public class Game extends JFrame {
 	private JLabel lblIncomeNBuy;
 	private JLabel lblIncomeNSell;
 	private JImgPanel panelImgTotolGold;
-	private JTextField textFieldWBuy;
-	private JTextField textFieldWSell;
-	private JTextField textFieldEBuy;
-	private JTextField textFieldESell;
-	private JTextField textFieldSBuy;
-	private JTextField textFieldSSell;
-	private JTextField textFieldNBuy;
-	private JTextField textFieldNSell;
+	private JTextField textFieldWBuy1;
+	private JTextField textFieldWSell1;
+	private JTextField textFieldEBuy1;
+	private JTextField textFieldESell1;
+	private JTextField textFieldSBuy1;
+	private JTextField textFieldSSell1;
+	private JTextField textFieldNBuy1;
+	private JTextField textFieldNSell1;
+	private JImgPanel panelImgWestBuy2;
+	private JImgPanel panelImgWestBuy3;
+	private JImgPanel panelImgWestBuy4;
+	private JImgPanel panelImgWestBuy5;
+	private JTextField textFieldWBuy2;
+	private JTextField textFieldWBuy3;
+	private JTextField textFieldWBuy4;
+	private JTextField textFieldWBuy5;
+	private JImgPanel panelImgWestSell2;
+	private JImgPanel panelImgWestSell3;
+	private JImgPanel panelImgWestSell4;
+	private JImgPanel panelImgWestSell5;
+	private JImgPanel panelImgEastBuy2;
+	private JImgPanel panelImgEastBuy3;
+	private JImgPanel panelImgEastBuy4;
+	private JImgPanel panelImgEastBuy5;
+	private JImgPanel panelImgEastSell2;
+	private JImgPanel panelImgEastSell3;
+	private JImgPanel panelImgEastSell14;
+	private JImgPanel panelImgEastSell5;
+	private JImgPanel panelImgSouthBuy2;
+	private JImgPanel panelImgSouthBuy3;
+	private JImgPanel panelImgSouthBuy4;
+	private JImgPanel panelImgSouthBuy5;
+	private JImgPanel panelImgSouthSell2;
+	private JImgPanel panelImgSouthSell3;
+	private JImgPanel panelImgSouthSell4;
+	private JImgPanel panelImgSouthSell5;
+	private JImgPanel panelImgNorthBuy2;
+	private JImgPanel panelImgNorthBuy3;
+	private JImgPanel panelImgNorthBuy4;
+	private JImgPanel panelImgNorthBuy5;
+	private JImgPanel panelImgNorthSell2;
+	private JImgPanel panelImgNorthSell3;
+	private JImgPanel panelImgNorthSell4;
+	private JImgPanel panelImgNorthSell5;
+	private JTextField textFieldWSell2;
+	private JTextField textFieldWSell3;
+	private JTextField textFieldWSell4;
+	private JTextField textFieldWSell5;
+	private JTextField textFieldEBuy2;
+	private JTextField textFieldEBuy3;
+	private JTextField textFieldEBuy4;
+	private JTextField textFieldEBuy5;
+	private JTextField textFieldESell2;
+	private JTextField textFieldESell3;
+	private JTextField textFieldESell4;
+	private JTextField textFieldESell5;
+	private JTextField textFieldSBuy2;
+	private JTextField textFieldSBuy3;
+	private JTextField textFieldSBuy4;
+	private JTextField textFieldSBuy5;
+	private JTextField textFieldSSell2;
+	private JTextField textFieldSSell3;
+	private JTextField textFieldSSell4;
+	private JTextField textFieldSSell5;
+	private JTextField textFieldNBuy2;
+	private JTextField textFieldNBuy3;
+	private JTextField textFieldNBuy4;
+	private JTextField textFieldNBuy5;
+	private JTextField textFieldNSell2;
+	private JTextField textFieldNSell3;
+	private JTextField textFieldNSell4;
+	private JTextField textFieldNSell5;
+	
 	
 	
 	public GridIO getGioGame() {
@@ -467,7 +539,7 @@ public class Game extends JFrame {
 		};
 		saveFile = file;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1096, 621);
+		setBounds(100, 100, 1024, 768);
 		contentPane = new JPanel();
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
@@ -490,7 +562,7 @@ public class Game extends JFrame {
 		contentPane.setBorder(null);
 		contentPane.setBackground(basicBackground);
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[398.00,grow][::256]", "[][256:n:256,grow][][361.00,grow]"));
+		contentPane.setLayout(new MigLayout("", "[398.00,grow][256px:n:256px]", "[][256:n:256,grow][][361.00,grow]"));
 		
 		panelMain = new JPanel();
 		contentPane.add(panelMain, "cell 0 1 1 3,grow");
@@ -661,7 +733,7 @@ public class Game extends JFrame {
 		panelTrade = new JPanel();
 		panelTrade.setBackground(basicBackground);
 		panelMain.add(panelTrade, cardTrade);
-		panelTrade.setLayout(new MigLayout("", "[32px:n:32px][][32px:n:32px][32px:n:32px,grow][32px:n:32px][32px:n:32px,grow][][32px:n:32px]", "[][][32px:n:32px,grow][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][][32px:n:32px,grow]"));
+		panelTrade.setLayout(new MigLayout("", "[32px:n:32px][][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px][32px:n:32px,grow][32px:n:32px,grow][32px:n:32px][64px:n:64px][32px:n:32px]", "[][][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][32px:n:32px][][32px:n:32px]"));
 		
 		lblTrading = new JLabel("Trading");
 		lblTrading.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -671,162 +743,506 @@ public class Game extends JFrame {
 		lblNation.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelTrade.add(lblNation, "cell 0 1 2 1");
 		
-		lblBuy = new JLabel("Buy");
-		lblBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblBuy, "flowx,cell 2 1 2 1");
-		
-		lblSell = new JLabel("Sell");
-		lblSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblSell, "cell 4 1 2 1");
-		
 		lblIncome = new JLabel("Income");
 		lblIncome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncome, "cell 6 1,alignx right");
+		panelTrade.add(lblIncome, "cell 17 1,alignx right");
 		
 		panelImgWest = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagWest.png");
 		panelImgWest.setToolTipText("ARBORIA (WEST)");
 		panelImgWest.setBackground(darkBackground);
 		panelTrade.add(panelImgWest, "cell 0 2,grow");
 		
-		panelImgWestBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "medicine.png");
-		panelImgWestBuy.setToolTipText("MEDICINE");
-		panelImgWestBuy.setBackground(darkBackground);
-		panelTrade.add(panelImgWestBuy, "cell 2 3,grow");
+		lblBuyW = new JLabel("Buy");
+		lblBuyW.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblBuyW, "flowx,cell 0 3");
 		
-		textFieldWBuy = new JTextField();
-		textFieldWBuy.setText("0");
-		panelTrade.add(textFieldWBuy, "cell 3 3,growx");
-		textFieldWBuy.setColumns(10);
+		panelImgWestBuy1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "medicine.png");
+		panelImgWestBuy1.setToolTipText("MEDICINE");
+		panelImgWestBuy1.setBackground(darkBackground);
+		panelTrade.add(panelImgWestBuy1, "cell 2 3,grow");
+		
+		textFieldWBuy1 = new JTextField();
+		textFieldWBuy1.setText("0");
+		panelTrade.add(textFieldWBuy1, "cell 3 3,growx");
+		textFieldWBuy1.setColumns(10);
+		
+		panelImgWestBuy2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "fruits.png");
+		panelImgWestBuy2.setToolTipText("FRUITS");
+		panelImgWestBuy2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestBuy2, "cell 5 3,grow");
+		
+		textFieldWBuy2 = new JTextField();
+		textFieldWBuy2.setText("0");
+		textFieldWBuy2.setColumns(10);
+		panelTrade.add(textFieldWBuy2, "cell 6 3,growx");
+		
+		panelImgWestBuy3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "shoes.png");
+		panelImgWestBuy3.setToolTipText("SHOES");
+		panelImgWestBuy3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestBuy3, "cell 8 3,grow");
+		
+		textFieldWBuy3 = new JTextField();
+		textFieldWBuy3.setText("0");
+		textFieldWBuy3.setColumns(10);
+		panelTrade.add(textFieldWBuy3, "cell 9 3,growx");
+		
+		panelImgWestBuy4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "books.png");
+		panelImgWestBuy4.setToolTipText("BOOKS");
+		panelImgWestBuy4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestBuy4, "cell 11 3,grow");
+		
+		textFieldWBuy4 = new JTextField();
+		textFieldWBuy4.setText("0");
+		textFieldWBuy4.setColumns(10);
+		panelTrade.add(textFieldWBuy4, "cell 12 3,growx");
+		
+		panelImgWestBuy5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "iceflowers.png");
+		panelImgWestBuy5.setToolTipText("ICEFLOWERS");
+		panelImgWestBuy5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestBuy5, "cell 14 3,grow");
+		
+		textFieldWBuy5 = new JTextField();
+		textFieldWBuy5.setText("0");
+		textFieldWBuy5.setColumns(10);
+		panelTrade.add(textFieldWBuy5, "cell 15 3,growx");
 		
 		lblIncomeWBuy = new JLabel("-0");
 		lblIncomeWBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeWBuy, "cell 6 3,alignx right");
+		panelTrade.add(lblIncomeWBuy, "cell 17 3,alignx right");
 		
-		panelImgWestSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "honey.png");
-		panelImgWestSell.setToolTipText("HONEY");
-		panelImgWestSell.setBackground(darkBackground);
-		panelTrade.add(panelImgWestSell, "cell 4 4,grow");
+		lblSellW = new JLabel("Sell");
+		lblSellW.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblSellW, "cell 0 4");
 		
-		textFieldWSell = new JTextField();
-		textFieldWSell.setText("0");
-		textFieldWSell.setColumns(10);
-		panelTrade.add(textFieldWSell, "cell 5 4,growx");
+		panelImgWestSell1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "honey.png");
+		panelImgWestSell1.setToolTipText("HONEY");
+		panelImgWestSell1.setBackground(darkBackground);
+		panelTrade.add(panelImgWestSell1, "cell 2 4,grow");
+		
+		textFieldWSell1 = new JTextField();
+		textFieldWSell1.setText("0");
+		textFieldWSell1.setColumns(10);
+		panelTrade.add(textFieldWSell1, "cell 3 4,growx");
+		
+		panelImgWestSell2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "vegetables.png");
+		panelImgWestSell2.setToolTipText("VEGETABLES");
+		panelImgWestSell2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestSell2, "cell 5 4,grow");
+		
+		textFieldWSell2 = new JTextField();
+		textFieldWSell2.setText("0");
+		textFieldWSell2.setColumns(10);
+		panelTrade.add(textFieldWSell2, "cell 6 4,growx");
+		
+		panelImgWestSell3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
+		panelImgWestSell3.setToolTipText("WOOD");
+		panelImgWestSell3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestSell3, "cell 8 4,grow");
+		
+		textFieldWSell3 = new JTextField();
+		textFieldWSell3.setText("0");
+		textFieldWSell3.setColumns(10);
+		panelTrade.add(textFieldWSell3, "cell 9 4,growx");
+		
+		panelImgWestSell4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "milk.png");
+		panelImgWestSell4.setToolTipText("MILK");
+		panelImgWestSell4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestSell4, "cell 11 4,grow");
+		
+		textFieldWSell4 = new JTextField();
+		textFieldWSell4.setText("0");
+		textFieldWSell4.setColumns(10);
+		panelTrade.add(textFieldWSell4, "cell 12 4,growx");
+		
+		panelImgWestSell5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "chocolates.png");
+		panelImgWestSell5.setToolTipText("CHOCOLATES");
+		panelImgWestSell5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgWestSell5, "cell 14 4,grow");
+		
+		textFieldWSell5 = new JTextField();
+		textFieldWSell5.setText("0");
+		textFieldWSell5.setColumns(10);
+		panelTrade.add(textFieldWSell5, "cell 15 4,growx");
 		
 		lblIncomeWSell = new JLabel("+0");
 		lblIncomeWSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeWSell, "cell 6 4,alignx right");
+		panelTrade.add(lblIncomeWSell, "cell 17 4,alignx right");
 		
 		panelImgEast = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagEast.png");
 		panelImgEast.setToolTipText("HUA (EAST)");
 		panelImgEast.setBackground(darkBackground);
-		panelTrade.add(panelImgEast, "cell 0 5,grow");
+		panelTrade.add(panelImgEast, "cell 0 6,grow");
 		
-		panelImgEastBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ornaments.png");
-		panelImgEastBuy.setToolTipText("ORNAMENTS");
-		panelImgEastBuy.setBackground(darkBackground);
-		panelTrade.add(panelImgEastBuy, "cell 2 6,grow");
+		lblBuyE = new JLabel("Buy");
+		lblBuyE.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblBuyE, "cell 0 7");
 		
-		textFieldEBuy = new JTextField();
-		textFieldEBuy.setText("0");
-		textFieldEBuy.setColumns(10);
-		panelTrade.add(textFieldEBuy, "cell 3 6,growx");
+		panelImgEastBuy1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "leather.png");
+		panelImgEastBuy1.setToolTipText("LEATHER");
+		panelImgEastBuy1.setBackground(darkBackground);
+		panelTrade.add(panelImgEastBuy1, "cell 2 7,grow");
+		
+		textFieldEBuy1 = new JTextField();
+		textFieldEBuy1.setText("0");
+		textFieldEBuy1.setColumns(10);
+		panelTrade.add(textFieldEBuy1, "cell 3 7,growx");
+		
+		panelImgEastBuy2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ornaments.png");
+		panelImgEastBuy2.setToolTipText("ORNAMETNS");
+		panelImgEastBuy2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastBuy2, "cell 5 7,grow");
+		
+		textFieldEBuy2 = new JTextField();
+		textFieldEBuy2.setText("0");
+		textFieldEBuy2.setColumns(10);
+		panelTrade.add(textFieldEBuy2, "cell 6 7,growx");
+		
+		panelImgEastBuy3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cocoabeans.png");
+		panelImgEastBuy3.setToolTipText("COCOABEANS");
+		panelImgEastBuy3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastBuy3, "cell 8 7,grow");
+		
+		textFieldEBuy3 = new JTextField();
+		textFieldEBuy3.setText("0");
+		textFieldEBuy3.setColumns(10);
+		panelTrade.add(textFieldEBuy3, "cell 9 7,growx");
+		
+		panelImgEastBuy4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "barrels.png");
+		panelImgEastBuy4.setToolTipText("BARRELS");
+		panelImgEastBuy4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastBuy4, "cell 11 7,grow");
+		
+		textFieldEBuy4 = new JTextField();
+		textFieldEBuy4.setText("0");
+		textFieldEBuy4.setColumns(10);
+		panelTrade.add(textFieldEBuy4, "cell 12 7,growx");
+		
+		panelImgEastBuy5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "pistols.png");
+		panelImgEastBuy5.setToolTipText("PISTOLS");
+		panelImgEastBuy5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastBuy5, "cell 14 7,grow");
+		
+		textFieldEBuy5 = new JTextField();
+		textFieldEBuy5.setText("0");
+		textFieldEBuy5.setColumns(10);
+		panelTrade.add(textFieldEBuy5, "cell 15 7,growx");
 		
 		lblIncomeEBuy = new JLabel("-0");
 		lblIncomeEBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeEBuy, "cell 6 6,alignx right");
+		panelTrade.add(lblIncomeEBuy, "cell 17 7,alignx right");
 		
-		panelImgEastSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "tobacco.png");
-		panelImgEastSell.setToolTipText("TOBACCO");
-		panelImgEastSell.setBackground(darkBackground);
-		panelTrade.add(panelImgEastSell, "cell 4 7,grow");
+		lblSellE = new JLabel("Sell");
+		lblSellE.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblSellE, "cell 0 8");
 		
-		textFieldESell = new JTextField();
-		textFieldESell.setText("0");
-		textFieldESell.setColumns(10);
-		panelTrade.add(textFieldESell, "cell 5 7,growx");
+		panelImgEastSell1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
+		panelImgEastSell1.setToolTipText("STONE");
+		panelImgEastSell1.setBackground(darkBackground);
+		panelTrade.add(panelImgEastSell1, "cell 2 8,grow");
+		
+		textFieldESell1 = new JTextField();
+		textFieldESell1.setText("0");
+		textFieldESell1.setColumns(10);
+		panelTrade.add(textFieldESell1, "cell 3 8,growx");
+		
+		panelImgEastSell2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "grain.png");
+		panelImgEastSell2.setToolTipText("GRAIN");
+		panelImgEastSell2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastSell2, "cell 5 8,grow");
+		
+		textFieldESell2 = new JTextField();
+		textFieldESell2.setText("0");
+		textFieldESell2.setColumns(10);
+		panelTrade.add(textFieldESell2, "cell 6 8,growx");
+		
+		panelImgEastSell3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "tobacco.png");
+		panelImgEastSell3.setToolTipText("TOBACCO");
+		panelImgEastSell3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastSell3, "cell 8 8,grow");
+		
+		textFieldESell3 = new JTextField();
+		textFieldESell3.setText("0");
+		textFieldESell3.setColumns(10);
+		panelTrade.add(textFieldESell3, "cell 9 8,growx");
+		
+		panelImgEastSell14 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "horses.png");
+		panelImgEastSell14.setToolTipText("HORSES");
+		panelImgEastSell14.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastSell14, "cell 11 8,grow");
+		
+		textFieldESell4 = new JTextField();
+		textFieldESell4.setText("0");
+		textFieldESell4.setColumns(10);
+		panelTrade.add(textFieldESell4, "cell 12 8,growx");
+		
+		panelImgEastSell5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cake.png");
+		panelImgEastSell5.setToolTipText("CAKE");
+		panelImgEastSell5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgEastSell5, "cell 14 8,grow");
+		
+		textFieldESell5 = new JTextField();
+		textFieldESell5.setText("0");
+		textFieldESell5.setColumns(10);
+		panelTrade.add(textFieldESell5, "cell 15 8,growx");
 		
 		lblIncomeESell = new JLabel("+0");
 		lblIncomeESell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeESell, "cell 6 7,alignx right");
+		panelTrade.add(lblIncomeESell, "cell 17 8,alignx right");
 		
 		panelImgSouth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagSouth.png");
 		panelImgSouth.setToolTipText("EEGIS (SOUTH)");
 		panelImgSouth.setBackground(darkBackground);
-		panelTrade.add(panelImgSouth, "cell 0 8,grow");
+		panelTrade.add(panelImgSouth, "cell 0 10,grow");
 		
-		panelImgSouthBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "perfume.png");
-		panelImgSouthBuy.setToolTipText("PERFUME");
-		panelImgSouthBuy.setBackground(darkBackground);
-		panelTrade.add(panelImgSouthBuy, "cell 2 9,grow");
+		lblBuyS = new JLabel("Buy");
+		lblBuyS.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblBuyS, "cell 0 11");
 		
-		textFieldSBuy = new JTextField();
-		textFieldSBuy.setText("0");
-		textFieldSBuy.setColumns(10);
-		panelTrade.add(textFieldSBuy, "cell 3 9,growx");
+		panelImgSouthBuy1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "water.png");
+		panelImgSouthBuy1.setToolTipText("WATER");
+		panelImgSouthBuy1.setBackground(darkBackground);
+		panelTrade.add(panelImgSouthBuy1, "cell 2 11,grow");
+		
+		textFieldSBuy1 = new JTextField();
+		textFieldSBuy1.setText("0");
+		textFieldSBuy1.setColumns(10);
+		panelTrade.add(textFieldSBuy1, "cell 3 11,growx");
+		
+		panelImgSouthBuy2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "paper.png");
+		panelImgSouthBuy2.setToolTipText("PAPER");
+		panelImgSouthBuy2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthBuy2, "cell 5 11,grow");
+		
+		textFieldSBuy2 = new JTextField();
+		textFieldSBuy2.setText("0");
+		textFieldSBuy2.setColumns(10);
+		panelTrade.add(textFieldSBuy2, "cell 6 11,growx");
+		
+		panelImgSouthBuy3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cheese.png");
+		panelImgSouthBuy3.setToolTipText("CHEESE");
+		panelImgSouthBuy3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthBuy3, "cell 8 11,grow");
+		
+		textFieldSBuy3 = new JTextField();
+		textFieldSBuy3.setText("0");
+		textFieldSBuy3.setColumns(10);
+		panelTrade.add(textFieldSBuy3, "cell 9 11,growx");
+		
+		panelImgSouthBuy4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "beer.png");
+		panelImgSouthBuy4.setToolTipText("BEER");
+		panelImgSouthBuy4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthBuy4, "cell 11 11,grow");
+		
+		textFieldSBuy4 = new JTextField();
+		textFieldSBuy4.setText("0");
+		textFieldSBuy4.setColumns(10);
+		panelTrade.add(textFieldSBuy4, "cell 12 11,growx");
+		
+		panelImgSouthBuy5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "bread.png");
+		panelImgSouthBuy5.setToolTipText("BREAD");
+		panelImgSouthBuy5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthBuy5, "cell 14 11,grow");
+		
+		textFieldSBuy5 = new JTextField();
+		textFieldSBuy5.setText("0");
+		textFieldSBuy5.setColumns(10);
+		panelTrade.add(textFieldSBuy5, "cell 15 11,growx");
 		
 		lblIncomeSBuy = new JLabel("-0");
 		lblIncomeSBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeSBuy, "cell 6 9,alignx right");
+		panelTrade.add(lblIncomeSBuy, "cell 17 11,alignx right");
 		
-		panelImgSouthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coffee.png");
-		panelImgSouthSell.setToolTipText("COFFEE");
-		panelImgSouthSell.setBackground(darkBackground);
-		panelTrade.add(panelImgSouthSell, "cell 4 10,grow");
+		lblSellS = new JLabel("Sell");
+		lblSellS.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblSellS, "cell 0 12");
 		
-		textFieldSSell = new JTextField();
-		textFieldSSell.setText("0");
-		textFieldSSell.setColumns(10);
-		panelTrade.add(textFieldSSell, "cell 5 10,growx");
+		panelImgSouthSell1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "sand.png");
+		panelImgSouthSell1.setToolTipText("SAND");
+		panelImgSouthSell1.setBackground(darkBackground);
+		panelTrade.add(panelImgSouthSell1, "cell 2 12,grow");
+		
+		textFieldSSell1 = new JTextField();
+		textFieldSSell1.setText("0");
+		textFieldSSell1.setColumns(10);
+		panelTrade.add(textFieldSSell1, "cell 3 12,growx");
+		
+		panelImgSouthSell2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "perfume.png");
+		panelImgSouthSell2.setToolTipText("PERFUME");
+		panelImgSouthSell2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthSell2, "cell 5 12,grow");
+		
+		textFieldSSell2 = new JTextField();
+		textFieldSSell2.setText("0");
+		textFieldSSell2.setColumns(10);
+		panelTrade.add(textFieldSSell2, "cell 6 12,growx");
+		
+		panelImgSouthSell3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "goldOre.png");
+		panelImgSouthSell3.setToolTipText("GOLD ORE");
+		panelImgSouthSell3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthSell3, "cell 8 12,grow");
+		
+		textFieldSSell3 = new JTextField();
+		textFieldSSell3.setText("0");
+		textFieldSSell3.setColumns(10);
+		panelTrade.add(textFieldSSell3, "cell 9 12,growx");
+		
+		panelImgSouthSell4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cocoa.png");
+		panelImgSouthSell4.setToolTipText("COCOA");
+		panelImgSouthSell4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthSell4, "cell 11 12,grow");
+		
+		textFieldSSell4 = new JTextField();
+		textFieldSSell4.setText("0");
+		textFieldSSell4.setColumns(10);
+		panelTrade.add(textFieldSSell4, "cell 12 12,growx");
+		
+		panelImgSouthSell5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coffee.png");
+		panelImgSouthSell5.setToolTipText("COFFEE");
+		panelImgSouthSell5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgSouthSell5, "cell 14 12,grow");
+		
+		textFieldSSell5 = new JTextField();
+		textFieldSSell5.setText("0");
+		textFieldSSell5.setColumns(10);
+		panelTrade.add(textFieldSSell5, "cell 15 12,growx");
 		
 		lblIncomeSSell = new JLabel("+0");
 		lblIncomeSSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeSSell, "cell 6 10,alignx right");
+		panelTrade.add(lblIncomeSSell, "cell 17 12,alignx right");
 		
 		panelImgNorth = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "flagNorth.png");
 		panelImgNorth.setToolTipText("GOREHEIM (NORTH)");
 		panelImgNorth.setBackground(darkBackground);
-		panelTrade.add(panelImgNorth, "cell 0 11,grow");
+		panelTrade.add(panelImgNorth, "cell 0 14,grow");
 		
-		panelImgNorthBuy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "liquor.png");
-		panelImgNorthBuy.setToolTipText("LIQUOR");
-		panelImgNorthBuy.setBackground(darkBackground);
-		panelTrade.add(panelImgNorthBuy, "cell 2 12,grow");
+		lblBuyN = new JLabel("Buy");
+		lblBuyN.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblBuyN, "cell 0 15");
 		
-		textFieldNBuy = new JTextField();
-		textFieldNBuy.setText("0");
-		textFieldNBuy.setColumns(10);
-		panelTrade.add(textFieldNBuy, "cell 3 12,growx");
+		panelImgNorthBuy1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "liquor.png");
+		panelImgNorthBuy1.setToolTipText("LIQUOR");
+		panelImgNorthBuy1.setBackground(darkBackground);
+		panelTrade.add(panelImgNorthBuy1, "cell 2 15,grow");
+		
+		textFieldNBuy1 = new JTextField();
+		textFieldNBuy1.setText("0");
+		textFieldNBuy1.setColumns(10);
+		panelTrade.add(textFieldNBuy1, "cell 3 15,growx");
+		
+		panelImgNorthBuy2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "clothes.png");
+		panelImgNorthBuy2.setToolTipText("CLOTHES");
+		panelImgNorthBuy2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthBuy2, "cell 5 15,grow");
+		
+		textFieldNBuy2 = new JTextField();
+		textFieldNBuy2.setText("0");
+		textFieldNBuy2.setColumns(10);
+		panelTrade.add(textFieldNBuy2, "cell 6 15,growx");
+		
+		panelImgNorthBuy3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "marshweed.png");
+		panelImgNorthBuy3.setToolTipText("MARSHWEED");
+		panelImgNorthBuy3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthBuy3, "cell 8 15,grow");
+		
+		textFieldNBuy3 = new JTextField();
+		textFieldNBuy3.setText("0");
+		textFieldNBuy3.setColumns(10);
+		panelTrade.add(textFieldNBuy3, "cell 9 15,growx");
+		
+		panelImgNorthBuy4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "jewelry.png");
+		panelImgNorthBuy4.setToolTipText("JEWELRY");
+		panelImgNorthBuy4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthBuy4, "cell 11 15,grow");
+		
+		textFieldNBuy4 = new JTextField();
+		textFieldNBuy4.setText("0");
+		textFieldNBuy4.setColumns(10);
+		panelTrade.add(textFieldNBuy4, "cell 12 15,growx");
+		
+		panelImgNorthBuy5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "liquor.png");
+		panelImgNorthBuy5.setToolTipText("LIQUOR");
+		panelImgNorthBuy5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthBuy5, "cell 14 15,grow");
+		
+		textFieldNBuy5 = new JTextField();
+		textFieldNBuy5.setText("0");
+		textFieldNBuy5.setColumns(10);
+		panelTrade.add(textFieldNBuy5, "cell 15 15,growx");
 		
 		lblIncomeNBuy = new JLabel("-0");
 		lblIncomeNBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeNBuy, "cell 6 12,alignx right");
+		panelTrade.add(lblIncomeNBuy, "cell 17 15,alignx right");
 		
-		panelImgNorthSell = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "salmon.png");
-		panelImgNorthSell.setToolTipText("SALMON");
-		panelImgNorthSell.setBackground(darkBackground);
-		panelTrade.add(panelImgNorthSell, "cell 4 13,grow");
+		lblSellN = new JLabel("Sell");
+		lblSellN.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblSellN, "cell 0 16");
 		
-		textFieldNSell = new JTextField();
-		textFieldNSell.setText("0");
-		textFieldNSell.setColumns(10);
-		panelTrade.add(textFieldNSell, "cell 5 13,growx");
+		panelImgNorthSell1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coal.png");
+		panelImgNorthSell1.setToolTipText("COAL");
+		panelImgNorthSell1.setBackground(darkBackground);
+		panelTrade.add(panelImgNorthSell1, "cell 2 16,grow");
+		
+		textFieldNSell1 = new JTextField();
+		textFieldNSell1.setText("0");
+		textFieldNSell1.setColumns(10);
+		panelTrade.add(textFieldNSell1, "cell 3 16,growx");
+		
+		panelImgNorthSell2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ironOre.png");
+		panelImgNorthSell2.setToolTipText("IRON ORE");
+		panelImgNorthSell2.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthSell2, "cell 5 16,grow");
+		
+		textFieldNSell2 = new JTextField();
+		textFieldNSell2.setText("0");
+		textFieldNSell2.setColumns(10);
+		panelTrade.add(textFieldNSell2, "cell 6 16,growx");
+		
+		panelImgNorthSell3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "icewine.png");
+		panelImgNorthSell3.setToolTipText("ICEWINE");
+		panelImgNorthSell3.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthSell3, "cell 8 16,grow");
+		
+		textFieldNSell3 = new JTextField();
+		textFieldNSell3.setText("0");
+		textFieldNSell3.setColumns(10);
+		panelTrade.add(textFieldNSell3, "cell 9 16,growx");
+		
+		panelImgNorthSell4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "hops.png");
+		panelImgNorthSell4.setToolTipText("HOPS");
+		panelImgNorthSell4.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthSell4, "cell 11 16,grow");
+		
+		textFieldNSell4 = new JTextField();
+		textFieldNSell4.setText("0");
+		textFieldNSell4.setColumns(10);
+		panelTrade.add(textFieldNSell4, "cell 12 16,growx");
+		
+		panelImgNorthSell5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "salmon.png");
+		panelImgNorthSell5.setToolTipText("SALMON");
+		panelImgNorthSell5.setBackground(new Color(229, 194, 137));
+		panelTrade.add(panelImgNorthSell5, "cell 14 16,grow");
+		
+		textFieldNSell5 = new JTextField();
+		textFieldNSell5.setText("0");
+		textFieldNSell5.setColumns(10);
+		panelTrade.add(textFieldNSell5, "cell 15 16,growx");
 		
 		lblIncomeNSell = new JLabel("+0");
 		lblIncomeNSell.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblIncomeNSell, "cell 6 13,alignx right");
+		panelTrade.add(lblIncomeNSell, "cell 17 16,alignx right");
 		
 		lblTotal = new JLabel("Total");
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblTotal, "cell 6 14,alignx right");
+		panelTrade.add(lblTotal, "cell 17 17,alignx right");
 		
 		lblTotalIncome = new JLabel("+0");
 		lblTotalIncome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panelTrade.add(lblTotalIncome, "cell 6 15,alignx right");
+		panelTrade.add(lblTotalIncome, "cell 17 18,alignx right");
 		
 		panelImgTotolGold = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
 		panelImgTotolGold.setToolTipText("SALMON");
 		panelImgTotolGold.setBackground(new Color(229, 194, 137));
-		panelTrade.add(panelImgTotolGold, "cell 7 15,grow");
+		panelTrade.add(panelImgTotolGold, "cell 18 18,grow");
 		
 		panelTopBar = new JPanel();
 		panelTopBar.setBackground(darkBackground);
