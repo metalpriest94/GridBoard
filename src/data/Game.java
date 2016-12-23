@@ -369,6 +369,7 @@ public class Game extends JFrame {
 	private JButton btnCalculate;
 	private JButton btnStopPurchases;
 	private JButton btnStopSales;
+	private JLabel lblInvalidValuesFound;
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -1605,6 +1606,8 @@ public class Game extends JFrame {
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				calculateTrades();
+				
 				amountBuy.clear();
 				amountBuy.add(Integer.valueOf(textFieldWBuy1.getText()));
 				amountBuy.add(Integer.valueOf(textFieldWBuy2.getText()));
@@ -1655,7 +1658,7 @@ public class Game extends JFrame {
 				amountSell.add(Integer.valueOf(textFieldNSell4.getText()));
 				amountSell.add(Integer.valueOf(textFieldNSell5.getText()));
 				
-				calculateTrades();
+				
 			}
 		});
 		panelTrade.add(btnConfirm, "cell 0 1 4 1,growx");
@@ -1691,6 +1694,10 @@ public class Game extends JFrame {
 				textFieldNSell3.setText("0");
 				textFieldNSell4.setText("0");
 				textFieldNSell5.setText("0");
+				westPayment = 0;
+				eastPayment = 0;
+				southPayment = 0;
+				northPayment = 0;
 				calculateTrades();
 				
 			}
@@ -1720,6 +1727,10 @@ public class Game extends JFrame {
 				textFieldNBuy3.setText("0");
 				textFieldNBuy4.setText("0");
 				textFieldNBuy5.setText("0");
+				westIncome = 0;
+				eastIncome = 0;
+				southIncome = 0;
+				northIncome = 0;
 				calculateTrades();
 			}
 		});
@@ -2233,6 +2244,12 @@ public class Game extends JFrame {
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelTrade.add(lblTotal, "cell 16 18,alignx right");
 		
+		lblInvalidValuesFound = new JLabel("Invalid value(s) found, please correct!");
+		lblInvalidValuesFound.setVisible(false);
+		lblInvalidValuesFound.setForeground(Color.RED);
+		lblInvalidValuesFound.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panelTrade.add(lblInvalidValuesFound, "cell 0 19 15 1");
+		
 		lblTotalIncome = new JLabel("+0");
 		lblTotalIncome.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelTrade.add(lblTotalIncome, "cell 16 19,alignx right");
@@ -2244,53 +2261,61 @@ public class Game extends JFrame {
 	}
 	public void calculateTrades()
 	{
-		westIncome = (Integer.parseInt(textFieldWBuy1.getText()) *tradeValues.get(0) +
-				Integer.parseInt(textFieldWBuy2.getText()) *tradeValues.get(1) + 
-				Integer.parseInt(textFieldWBuy3.getText()) *tradeValues.get(2) + 
-				Integer.parseInt(textFieldWBuy4.getText()) *tradeValues.get(3) +
-				Integer.parseInt(textFieldWBuy5.getText()) *tradeValues.get(4));
-		
-		westPayment = (Integer.parseInt(textFieldWSell1.getText()) *tradeValues.get(5) +
-				Integer.parseInt(textFieldWSell2.getText()) *tradeValues.get(6) + 
-				Integer.parseInt(textFieldWSell3.getText()) *tradeValues.get(7) + 
-				Integer.parseInt(textFieldWSell4.getText()) *tradeValues.get(8) +
-				Integer.parseInt(textFieldWSell5.getText()) *tradeValues.get(9));
-		
-		eastIncome = (Integer.parseInt(textFieldEBuy1.getText()) *tradeValues.get(10) +
-				Integer.parseInt(textFieldEBuy2.getText()) *tradeValues.get(11) + 
-				Integer.parseInt(textFieldEBuy3.getText()) *tradeValues.get(12) + 
-				Integer.parseInt(textFieldEBuy4.getText()) *tradeValues.get(13) +
-				Integer.parseInt(textFieldEBuy5.getText()) *tradeValues.get(14));
-		
-		eastPayment = (Integer.parseInt(textFieldESell1.getText()) *tradeValues.get(15) +
-				Integer.parseInt(textFieldESell2.getText()) *tradeValues.get(16) + 
-				Integer.parseInt(textFieldESell3.getText()) *tradeValues.get(17) + 
-				Integer.parseInt(textFieldESell4.getText()) *tradeValues.get(18) +
-				Integer.parseInt(textFieldESell5.getText()) *tradeValues.get(19));
-		
-		southIncome = (Integer.parseInt(textFieldSBuy1.getText()) *tradeValues.get(20) +
-				Integer.parseInt(textFieldSBuy2.getText()) *tradeValues.get(21) + 
-				Integer.parseInt(textFieldSBuy3.getText()) *tradeValues.get(22) + 
-				Integer.parseInt(textFieldSBuy4.getText()) *tradeValues.get(23) +
-				Integer.parseInt(textFieldSBuy5.getText()) *tradeValues.get(24));
-		
-		southPayment = (Integer.parseInt(textFieldSSell1.getText()) *tradeValues.get(25) +
-				Integer.parseInt(textFieldSSell2.getText()) *tradeValues.get(26) + 
-				Integer.parseInt(textFieldSSell3.getText()) *tradeValues.get(27) + 
-				Integer.parseInt(textFieldSSell4.getText()) *tradeValues.get(28) +
-				Integer.parseInt(textFieldSSell5.getText()) *tradeValues.get(29));
-		
-		northIncome = (Integer.parseInt(textFieldNBuy1.getText()) *tradeValues.get(30) +
-				Integer.parseInt(textFieldNBuy2.getText()) *tradeValues.get(31) + 
-				Integer.parseInt(textFieldNBuy3.getText()) *tradeValues.get(32) + 
-				Integer.parseInt(textFieldNBuy4.getText()) *tradeValues.get(33) +
-				Integer.parseInt(textFieldNBuy5.getText()) *tradeValues.get(34));
-		
-		northPayment = (Integer.parseInt(textFieldNSell1.getText()) *tradeValues.get(35) +
-				Integer.parseInt(textFieldNSell2.getText()) *tradeValues.get(36) + 
-				Integer.parseInt(textFieldNSell3.getText()) *tradeValues.get(37) + 
-				Integer.parseInt(textFieldNSell4.getText()) *tradeValues.get(38) +
-				Integer.parseInt(textFieldNSell5.getText()) *tradeValues.get(39));
+		try
+		{
+			lblInvalidValuesFound.setVisible(false);
+			westIncome = (Integer.parseInt(textFieldWBuy1.getText()) *tradeValues.get(0) +
+					Integer.parseInt(textFieldWBuy2.getText()) *tradeValues.get(1) + 
+					Integer.parseInt(textFieldWBuy3.getText()) *tradeValues.get(2) + 
+					Integer.parseInt(textFieldWBuy4.getText()) *tradeValues.get(3) +
+					Integer.parseInt(textFieldWBuy5.getText()) *tradeValues.get(4));
+			
+			westPayment = (Integer.parseInt(textFieldWSell1.getText()) *tradeValues.get(5) +
+					Integer.parseInt(textFieldWSell2.getText()) *tradeValues.get(6) + 
+					Integer.parseInt(textFieldWSell3.getText()) *tradeValues.get(7) + 
+					Integer.parseInt(textFieldWSell4.getText()) *tradeValues.get(8) +
+					Integer.parseInt(textFieldWSell5.getText()) *tradeValues.get(9));
+			
+			eastIncome = (Integer.parseInt(textFieldEBuy1.getText()) *tradeValues.get(10) +
+					Integer.parseInt(textFieldEBuy2.getText()) *tradeValues.get(11) + 
+					Integer.parseInt(textFieldEBuy3.getText()) *tradeValues.get(12) + 
+					Integer.parseInt(textFieldEBuy4.getText()) *tradeValues.get(13) +
+					Integer.parseInt(textFieldEBuy5.getText()) *tradeValues.get(14));
+			
+			eastPayment = (Integer.parseInt(textFieldESell1.getText()) *tradeValues.get(15) +
+					Integer.parseInt(textFieldESell2.getText()) *tradeValues.get(16) + 
+					Integer.parseInt(textFieldESell3.getText()) *tradeValues.get(17) + 
+					Integer.parseInt(textFieldESell4.getText()) *tradeValues.get(18) +
+					Integer.parseInt(textFieldESell5.getText()) *tradeValues.get(19));
+			
+			southIncome = (Integer.parseInt(textFieldSBuy1.getText()) *tradeValues.get(20) +
+					Integer.parseInt(textFieldSBuy2.getText()) *tradeValues.get(21) + 
+					Integer.parseInt(textFieldSBuy3.getText()) *tradeValues.get(22) + 
+					Integer.parseInt(textFieldSBuy4.getText()) *tradeValues.get(23) +
+					Integer.parseInt(textFieldSBuy5.getText()) *tradeValues.get(24));
+			
+			southPayment = (Integer.parseInt(textFieldSSell1.getText()) *tradeValues.get(25) +
+					Integer.parseInt(textFieldSSell2.getText()) *tradeValues.get(26) + 
+					Integer.parseInt(textFieldSSell3.getText()) *tradeValues.get(27) + 
+					Integer.parseInt(textFieldSSell4.getText()) *tradeValues.get(28) +
+					Integer.parseInt(textFieldSSell5.getText()) *tradeValues.get(29));
+			
+			northIncome = (Integer.parseInt(textFieldNBuy1.getText()) *tradeValues.get(30) +
+					Integer.parseInt(textFieldNBuy2.getText()) *tradeValues.get(31) + 
+					Integer.parseInt(textFieldNBuy3.getText()) *tradeValues.get(32) + 
+					Integer.parseInt(textFieldNBuy4.getText()) *tradeValues.get(33) +
+					Integer.parseInt(textFieldNBuy5.getText()) *tradeValues.get(34));
+			
+			northPayment = (Integer.parseInt(textFieldNSell1.getText()) *tradeValues.get(35) +
+					Integer.parseInt(textFieldNSell2.getText()) *tradeValues.get(36) + 
+					Integer.parseInt(textFieldNSell3.getText()) *tradeValues.get(37) + 
+					Integer.parseInt(textFieldNSell4.getText()) *tradeValues.get(38) +
+					Integer.parseInt(textFieldNSell5.getText()) *tradeValues.get(39));
+		}
+		catch(NumberFormatException ex)
+		{
+			lblInvalidValuesFound.setVisible(true);
+		}
 		
 		lblIncomeWBuy.setText(("+" + String.valueOf(westIncome)));
 		lblIncomeWSell.setText(("-" + String.valueOf(westPayment)));
