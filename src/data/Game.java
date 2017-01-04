@@ -370,6 +370,7 @@ public class Game extends JFrame {
 	private JButton btnStopPurchases;
 	private JButton btnStopSales;
 	private JLabel lblInvalidValuesFound;
+	private JButton btnOk;
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -396,9 +397,54 @@ public class Game extends JFrame {
 		storage.add(storeStone);
 		storage.add(storeSteel);
 		storage.add(storeGlass);
+		storage.add(storeSand);
+		storage.add(storeWool);
+		storage.add(storeLeather);
+		storage.add(storeMarshweed);
+		storage.add(storeGrain);
+		storage.add(storeHops);
+		storage.add(storeCocoabeans);
+		storage.add(storeRawChocolate);
+		storage.add(storeIceflowers);
+		storage.add(storeBarrels);
+		storage.add(storePaper);
+		storage.add(storeGold);
+		storage.add(storeIronOre);
+		storage.add(storeGoldOre);
+		
 		storage.add(storeWater);
 		storage.add(storeVegetables);
-		storage.add(storeGold);
+		storage.add(storeClothes);
+		storage.add(storeCoal);
+		
+		storage.add(storeMilk);
+		storage.add(storeMeat);
+		storage.add(storeMedicine);
+		storage.add(storeShoes);
+		storage.add(storeHoney);
+		storage.add(storeOrnaments);
+		
+		storage.add(storeBeer);
+		storage.add(storeFruits);
+		storage.add(storeHorses);
+		storage.add(storeBread);
+		storage.add(storeTobacco);
+		storage.add(storePerfume);
+		storage.add(storeCheese);
+		storage.add(storeCocoa);
+		
+		storage.add(storeIcewine);
+		storage.add(storeCake);
+		storage.add(storeDeer);
+		storage.add(storeChocolates);
+		storage.add(storePistols);
+		storage.add(storeLiquor);
+		storage.add(storeBooks);
+		storage.add(storeJewelry);
+		storage.add(storeSalmon);
+		storage.add(storeCoffee);
+		
+		
 		return storage;
 	}
 
@@ -1014,7 +1060,7 @@ public class Game extends JFrame {
 		
 		panelSelectItem.setBackground(darkBackground);
 		
-		scrollPane.setViewportView(panelSelectItem);
+		scrollPane.setRowHeaderView(panelSelectItem);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(panelSelectItem.getTileSize());
 				
 		panelInfo = new JPanel();
@@ -1479,9 +1525,52 @@ public class Game extends JFrame {
 		storeStone = storage[1];
 		storeSteel = storage[2];
 		storeGlass = storage[3];
-		storeWater = storage[4];
-		storeVegetables = storage[5];
-		storeGold = storage[6];
+		storeSand = storage[4];
+		storeWool = storage[5];
+		storeLeather = storage[6];
+		storeMarshweed = storage[7];
+		storeGrain = storage[8];
+		storeHops = storage[9];
+		storeCocoabeans = storage[10];
+		storeRawChocolate = storage[11];
+		storeIceflowers = storage[12];
+		storeBarrels = storage[13];
+		storePaper = storage[14];
+		storeGold = storage[15];
+		storeIronOre = storage[16];
+		storeGoldOre = storage[17];
+		
+		storeWater = storage[18];
+		storeVegetables = storage[19];
+		storeClothes = storage[20];
+		storeCoal = storage[21];
+		
+		storeMilk = storage[22];
+		storeMeat = storage[23];
+		storeMedicine = storage[24];
+		storeShoes = storage[25];
+		storeHoney = storage[26];
+		storeOrnaments = storage[27];
+		
+		storeBeer = storage[28];
+		storeFruits = storage[29];
+		storeHorses = storage[30];
+		storeBread = storage[31];
+		storeTobacco = storage[32];
+		storePerfume = storage[33];
+		storeCheese = storage[34];
+		storeCocoa = storage[35];
+		
+		storeIcewine = storage[36];
+		storeCake = storage[37];
+		storeDeer = storage[38];
+		storeChocolates = storage[39];
+		storePistols = storage[40];
+		storeLiquor = storage[41];
+		storeBooks = storage[42];
+		storeJewelry = storage[43];
+		storeSalmon = storage[44];
+		storeCoffee = storage[45];
 		
 		displayStorage();
 	}
@@ -1492,13 +1581,25 @@ public class Game extends JFrame {
 		storeStone = 10;
 		storeSteel = 10;
 		storeGlass = 10;
+		storeSand = 0;
+		storeWool = 0;
+		storeLeather = 0;
+		storeMarshweed = 0;
+		storeGrain = 0;
+		storeHops = 0;
+		storeCocoabeans = 0;
+		storeRawChocolate = 0;
+		storeIceflowers = 0;
+		storeBarrels = 0;
+		storePaper = 0;
 		storeGold = 10;
+		storeIronOre = 0;
+		storeGoldOre = 0;
 		
 		storeWater = 20;
 		storeVegetables = 20;
 		storeClothes = 0;
 		storeCoal = 0;
-		
 		
 		storeMilk = 0;
 		storeMeat = 0;
@@ -1526,20 +1627,6 @@ public class Game extends JFrame {
 		storeJewelry = 0;
 		storeSalmon = 0;
 		storeCoffee = 0;
-		
-		storeSand = 0;
-		storeWool = 0;
-		storeLeather = 0;
-		storeMarshweed = 0;
-		storeGrain = 0;
-		storeHops = 0;
-		storeCocoabeans = 0;
-		storeRawChocolate = 0;
-		storeIceflowers = 0;
-		storeBarrels = 0;
-		storePaper = 0;
-		storeIronOre = 0;
-		storeGoldOre = 0;
 		
 		displayStorage();
 	}
@@ -1735,6 +1822,14 @@ public class Game extends JFrame {
 			}
 		});
 		panelTrade.add(btnStopSales, "cell 12 1 4 1,growx");
+		
+		btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainCard.show(panelMain, cardGame);
+			}
+		});
+		panelTrade.add(btnOk, "cell 16 1,growx");
 		
 		lblNation = new JLabel("Nation");
 		lblNation.setFont(new Font("Tahoma", Font.PLAIN, 14));
