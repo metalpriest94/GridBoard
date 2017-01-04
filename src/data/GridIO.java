@@ -92,6 +92,13 @@ public class GridIO{
 					fileWrite.write(storage.get(i) + "/");
 				}
 				fileWrite.newLine();
+				
+				ArrayList<Integer> trades = game.getTrades();
+				for (int i = 0; i < trades.size(); i++)
+				{
+					fileWrite.write(trades.get(i) + "/");
+				}
+				fileWrite.newLine();
 			}
 		}
 		catch (IOException ex)
@@ -150,7 +157,16 @@ public class GridIO{
 				{
 					storage[i] = Integer.parseInt(nextSplitData[i]);
 				}
+				
+				nextLineContent = fileRead.readLine(); //gets trades area
+				nextSplitData = nextLineContent.split("/");
+				int[] trades = new int[nextSplitData.length];
+				for(int i = 0; i < trades.length; i++)
+				{
+					trades[i] = Integer.parseInt(nextSplitData[i]);
+				}
 				game.setUpStorage(storage);
+				game.receiveTradeData(trades);
 				
 				panelMap.repaint();
 			}

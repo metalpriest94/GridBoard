@@ -355,6 +355,7 @@ public class Game extends JFrame {
 	private ArrayList<Integer> amountBuy = new ArrayList<Integer>();
 	private ArrayList<Integer> amountSell = new ArrayList<Integer>();
 	
+	private int[] tradeData;
 	private ArrayList<Integer> tradeValues = new ArrayList<Integer>();
 	private int westIncome;
 	private int westPayment;
@@ -370,7 +371,7 @@ public class Game extends JFrame {
 	private JButton btnStopPurchases;
 	private JButton btnStopSales;
 	private JLabel lblInvalidValuesFound;
-	private JButton btnOk;
+	private JButton btnBack;
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -444,8 +445,63 @@ public class Game extends JFrame {
 		storage.add(storeSalmon);
 		storage.add(storeCoffee);
 		
-		
 		return storage;
+	}
+	
+	public ArrayList<Integer> getTrades()
+	{
+		ArrayList<Integer> trades = new ArrayList<Integer>();
+		trades.add(Integer.parseInt(textFieldWBuy1.getText()));
+		trades.add(Integer.parseInt(textFieldWBuy2.getText()));
+		trades.add(Integer.parseInt(textFieldWBuy3.getText()));
+		trades.add(Integer.parseInt(textFieldWBuy4.getText()));
+		trades.add(Integer.parseInt(textFieldWBuy5.getText()));
+		
+		trades.add(Integer.parseInt(textFieldWSell1.getText()));
+		trades.add(Integer.parseInt(textFieldWSell2.getText()));
+		trades.add(Integer.parseInt(textFieldWSell3.getText()));
+		trades.add(Integer.parseInt(textFieldWSell4.getText()));
+		trades.add(Integer.parseInt(textFieldWSell5.getText()));
+		
+		
+		trades.add(Integer.parseInt(textFieldEBuy1.getText()));
+		trades.add(Integer.parseInt(textFieldEBuy2.getText()));
+		trades.add(Integer.parseInt(textFieldEBuy3.getText()));
+		trades.add(Integer.parseInt(textFieldEBuy4.getText()));
+		trades.add(Integer.parseInt(textFieldEBuy5.getText()));
+		
+		trades.add(Integer.parseInt(textFieldESell1.getText()));
+		trades.add(Integer.parseInt(textFieldESell2.getText()));
+		trades.add(Integer.parseInt(textFieldESell3.getText()));
+		trades.add(Integer.parseInt(textFieldESell4.getText()));
+		trades.add(Integer.parseInt(textFieldESell5.getText()));
+		
+		
+		trades.add(Integer.parseInt(textFieldSBuy1.getText()));
+		trades.add(Integer.parseInt(textFieldSBuy2.getText()));
+		trades.add(Integer.parseInt(textFieldSBuy3.getText()));
+		trades.add(Integer.parseInt(textFieldSBuy4.getText()));
+		trades.add(Integer.parseInt(textFieldSBuy5.getText()));
+		
+		trades.add(Integer.parseInt(textFieldSSell1.getText()));
+		trades.add(Integer.parseInt(textFieldSSell2.getText()));
+		trades.add(Integer.parseInt(textFieldSSell3.getText()));
+		trades.add(Integer.parseInt(textFieldSSell4.getText()));
+		trades.add(Integer.parseInt(textFieldSSell5.getText()));
+		
+		
+		trades.add(Integer.parseInt(textFieldNBuy1.getText()));
+		trades.add(Integer.parseInt(textFieldNBuy2.getText()));
+		trades.add(Integer.parseInt(textFieldNBuy3.getText()));
+		trades.add(Integer.parseInt(textFieldNBuy4.getText()));
+		trades.add(Integer.parseInt(textFieldNBuy5.getText()));
+		
+		trades.add(Integer.parseInt(textFieldNSell1.getText()));
+		trades.add(Integer.parseInt(textFieldNSell2.getText()));
+		trades.add(Integer.parseInt(textFieldNSell3.getText()));
+		trades.add(Integer.parseInt(textFieldNSell4.getText()));
+		trades.add(Integer.parseInt(textFieldNSell5.getText()));
+		return trades;
 	}
 
 	/**
@@ -1823,13 +1879,13 @@ public class Game extends JFrame {
 		});
 		panelTrade.add(btnStopSales, "cell 12 1 4 1,growx");
 		
-		btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
+		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainCard.show(panelMain, cardGame);
 			}
 		});
-		panelTrade.add(btnOk, "cell 16 1,growx");
+		panelTrade.add(btnBack, "cell 16 1,growx");
 		
 		lblNation = new JLabel("Nation");
 		lblNation.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -2353,6 +2409,59 @@ public class Game extends JFrame {
 		panelImgTotalGold.setToolTipText("GOLD");
 		panelImgTotalGold.setBackground(new Color(229, 194, 137));
 		panelTrade.add(panelImgTotalGold, "cell 17 19,grow");
+		
+		setUpTradeData(tradeData);
+	}
+	
+	public void receiveTradeData(int[] trades)
+	{
+		tradeData = trades;
+	}
+	public void setUpTradeData(int[] trades)
+	{
+		textFieldWSell1.setText(String.valueOf(trades[0]));
+		textFieldWSell2.setText(String.valueOf(trades[1]));
+		textFieldWSell3.setText(String.valueOf(trades[2]));
+		textFieldWSell4.setText(String.valueOf(trades[3]));
+		textFieldWSell5.setText(String.valueOf(trades[4]));
+		textFieldESell1.setText(String.valueOf(trades[10]));
+		textFieldESell2.setText(String.valueOf(trades[11]));
+		textFieldESell3.setText(String.valueOf(trades[12]));
+		textFieldESell4.setText(String.valueOf(trades[13]));
+		textFieldESell5.setText(String.valueOf(trades[14]));
+		textFieldSSell1.setText(String.valueOf(trades[20]));
+		textFieldSSell2.setText(String.valueOf(trades[21]));
+		textFieldSSell3.setText(String.valueOf(trades[22]));
+		textFieldSSell4.setText(String.valueOf(trades[23]));
+		textFieldSSell5.setText(String.valueOf(trades[24]));
+		textFieldNSell1.setText(String.valueOf(trades[30]));
+		textFieldNSell2.setText(String.valueOf(trades[31]));
+		textFieldNSell3.setText(String.valueOf(trades[32]));
+		textFieldNSell4.setText(String.valueOf(trades[33]));
+		textFieldNSell5.setText(String.valueOf(trades[34]));
+		
+		textFieldWBuy1.setText(String.valueOf(trades[5]));
+		textFieldWBuy2.setText(String.valueOf(trades[6]));
+		textFieldWBuy3.setText(String.valueOf(trades[7]));
+		textFieldWBuy4.setText(String.valueOf(trades[8]));
+		textFieldWBuy5.setText(String.valueOf(trades[9]));
+		textFieldEBuy1.setText(String.valueOf(trades[15]));
+		textFieldEBuy2.setText(String.valueOf(trades[16]));
+		textFieldEBuy3.setText(String.valueOf(trades[17]));
+		textFieldEBuy4.setText(String.valueOf(trades[18]));
+		textFieldEBuy5.setText(String.valueOf(trades[19]));
+		textFieldSBuy1.setText(String.valueOf(trades[25]));
+		textFieldSBuy2.setText(String.valueOf(trades[26]));
+		textFieldSBuy3.setText(String.valueOf(trades[27]));
+		textFieldSBuy4.setText(String.valueOf(trades[28]));
+		textFieldSBuy5.setText(String.valueOf(trades[29]));
+		textFieldNBuy1.setText(String.valueOf(trades[35]));
+		textFieldNBuy2.setText(String.valueOf(trades[36]));
+		textFieldNBuy3.setText(String.valueOf(trades[37]));
+		textFieldNBuy4.setText(String.valueOf(trades[38]));
+		textFieldNBuy5.setText(String.valueOf(trades[39]));
+		
+		calculateTrades();
 	}
 	public void calculateTrades()
 	{
