@@ -355,7 +355,7 @@ public class Game extends JFrame {
 	private ArrayList<Integer> amountBuy = new ArrayList<Integer>();
 	private ArrayList<Integer> amountSell = new ArrayList<Integer>();
 	
-	private int[] tradeData;
+	private int[] tradeData = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	private ArrayList<Integer> tradeValues = new ArrayList<Integer>();
 	private int westIncome;
 	private int westPayment;
