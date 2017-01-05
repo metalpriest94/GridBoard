@@ -198,7 +198,7 @@ public class Game extends JFrame {
 	private JPanel panelSpacer3;
 	private JPanel panelSpacer4;
 	private JImgPanel panelPicGold;
-	private JLabel lblGold;
+	private JLabel lblStoreGold;
 	private JLabel lblHours;
 	private JLabel lblClockSeparator;
 	private JLabel lblMinutes;
@@ -1020,9 +1020,9 @@ public class Game extends JFrame {
 		panelPicGold.setBackground(darkBackground);
 		panelResources.add(panelPicGold, "cell 13 0,grow");
 		
-		lblGold = new JLabel("10");
-		lblGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		panelResources.add(lblGold, "cell 14 0,alignx center");
+		lblStoreGold = new JLabel("10");
+		lblStoreGold.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		panelResources.add(lblStoreGold, "cell 14 0,alignx center");
 		
 		btnNextRes = new JButton(">");
 		btnNextRes.addActionListener(new ActionListener() {
@@ -1195,8 +1195,8 @@ public class Game extends JFrame {
 		});
 		lblExit1.setVisible(false);	
 		
-		InputMap input = panelGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap action = panelGame.getActionMap();
+		InputMap input = panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap action = panelMain.getActionMap();
 		
 	
 		input.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "up");
@@ -1701,7 +1701,7 @@ public class Game extends JFrame {
 		lblStoreStone.setText(String.valueOf(storeStone));
 		lblStoreSteel.setText(String.valueOf(storeSteel));
 		lblStoreGlass.setText(String.valueOf(storeGlass));
-		lblGold.setText(String.valueOf(storeGold));
+		lblStoreGold.setText(String.valueOf(storeGold));
 		
 	}
 	public void setUpLiving()
@@ -1883,6 +1883,47 @@ public class Game extends JFrame {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainCard.show(panelMain, cardGame);
+				textFieldWSell1.setText(String.valueOf(amountSell.get(0)));
+				textFieldWSell2.setText(String.valueOf(amountSell.get(1)));
+				textFieldWSell3.setText(String.valueOf(amountSell.get(2)));
+				textFieldWSell4.setText(String.valueOf(amountSell.get(3)));
+				textFieldWSell5.setText(String.valueOf(amountSell.get(4)));
+				textFieldESell1.setText(String.valueOf(amountSell.get(5)));
+				textFieldESell2.setText(String.valueOf(amountSell.get(6)));
+				textFieldESell3.setText(String.valueOf(amountSell.get(7)));
+				textFieldESell4.setText(String.valueOf(amountSell.get(8)));
+				textFieldESell5.setText(String.valueOf(amountSell.get(9)));
+				textFieldSSell1.setText(String.valueOf(amountSell.get(10)));
+				textFieldSSell2.setText(String.valueOf(amountSell.get(11)));
+				textFieldSSell3.setText(String.valueOf(amountSell.get(12)));
+				textFieldSSell4.setText(String.valueOf(amountSell.get(13)));
+				textFieldSSell5.setText(String.valueOf(amountSell.get(14)));
+				textFieldNSell1.setText(String.valueOf(amountSell.get(15)));
+				textFieldNSell2.setText(String.valueOf(amountSell.get(16)));
+				textFieldNSell3.setText(String.valueOf(amountSell.get(17)));
+				textFieldNSell4.setText(String.valueOf(amountSell.get(18)));
+				textFieldNSell5.setText(String.valueOf(amountSell.get(19)));
+				
+				textFieldWBuy1.setText(String.valueOf(amountBuy.get(0)));
+				textFieldWBuy2.setText(String.valueOf(amountBuy.get(1)));
+				textFieldWBuy3.setText(String.valueOf(amountBuy.get(2)));
+				textFieldWBuy4.setText(String.valueOf(amountBuy.get(3)));
+				textFieldWBuy5.setText(String.valueOf(amountBuy.get(4)));
+				textFieldEBuy1.setText(String.valueOf(amountBuy.get(5)));
+				textFieldEBuy2.setText(String.valueOf(amountBuy.get(6)));
+				textFieldEBuy3.setText(String.valueOf(amountBuy.get(7)));
+				textFieldEBuy4.setText(String.valueOf(amountBuy.get(8)));
+				textFieldEBuy5.setText(String.valueOf(amountBuy.get(9)));
+				textFieldSBuy1.setText(String.valueOf(amountBuy.get(10)));
+				textFieldSBuy2.setText(String.valueOf(amountBuy.get(11)));
+				textFieldSBuy3.setText(String.valueOf(amountBuy.get(12)));
+				textFieldSBuy4.setText(String.valueOf(amountBuy.get(13)));
+				textFieldSBuy5.setText(String.valueOf(amountBuy.get(14)));
+				textFieldNBuy1.setText(String.valueOf(amountBuy.get(15)));
+				textFieldNBuy2.setText(String.valueOf(amountBuy.get(16)));
+				textFieldNBuy3.setText(String.valueOf(amountBuy.get(17)));
+				textFieldNBuy4.setText(String.valueOf(amountBuy.get(18)));
+				textFieldNBuy5.setText(String.valueOf(amountBuy.get(19)));
 			}
 		});
 		panelTrade.add(btnBack, "cell 16 1,growx");
@@ -2461,6 +2502,50 @@ public class Game extends JFrame {
 		textFieldNBuy4.setText(String.valueOf(trades[38]));
 		textFieldNBuy5.setText(String.valueOf(trades[39]));
 		
+		amountBuy.clear();
+		amountBuy.add(trades[0]);
+		amountBuy.add(trades[1]);
+		amountBuy.add(trades[2]);
+		amountBuy.add(trades[3]);
+		amountBuy.add(trades[4]);
+		amountBuy.add(trades[10]);
+		amountBuy.add(trades[11]);
+		amountBuy.add(trades[12]);
+		amountBuy.add(trades[13]);
+		amountBuy.add(trades[14]);
+		amountBuy.add(trades[20]);
+		amountBuy.add(trades[21]);
+		amountBuy.add(trades[22]);
+		amountBuy.add(trades[23]);
+		amountBuy.add(trades[24]);
+		amountBuy.add(trades[30]);
+		amountBuy.add(trades[31]);
+		amountBuy.add(trades[32]);
+		amountBuy.add(trades[33]);
+		amountBuy.add(trades[34]);
+		
+		amountSell.clear();
+		amountSell.add(trades[5]);
+		amountSell.add(trades[6]);
+		amountSell.add(trades[7]);
+		amountSell.add(trades[8]);
+		amountSell.add(trades[9]);
+		amountSell.add(trades[15]);
+		amountSell.add(trades[16]);
+		amountSell.add(trades[17]);
+		amountSell.add(trades[18]);
+		amountSell.add(trades[19]);
+		amountSell.add(trades[25]);
+		amountSell.add(trades[26]);
+		amountSell.add(trades[27]);
+		amountSell.add(trades[28]);
+		amountSell.add(trades[29]);
+		amountSell.add(trades[35]);
+		amountSell.add(trades[36]);
+		amountSell.add(trades[37]);
+		amountSell.add(trades[38]);
+		amountSell.add(trades[39]);
+		
 		calculateTrades();
 	}
 	public void calculateTrades()
@@ -2544,6 +2629,7 @@ public class Game extends JFrame {
 		final int ticksPerDayInGame = cwGame.getTICKSPERSEC() * (60/cwGame.getINTERVAL()) * 24;
 		final int timeToConsume = 1700; //equals 17:00
 		final int timeToCheckLiving = 600;
+		final int timeToTrade = 800;
 		{
 			int randomNewInhab = r.nextInt();
 			if (randomNewInhab < 0)
@@ -2563,6 +2649,8 @@ public class Game extends JFrame {
 				consumeGoods();
 			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToCheckLiving / 2400)
 				checkHousingSpace();
+			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToTrade / 2400)
+				executeTrades();
 		}
 	}
 	public void consumeGoods()
@@ -2914,7 +3002,459 @@ public class Game extends JFrame {
 	
 	public void executeTrades()
 	{
+		System.out.println("!1");
+		if(storeShoes < Integer.parseInt(textFieldWBuy1.getText()))
+		{
+			storeGold += storeShoes * tradeValues.get(0);
+			storeShoes =0;
+		}
+		else
+		{
+			storeShoes-=Integer.parseInt(textFieldWBuy1.getText());
+			storeGold += Integer.parseInt(textFieldWBuy1.getText()) * tradeValues.get(0);
+		}
 		
+		if(storeMedicine < Integer.parseInt(textFieldWBuy2.getText()))
+		{
+			storeGold += storeMedicine * tradeValues.get(1);
+			storeMedicine =0;
+		}
+		else
+		{
+			storeMedicine-=Integer.parseInt(textFieldWBuy2.getText());
+			storeGold += Integer.parseInt(textFieldWBuy2.getText()) * tradeValues.get(1);
+		}
+		
+		if(storeFruits < Integer.parseInt(textFieldWBuy3.getText()))
+		{
+			storeGold += storeFruits * tradeValues.get(2);
+			storeFruits =0;
+		}
+		else
+		{
+			storeFruits-=Integer.parseInt(textFieldWBuy3.getText());
+			storeGold += Integer.parseInt(textFieldWBuy3.getText()) * tradeValues.get(2);
+		}
+		
+		if(storeBooks < Integer.parseInt(textFieldWBuy4.getText()))
+		{
+			storeGold += storeBooks * tradeValues.get(3);
+			storeBooks =0;
+		}
+		else
+		{
+			storeBooks-=Integer.parseInt(textFieldWBuy4.getText());
+			storeGold += Integer.parseInt(textFieldWBuy4.getText()) * tradeValues.get(3);
+		}
+		
+		if(storeIceflowers < Integer.parseInt(textFieldWBuy5.getText()))
+		{
+			storeGold += storeIceflowers * tradeValues.get(4);
+			storeIceflowers =0;
+		}
+		else
+		{
+			storeIceflowers-=Integer.parseInt(textFieldWBuy5.getText());
+			storeGold += Integer.parseInt(textFieldWBuy5.getText()) * tradeValues.get(4);
+		}
+		
+		
+		if(storeLeather < Integer.parseInt(textFieldEBuy1.getText()))
+		{
+			storeGold += storeLeather * tradeValues.get(0);
+			storeLeather =0;
+		}
+		else
+		{
+			storeLeather-=Integer.parseInt(textFieldEBuy1.getText());
+			storeGold += Integer.parseInt(textFieldEBuy1.getText()) * tradeValues.get(10);
+		}
+		
+		if(storeOrnaments < Integer.parseInt(textFieldEBuy2.getText()))
+		{
+			storeGold += storeOrnaments * tradeValues.get(1);
+			storeOrnaments =0;
+		}
+		else
+		{
+			storeOrnaments-=Integer.parseInt(textFieldEBuy2.getText());
+			storeGold += Integer.parseInt(textFieldEBuy2.getText()) * tradeValues.get(11);
+		}
+		
+		if(storeCocoabeans < Integer.parseInt(textFieldEBuy3.getText()))
+		{
+			storeGold += storeCocoabeans * tradeValues.get(2);
+			storeCocoabeans =0;
+		}
+		else
+		{
+			storeCocoabeans-=Integer.parseInt(textFieldEBuy3.getText());
+			storeGold += Integer.parseInt(textFieldEBuy3.getText()) * tradeValues.get(12);
+		}
+		
+		if(storeBarrels < Integer.parseInt(textFieldEBuy4.getText()))
+		{
+			storeGold += storeBarrels * tradeValues.get(3);
+			storeBarrels =0;
+		}
+		else
+		{
+			storeBarrels-=Integer.parseInt(textFieldEBuy4.getText());
+			storeGold += Integer.parseInt(textFieldEBuy4.getText()) * tradeValues.get(13);
+		}
+		
+		if(storePistols < Integer.parseInt(textFieldEBuy5.getText()))
+		{
+			storeGold += storePistols * tradeValues.get(4);
+			storePistols =0;
+		}
+		else
+		{
+			storePistols-=Integer.parseInt(textFieldEBuy5.getText());
+			storeGold += Integer.parseInt(textFieldEBuy5.getText()) * tradeValues.get(14);
+		}
+		
+		
+		if(storeWater < Integer.parseInt(textFieldSBuy1.getText()))
+		{
+			storeGold += storeWater * tradeValues.get(0);
+			storeWater =0;
+		}
+		else
+		{
+			storeWater-=Integer.parseInt(textFieldSBuy1.getText());
+			storeGold += Integer.parseInt(textFieldSBuy1.getText()) * tradeValues.get(20);
+		}
+		
+		if(storePaper < Integer.parseInt(textFieldSBuy2.getText()))
+		{
+			storeGold += storePaper * tradeValues.get(1);
+			storePaper =0;
+		}
+		else
+		{
+			storePaper-=Integer.parseInt(textFieldSBuy2.getText());
+			storeGold += Integer.parseInt(textFieldSBuy2.getText()) * tradeValues.get(21);
+		}
+		
+		if(storeCheese < Integer.parseInt(textFieldSBuy3.getText()))
+		{
+			storeGold += storeCheese * tradeValues.get(2);
+			storeCheese =0;
+		}
+		else
+		{
+			storeCheese-=Integer.parseInt(textFieldSBuy3.getText());
+			storeGold += Integer.parseInt(textFieldSBuy3.getText()) * tradeValues.get(22);
+		}
+		
+		if(storeBeer < Integer.parseInt(textFieldSBuy4.getText()))
+		{
+			storeGold += storeBeer * tradeValues.get(3);
+			storeBeer =0;
+		}
+		else
+		{
+			storeBeer-=Integer.parseInt(textFieldSBuy4.getText());
+			storeGold += Integer.parseInt(textFieldSBuy4.getText()) * tradeValues.get(23);
+		}
+		
+		if(storeBread < Integer.parseInt(textFieldSBuy5.getText()))
+		{
+			storeGold += storeBread * tradeValues.get(4);
+			storeBread =0;
+		}
+		else
+		{
+			storeBread-=Integer.parseInt(textFieldSBuy5.getText());
+			storeGold += Integer.parseInt(textFieldSBuy5.getText()) * tradeValues.get(24);
+		}
+		
+		if(storeWool < Integer.parseInt(textFieldWBuy1.getText()))
+		{
+			storeWool += storeWool * tradeValues.get(0);
+			storeShoes =0;
+		}
+		else
+		{
+			storeWool-=Integer.parseInt(textFieldWBuy1.getText());
+			storeGold += Integer.parseInt(textFieldWBuy1.getText()) * tradeValues.get(30);
+		}
+		
+		if(storeClothes < Integer.parseInt(textFieldWBuy2.getText()))
+		{
+			storeGold += storeClothes * tradeValues.get(1);
+			storeClothes =0;
+		}
+		else
+		{
+			storeClothes-=Integer.parseInt(textFieldWBuy2.getText());
+			storeGold += Integer.parseInt(textFieldWBuy2.getText()) * tradeValues.get(31);
+		}
+		
+		if(storeMarshweed < Integer.parseInt(textFieldWBuy3.getText()))
+		{
+			storeGold += storeMarshweed * tradeValues.get(2);
+			storeMarshweed =0;
+		}
+		else
+		{
+			storeMarshweed-=Integer.parseInt(textFieldWBuy3.getText());
+			storeGold += Integer.parseInt(textFieldWBuy3.getText()) * tradeValues.get(32);
+		}
+		
+		if(storeJewelry < Integer.parseInt(textFieldWBuy4.getText()))
+		{
+			storeGold += storeJewelry * tradeValues.get(3);
+			storeJewelry =0;
+		}
+		else
+		{
+			storeJewelry-=Integer.parseInt(textFieldWBuy4.getText());
+			storeGold += Integer.parseInt(textFieldWBuy4.getText()) * tradeValues.get(33);
+		}
+		
+		if(storeLiquor < Integer.parseInt(textFieldWBuy5.getText()))
+		{
+			storeGold += storeLiquor * tradeValues.get(4);
+			storeLiquor =0;
+		}
+		else
+		{
+			storeLiquor-=Integer.parseInt(textFieldWBuy5.getText());
+			storeGold += Integer.parseInt(textFieldWBuy5.getText()) * tradeValues.get(34);
+		}
+			
+		
+		
+		if(storeGold < Integer.parseInt(textFieldWSell1.getText()) *tradeValues.get(5))
+		{
+			storeVegetables += storeGold / tradeValues.get(5);
+			storeGold = storeGold % tradeValues.get(5); 
+		}
+		else
+		{
+			storeVegetables += Integer.parseInt(textFieldWSell1.getText());
+			storeGold -= Integer.parseInt(textFieldWSell1.getText()) *tradeValues.get(5);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldWSell2.getText()) *tradeValues.get(6))
+		{
+			storeWood += storeGold / tradeValues.get(6);
+			storeGold = storeGold % tradeValues.get(6); 
+		}
+		else
+		{
+			storeWood += Integer.parseInt(textFieldWSell2.getText());
+			storeGold -= Integer.parseInt(textFieldWSell2.getText()) *tradeValues.get(6);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldWSell3.getText()) *tradeValues.get(7))
+		{
+			storeMilk += storeGold / tradeValues.get(7);
+			storeGold = storeGold % tradeValues.get(7); 
+		}
+		else
+		{
+			storeMilk += Integer.parseInt(textFieldWSell3.getText());
+			storeGold -= Integer.parseInt(textFieldWSell3.getText()) *tradeValues.get(7);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldWSell4.getText()) *tradeValues.get(8))
+		{
+			storeHoney += storeGold / tradeValues.get(8);
+			storeGold = storeGold % tradeValues.get(8); 
+		}
+		else
+		{
+			storeHoney += Integer.parseInt(textFieldWSell4.getText());
+			storeGold -= Integer.parseInt(textFieldWSell4.getText()) *tradeValues.get(8);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldWSell5.getText()) *tradeValues.get(9))
+		{
+			storeChocolates += storeGold / tradeValues.get(9);
+			storeGold = storeGold % tradeValues.get(9); 
+		}
+		else
+		{
+			storeChocolates += Integer.parseInt(textFieldWSell5.getText());
+			storeGold -= Integer.parseInt(textFieldWSell5.getText()) *tradeValues.get(9);
+		}
+		
+		
+		if(storeGold < Integer.parseInt(textFieldESell1.getText()) *tradeValues.get(15))
+		{
+			storeStone += storeGold / tradeValues.get(15);
+			storeGold = storeGold % tradeValues.get(15); 
+		}
+		else
+		{
+			storeStone += Integer.parseInt(textFieldESell1.getText());
+			storeGold -= Integer.parseInt(textFieldESell1.getText()) *tradeValues.get(15);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldESell2.getText()) *tradeValues.get(16))
+		{
+			storeGrain += storeGold / tradeValues.get(16);
+			storeGold = storeGold % tradeValues.get(16); 
+		}
+		else
+		{
+			storeGrain += Integer.parseInt(textFieldESell2.getText());
+			storeGold -= Integer.parseInt(textFieldESell2.getText()) *tradeValues.get(16);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldESell3.getText()) *tradeValues.get(17))
+		{
+			storeTobacco += storeGold / tradeValues.get(17);
+			storeGold = storeGold % tradeValues.get(17); 
+		}
+		else
+		{
+			storeTobacco += Integer.parseInt(textFieldESell3.getText());
+			storeGold -= Integer.parseInt(textFieldESell3.getText()) *tradeValues.get(17);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldESell4.getText()) *tradeValues.get(18))
+		{
+			storeHorses += storeGold / tradeValues.get(18);
+			storeGold = storeGold % tradeValues.get(18); 
+		}
+		else
+		{
+			storeHorses += Integer.parseInt(textFieldESell4.getText());
+			storeGold -= Integer.parseInt(textFieldESell4.getText()) *tradeValues.get(18);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldESell5.getText()) *tradeValues.get(19))
+		{
+			storeCake += storeGold / tradeValues.get(19);
+			storeGold = storeGold % tradeValues.get(19); 
+		}
+		else
+		{
+			storeCake += Integer.parseInt(textFieldESell5.getText());
+			storeGold -= Integer.parseInt(textFieldESell5.getText()) *tradeValues.get(19);
+		}
+		
+		
+		if(storeGold < Integer.parseInt(textFieldSSell1.getText()) *tradeValues.get(25))
+		{
+			storeSand += storeGold / tradeValues.get(25);
+			storeGold = storeGold % tradeValues.get(25); 
+		}
+		else
+		{
+			storeSand += Integer.parseInt(textFieldSSell1.getText());
+			storeGold -= Integer.parseInt(textFieldSSell1.getText()) *tradeValues.get(25);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldSSell2.getText()) *tradeValues.get(26))
+		{
+			storePerfume += storeGold / tradeValues.get(26);
+			storeGold = storeGold % tradeValues.get(26); 
+		}
+		else
+		{
+			storePerfume += Integer.parseInt(textFieldSSell2.getText());
+			storeGold -= Integer.parseInt(textFieldSSell2.getText()) *tradeValues.get(26);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldSSell3.getText()) *tradeValues.get(27))
+		{
+			storeGoldOre += storeGold / tradeValues.get(27);
+			storeGold = storeGold % tradeValues.get(27); 
+		}
+		else
+		{
+			storeGoldOre += Integer.parseInt(textFieldSSell3.getText());
+			storeGold -= Integer.parseInt(textFieldSSell3.getText()) *tradeValues.get(27);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldSSell4.getText()) *tradeValues.get(28))
+		{
+			storeCocoa += storeGold / tradeValues.get(28);
+			storeGold = storeGold % tradeValues.get(28); 
+		}
+		else
+		{
+			storeCocoa += Integer.parseInt(textFieldSSell4.getText());
+			storeGold -= Integer.parseInt(textFieldSSell4.getText()) *tradeValues.get(28);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldSSell5.getText()) *tradeValues.get(29))
+		{
+			storeCoffee += storeGold / tradeValues.get(29);
+			storeGold = storeGold % tradeValues.get(29); 
+		}
+		else
+		{
+			storeCoffee += Integer.parseInt(textFieldSSell5.getText());
+			storeGold -= Integer.parseInt(textFieldSSell5.getText()) *tradeValues.get(29);
+		}
+		
+		
+		if(storeGold < Integer.parseInt(textFieldNSell1.getText()) *tradeValues.get(35))
+		{
+			storeCoal += storeGold / tradeValues.get(35);
+			storeGold = storeGold % tradeValues.get(35); 
+		}
+		else
+		{
+			storeCoal += Integer.parseInt(textFieldNSell1.getText());
+			storeGold -= Integer.parseInt(textFieldNSell1.getText()) *tradeValues.get(35);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldNSell2.getText()) *tradeValues.get(36))
+		{
+			storeIronOre += storeGold / tradeValues.get(36);
+			storeGold = storeGold % tradeValues.get(36); 
+		}
+		else
+		{
+			storeIronOre += Integer.parseInt(textFieldNSell2.getText());
+			storeGold -= Integer.parseInt(textFieldNSell2.getText()) *tradeValues.get(36);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldNSell3.getText()) *tradeValues.get(37))
+		{
+			storeIcewine += storeGold / tradeValues.get(37);
+			storeGold = storeGold % tradeValues.get(37); 
+		}
+		else
+		{
+			storeIcewine += Integer.parseInt(textFieldNSell3.getText());
+			storeGold -= Integer.parseInt(textFieldNSell3.getText()) *tradeValues.get(37);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldNSell4.getText()) *tradeValues.get(38))
+		{
+			storeHops += storeGold / tradeValues.get(38);
+			storeGold = storeGold % tradeValues.get(38); 
+		}
+		else
+		{
+			storeHops += Integer.parseInt(textFieldNSell4.getText());
+			storeGold -= Integer.parseInt(textFieldNSell4.getText()) *tradeValues.get(38);
+		}
+		
+		if(storeGold < Integer.parseInt(textFieldNSell5.getText()) *tradeValues.get(39))
+		{
+			storeSalmon += storeGold / tradeValues.get(39);
+			storeGold = storeGold % tradeValues.get(39); 
+		}
+		else
+		{
+			storeSalmon += Integer.parseInt(textFieldNSell5.getText());
+			storeGold -= Integer.parseInt(textFieldNSell5.getText()) *tradeValues.get(39);
+		}
+		
+		lblStoreWood.setText(String.valueOf(storeWood));
+		lblStoreStone.setText(String.valueOf(storeStone));
+		lblStoreSteel.setText(String.valueOf(storeSteel));
+		lblStoreGlass.setText(String.valueOf(storeGlass));
+		lblStoreGold.setText(String.valueOf(storeGold));
 	}
 	
 	public void showHappiness(double happiness)
