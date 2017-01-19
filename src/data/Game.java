@@ -709,6 +709,7 @@ public class Game extends JFrame {
 		});
 		
 		panelGame.setTileSize(48);
+		panelGame.setDoubleBuffered(true);
 		panelGame.setBackground(basicBackground);
 		panelGame.addMouseListener(new MouseAdapter() {
 			@Override
@@ -2991,7 +2992,9 @@ public class Game extends JFrame {
 	{
 		if(inhabs > capacity)
 		{
-			happiness = happiness + 2 - (20 * (1 - (storeVegetables / (inhabs * 2.0))));
+			happiness = happiness + 2 - (20 * (1 - (capacity / (inhabs * 2.0))));
+			if(happiness > ((double)capacity / (double)inhabs))
+				happiness = 100 - (100 - ((double)capacity / (double)inhabs) /2);
 		}
 		else
 		{
@@ -3002,7 +3005,6 @@ public class Game extends JFrame {
 	
 	public void executeTrades()
 	{
-		System.out.println("!1");
 		if(storeShoes < Integer.parseInt(textFieldWBuy1.getText()))
 		{
 			storeGold += storeShoes * tradeValues.get(0);
