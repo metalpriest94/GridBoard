@@ -1818,6 +1818,30 @@ public class Game extends JFrame {
 		btnStopPurchases = new JButton("Stop purchases");
 		btnStopPurchases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				amountSell.clear();
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
+				amountSell.add(0);
 				textFieldWSell1.setText("0");
 				textFieldWSell2.setText("0");
 				textFieldWSell3.setText("0");
@@ -1851,6 +1875,30 @@ public class Game extends JFrame {
 		btnStopSales = new JButton("Stop sales");
 		btnStopSales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				amountBuy.clear();
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
+				amountBuy.add(0);
 				textFieldWBuy1.setText("0");
 				textFieldWBuy2.setText("0");
 				textFieldWBuy3.setText("0");
