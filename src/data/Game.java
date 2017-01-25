@@ -62,10 +62,12 @@ public class Game extends JFrame {
 	private MiniMapUpdater mmuGame;
 	private Clockwork cwGame;
 	private PanelAnimator paGame;
+	private StorageMonitor smGame;
 	private Thread gridScroll;
 	private Thread miniMapUpdate;
 	private Thread clockwork;
 	private Thread animator;
+	private Thread storageMonitor;
 	
 	private final Color basicBackground = new Color(255, 219, 153);
 	private final Color darkBackground = new Color(229, 194, 137);
@@ -1653,8 +1655,9 @@ public class Game extends JFrame {
 		gsGame = new GridScroller(panelGame, contentPane);
 		mmuGame = new MiniMapUpdater(panelMiniMap, panelGame);
 		paGame = new PanelAnimator(panelGame, 25);
-		
+		smGame = new StorageMonitor(this);
 		cwGame = new Clockwork(lblDay,lblHours, lblMinutes, this);
+		
 		if(isNewGame)
 			callMap(file, false);
 		else
@@ -1666,6 +1669,8 @@ public class Game extends JFrame {
 		miniMapUpdate.start();
 		animator = new Thread(paGame);
 		animator.start();
+		storageMonitor = new Thread(smGame);
+		storageMonitor.start();
 		
 		setUpBuildCard();
 		if (isNewGame)
@@ -3891,12 +3896,61 @@ public class Game extends JFrame {
 			storeSalmon += Integer.parseInt(textFieldNSell5.getText());
 			storeGold -= Integer.parseInt(textFieldNSell5.getText()) *tradeValues.get(39);
 		}
+	}
+	
+	public void updateStorage(ArrayList<Integer> data)
+	{
+		lblStorageWood.setText(String.valueOf(data.get(0)));
+		lblStorageStone.setText(String.valueOf(data.get(1)));
+		lblStorageSteel.setText(String.valueOf(data.get(2)));
+		lblStorageGlass.setText(String.valueOf(data.get(3)));
+		lblStorageSand.setText(String.valueOf(data.get(4)));
+		lblStorageWool.setText(String.valueOf(data.get(5)));
+		lblStorageLeather.setText(String.valueOf(data.get(6)));
+		lblStorageMarshweed.setText(String.valueOf(data.get(7)));
+		lblStorageGrain.setText(String.valueOf(data.get(8)));
+		lblStorageHops.setText(String.valueOf(data.get(9)));
+		lblStorageCocoabeans.setText(String.valueOf(data.get(10)));
+		lblStorageRawChocolate.setText(String.valueOf(data.get(11)));
+		lblStorageIceflowers.setText(String.valueOf(data.get(12)));
+		lblStorageBarrels.setText(String.valueOf(data.get(13)));
+		lblStoragePaper.setText(String.valueOf(data.get(14)));
+		lblStorageGold.setText(String.valueOf(data.get(15)));
+		lblStorageIronOre.setText(String.valueOf(data.get(16)));
+		lblStorageGoldOre.setText(String.valueOf(data.get(17)));
 		
-		lblStoreWood.setText(String.valueOf(storeWood));
-		lblStoreStone.setText(String.valueOf(storeStone));
-		lblStoreSteel.setText(String.valueOf(storeSteel));
-		lblStoreGlass.setText(String.valueOf(storeGlass));
-		lblStoreGold.setText(String.valueOf(storeGold));
+		lblStorageWater.setText(String.valueOf(data.get(18)));
+		lblStorageVegetables.setText(String.valueOf(data.get(19)));
+		lblStorageClothes.setText(String.valueOf(data.get(20)));
+		lblStorageCoal.setText(String.valueOf(data.get(21)));
+		
+		lblStorageMilk.setText(String.valueOf(data.get(22)));
+		lblStorageMeat.setText(String.valueOf(data.get(23)));
+		lblStorageMedicine.setText(String.valueOf(data.get(24)));
+		lblStorageShoes.setText(String.valueOf(data.get(25)));
+		lblStorageHoney.setText(String.valueOf(data.get(26)));
+		lblStorageOrnaments.setText(String.valueOf(data.get(27)));
+		
+		lblStorageBeer.setText(String.valueOf(data.get(28)));
+		lblStorageFruits.setText(String.valueOf(data.get(29)));
+		lblStorageHorses.setText(String.valueOf(data.get(30)));
+		lblStorageBread.setText(String.valueOf(data.get(31)));
+		lblStorageTobacco.setText(String.valueOf(data.get(32)));
+		lblStoragePerfume.setText(String.valueOf(data.get(33)));
+		lblStorageCheese.setText(String.valueOf(data.get(34)));
+		lblStorageCocoa.setText(String.valueOf(data.get(35)));
+		
+		lblStorageIcewine.setText(String.valueOf(data.get(36)));
+		lblStorageCake.setText(String.valueOf(data.get(37)));
+		lblStorageDeer.setText(String.valueOf(data.get(38)));
+		lblStorageChocolates.setText(String.valueOf(data.get(39)));
+		lblStoragePistols.setText(String.valueOf(data.get(40)));
+		lblStorageLiquor.setText(String.valueOf(data.get(41)));
+		lblStorageBooks.setText(String.valueOf(data.get(42)));
+		lblStorageJewelry.setText(String.valueOf(data.get(43)));
+		lblStorageSalmon.setText(String.valueOf(data.get(44)));
+		lblStorageCoffee.setText(String.valueOf(data.get(45)));
+		
 	}
 	
 	public void showHappiness(double happiness)
