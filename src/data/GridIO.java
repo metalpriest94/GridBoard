@@ -28,6 +28,7 @@ public class GridIO{
 	private int lastY, nextY;
 
 	private ArrayList<Item> constructableItems;
+	private ArrayList<Item> producingItems;
 	
 	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems, Game caller)
 	{
@@ -44,6 +45,19 @@ public class GridIO{
 		allItems = listitems;
 	}
 	
+	
+	public ArrayList<Item> getAllItems() {
+		return allItems;
+	}
+
+	public ArrayList<Item> getConstructableItems() {
+		return constructableItems;
+	}
+
+	public ArrayList<Item> getProducingItems() {
+		return producingItems;
+	}
+
 	public void save(String fileName, boolean isSav)
 	{
 		BufferedWriter fileWrite = null;
@@ -398,7 +412,7 @@ public class GridIO{
 		return allTiles;
 	}
 	
-	public ArrayList<Item> createItemList(boolean onlyConstructables)
+	public void createItemList()
 	{
 		String[] findITM, files, fileContent;
 		BufferedReader fileRead;
@@ -407,6 +421,7 @@ public class GridIO{
 		
 		allItems = new ArrayList<Item>();
 		constructableItems = new ArrayList<Item>();
+		producingItems = new ArrayList<Item>();
 		
 		File folderRead = new File("src" + File.separator +  "items"); 
 			
@@ -439,6 +454,10 @@ public class GridIO{
 								{
 									constructableItems.add(new Item(fileContent));
 								}
+								if(fileContent[2].equals("production"));
+								{
+									producingItems.add(new Item(fileContent));
+								}
 							}
 							catch (IOException ex)
 							{
@@ -465,10 +484,6 @@ public class GridIO{
 				}
 			}
 		}
-		if(onlyConstructables)
-			return constructableItems;
-		else
-			return allItems;
 	}
 }
 

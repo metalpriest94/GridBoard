@@ -75,6 +75,9 @@ public class Game extends JFrame {
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
 	private ArrayList<Item> constructableItems;
+	private ArrayList<Item> producingItems;
+	
+	private ArrayList<Integer>productAmounts;
 	
 	// Variables defining the appearance of the MiniMap
 	// ((Mapsize / Detail) * Scale) should be as close to 256 as possible. If the map is not square-shaped, use the long side for Mapsize.
@@ -461,6 +464,7 @@ public class Game extends JFrame {
 	private JImgPanel panelStorageSand;
 	private JLabel lblStorageSand;
 	private JButton btnBackStorage;
+	
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -1699,9 +1703,11 @@ public class Game extends JFrame {
 	{
 
 		gioGame = new GridIO(panelGame, allTiles, allItems, this);
+		gioGame.createItemList();
 		allTiles = gioGame.createTileList();
-		allItems = gioGame.createItemList(false);
-		constructableItems = gioGame.createItemList(true);
+		allItems = gioGame.getAllItems();
+		constructableItems = gioGame.getConstructableItems();
+		producingItems = gioGame.getProducingItems();
 		
 		gioGame.load(name, isNewGame);
 	}
@@ -1932,10 +1938,11 @@ public class Game extends JFrame {
 					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 8, Utilities.boolToInt(each.hasEmployee()));
 					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 9, each.getCapacity());
 					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 10, each.getUsedCapacity());
-					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 11, each.getStore1());
-					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 12, each.getStore2());
-					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 13, each.getStore3());
-					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getStoreSideProduct());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 11, each.getProducingResource1());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 12, each.getProducingResource2());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 13, each.getYieldProduct1());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 14, each.getYieldProduct2());
+					panelGame.applyProperty(panelGame.getCurrentX(), panelGame.getCurrentY(), 15, each.getProducingTime());
 					panelGame.applyItemImage(panelGame.getCurrentX(), panelGame.getCurrentY(), each.getImage());
 					
 					if (each.getPurpose() == 1)
@@ -3100,12 +3107,27 @@ public class Game extends JFrame {
 			}
 		}
 		{
+			produceGoods();
 			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToConsume / 2400)
 				consumeGoods();
 			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToCheckLiving / 2400)
 				checkHousingSpace();
 			if (cwGame.getContinousTime() % ticksPerDayInGame == ticksPerDayInGame * timeToTrade / 2400)
 				executeTrades();
+		}
+	}
+	public void produceGoods()
+	{
+		for (int x = 0; x < panelGame.getTilesX(); x++)
+		{
+			for (int y= 0; y < panelGame.getTilesY(); y++)
+			{
+				panelGame.applyProperty(x, y, 9, (panelGame.getMapping()[x][y][9] + 1));
+				if(panelGame.getMapping()[x][y][9] >= panelGame.getMapping()[x][y][15])
+				{
+					panelGame.applyProperty(x, y, 9, 0);
+				}
+			}
 		}
 	}
 	public void consumeGoods()

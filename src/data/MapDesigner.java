@@ -680,8 +680,9 @@ public class MapDesigner extends JFrame {
 		
 		readConfig();
 		gio = new GridIO(panelMap, allTiles, allItems);
+		gio.createItemList();
 		allTiles = gio.createTileList();
-		allItems = gio.createItemList(false);
+		allItems = gio.getAllItems();
 		for(MapTile each: allTiles)
 		{
 			modelMapTiles.addElement(each.getName());
