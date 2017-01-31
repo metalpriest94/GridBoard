@@ -28,7 +28,8 @@ public class GridIO{
 	private int lastY, nextY;
 
 	private ArrayList<Item> constructableItems;
-	private ArrayList<Item> producingItems;
+	private ArrayList<Integer> productionAmounts1;
+	private ArrayList<Integer> productionAmounts2;
 	
 	public GridIO(JGridPanel jgridpanel, ArrayList<MapTile> listmaptiles, ArrayList<Item> listitems, Game caller)
 	{
@@ -53,9 +54,15 @@ public class GridIO{
 	public ArrayList<Item> getConstructableItems() {
 		return constructableItems;
 	}
+	
+	
 
-	public ArrayList<Item> getProducingItems() {
-		return producingItems;
+	public ArrayList<Integer> getProductionAmounts1() {
+		return productionAmounts1;
+	}
+
+	public ArrayList<Integer> getProductionAmounts2() {
+		return productionAmounts2;
 	}
 
 	public void save(String fileName, boolean isSav)
@@ -421,7 +428,8 @@ public class GridIO{
 		
 		allItems = new ArrayList<Item>();
 		constructableItems = new ArrayList<Item>();
-		producingItems = new ArrayList<Item>();
+		productionAmounts1 = new ArrayList<Integer>();
+		productionAmounts2 = new ArrayList<Integer>();
 		
 		File folderRead = new File("src" + File.separator +  "items"); 
 			
@@ -456,7 +464,8 @@ public class GridIO{
 								}
 								if(fileContent[2].equals("production"));
 								{
-									producingItems.add(new Item(fileContent));
+									productionAmounts1.add(Integer.parseInt(fileContent[23]));
+									productionAmounts2.add(Integer.parseInt(fileContent[24]));
 								}
 							}
 							catch (IOException ex)

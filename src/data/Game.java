@@ -74,10 +74,9 @@ public class Game extends JFrame {
 	
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
-	private ArrayList<Item> constructableItems;
-	private ArrayList<Item> producingItems;
-	
-	private ArrayList<Integer>productAmounts;
+	private ArrayList<Item> constructableItems;	
+	private ArrayList<Integer>productAmounts1;
+	private ArrayList<Integer>productAmounts2;
 	
 	// Variables defining the appearance of the MiniMap
 	// ((Mapsize / Detail) * Scale) should be as close to 256 as possible. If the map is not square-shaped, use the long side for Mapsize.
@@ -1707,7 +1706,8 @@ public class Game extends JFrame {
 		allTiles = gioGame.createTileList();
 		allItems = gioGame.getAllItems();
 		constructableItems = gioGame.getConstructableItems();
-		producingItems = gioGame.getProducingItems();
+		productAmounts1 = gioGame.getProductionAmounts1();
+		productAmounts2 = gioGame.getProductionAmounts2();
 		
 		gioGame.load(name, isNewGame);
 	}
