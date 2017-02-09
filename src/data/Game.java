@@ -1507,7 +1507,8 @@ public class Game extends JFrame {
 		
 		panelBuild.add(scrollPane, "cell 0 1,grow");
 		
-		panelSelectItem = new JGridPanel(3,6,4);
+		panelSelectItem = new JGridPanel(3,24,4);
+		panelSelectItem.setTilesY(15);
 		panelSelectItem.setTileSize(64);
 		panelSelectItem.setPreferredSize(new Dimension(192, (panelSelectItem.getTilesY() * panelSelectItem.getTileSize())));
 		panelSelectItem.addMouseListener(new MouseAdapter() {

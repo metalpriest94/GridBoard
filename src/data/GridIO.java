@@ -461,12 +461,13 @@ public class GridIO{
 								if(fileContent[3].equals(String.valueOf(true)))
 								{
 									constructableItems.add(new Item(fileContent));
-								}
+								}/*
 								if(fileContent[2].equals("production"));
 								{
-									productionAmounts1.add(Integer.parseInt(fileContent[23]));
-									productionAmounts2.add(Integer.parseInt(fileContent[24]));
-								}
+									//System.out.println(fileContent[]);
+									productionAmounts1.add(Integer.parseInt(fileContent[25]));
+									productionAmounts2.add(Integer.parseInt(fileContent[26]));
+								}*/
 							}
 							catch (IOException ex)
 							{

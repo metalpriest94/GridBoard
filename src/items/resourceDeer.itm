@@ -1,5 +1,5 @@
 125/id
-Wood/name
+Deer/name
 resource/purpose
 false/isConstructable
 0/employee
@@ -25,4 +25,4 @@ false/hasEmployee
 0/yieldProduct2
 0/amountYieldProduct1
 0/amountYieldProduct2
-wood.png/image
+deer.png/image
