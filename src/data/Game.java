@@ -177,13 +177,14 @@ public class Game extends JFrame {
 	private int storeGrain;
 	private int storeHops;
 	private int storeCocoabeans;
-	private int storeRawChocolate;
+	private int storeChocolate;
 	private int storeIceflowers;
 	private int storeBarrels;
 	private int storePaper;
 	private int storeGold;
 	private int storeIronOre;
 	private int storeGoldOre;
+	private int storeCows;
 	
 	private int inhabs;
 	private int capacity;
@@ -412,7 +413,7 @@ public class Game extends JFrame {
 	private JImgPanel panelStorageLeather;
 	private JImgPanel panelStorageGrain;
 	private JImgPanel panelStorageIronOre;
-	private JImgPanel panelStorageRawChocolate;
+	private JImgPanel panelStorageChocolate;
 	private JImgPanel panelStorageHops;
 	private JImgPanel panelStorageCocoabeans;
 	private JImgPanel panelStorageIceflowers;
@@ -463,6 +464,8 @@ public class Game extends JFrame {
 	private JImgPanel panelStorageSand;
 	private JLabel lblStorageSand;
 	private JButton btnBackStorage;
+	private JImgPanel panelStorageCows;
+	private JLabel lblStorageStore;
 	
 	
 	public GridIO getGioGame() {
@@ -497,7 +500,7 @@ public class Game extends JFrame {
 		storage.add(storeGrain);
 		storage.add(storeHops);
 		storage.add(storeCocoabeans);
-		storage.add(storeRawChocolate);
+		storage.add(storeChocolate);
 		storage.add(storeIceflowers);
 		storage.add(storeBarrels);
 		storage.add(storePaper);
@@ -1138,12 +1141,12 @@ public class Game extends JFrame {
 		lblStorageLiquor = new JLabel("0");
 		panelStorageItems.add(lblStorageLiquor, "cell 13 8");
 		
-		panelStorageLeather = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"leather.png");
-		panelStorageLeather.setBackground(new Color(229, 194, 137));
-		panelStorageItems.add(panelStorageLeather, "cell 6 9,grow");
+		panelStorageCows = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"cows.png");
+		panelStorageCows.setBackground(new Color(229, 194, 137));
+		panelStorageItems.add(panelStorageCows, "cell 6 9,grow");
 		
-		lblStorageLeather = new JLabel("0");
-		panelStorageItems.add(lblStorageLeather, "cell 7 9");
+		lblStorageStore = new JLabel("0");
+		panelStorageItems.add(lblStorageStore, "cell 7 9");
 		
 		panelStorageCheese = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"cheese.png");
 		panelStorageCheese.setBackground(new Color(229, 194, 137));
@@ -1159,12 +1162,12 @@ public class Game extends JFrame {
 		lblStorageBooks = new JLabel("0");
 		panelStorageItems.add(lblStorageBooks, "cell 13 9");
 		
-		panelStorageMarshweed = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"marshweed.png");
-		panelStorageMarshweed.setBackground(new Color(229, 194, 137));
-		panelStorageItems.add(panelStorageMarshweed, "cell 6 10,grow");
+		panelStorageLeather = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"leather.png");
+		panelStorageLeather.setBackground(new Color(229, 194, 137));
+		panelStorageItems.add(panelStorageLeather, "cell 6 10,grow");
 		
-		lblStorageMarshweed = new JLabel("0");
-		panelStorageItems.add(lblStorageMarshweed, "cell 7 10");
+		lblStorageLeather = new JLabel("0");
+		panelStorageItems.add(lblStorageLeather, "cell 7 10");
 		
 		panelStorageCocoa = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"cocoa.png");
 		panelStorageCocoa.setBackground(new Color(229, 194, 137));
@@ -1179,6 +1182,13 @@ public class Game extends JFrame {
 		
 		lblStorageJewelry = new JLabel("0");
 		panelStorageItems.add(lblStorageJewelry, "cell 13 10");
+		
+		panelStorageMarshweed = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"marshweed.png");
+		panelStorageMarshweed.setBackground(new Color(229, 194, 137));
+		panelStorageItems.add(panelStorageMarshweed, "cell 6 11,grow");
+		
+		lblStorageMarshweed = new JLabel("0");
+		panelStorageItems.add(lblStorageMarshweed, "cell 7 11");
 		
 		panelStorageSand = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"sand.png");
 		panelStorageSand.setBackground(new Color(229, 194, 137));
@@ -1236,9 +1246,9 @@ public class Game extends JFrame {
 		lblStorageBarrels = new JLabel("0");
 		panelStorageItems.add(lblStorageBarrels, "cell 13 14");
 		
-		panelStorageRawChocolate = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"rawchocolate.png");
-		panelStorageRawChocolate.setBackground(new Color(229, 194, 137));
-		panelStorageItems.add(panelStorageRawChocolate, "cell 9 15,grow");
+		panelStorageChocolate = new JImgPanel("resources"+ File.separator +"images"+ File.separator +"items"+ File.separator +"chocolate.png");
+		panelStorageChocolate.setBackground(new Color(229, 194, 137));
+		panelStorageItems.add(panelStorageChocolate, "cell 9 15,grow");
 		
 		lblStorageRawChocolate = new JLabel("0");
 		panelStorageItems.add(lblStorageRawChocolate, "cell 10 15");
@@ -2003,7 +2013,7 @@ public class Game extends JFrame {
 		storeGrain = storage[8];
 		storeHops = storage[9];
 		storeCocoabeans = storage[10];
-		storeRawChocolate = storage[11];
+		storeChocolate = storage[11];
 		storeIceflowers = storage[12];
 		storeBarrels = storage[13];
 		storePaper = storage[14];
@@ -2059,7 +2069,7 @@ public class Game extends JFrame {
 		storeGrain = 0;
 		storeHops = 0;
 		storeCocoabeans = 0;
-		storeRawChocolate = 0;
+		storeChocolate = 0;
 		storeIceflowers = 0;
 		storeBarrels = 0;
 		storePaper = 0;
@@ -3123,13 +3133,207 @@ public class Game extends JFrame {
 		{
 			for (int y= 0; y < panelGame.getTilesY(); y++)
 			{
-				panelGame.applyProperty(x, y, 9, (panelGame.getMapping()[x][y][9] + 1));
-				if(panelGame.getMapping()[x][y][9] >= panelGame.getMapping()[x][y][15])
+				if(panelGame.getMapping()[x][y][4] >= 200 && panelGame.getMapping()[x][y][4] < 300)
 				{
-					panelGame.applyProperty(x, y, 9, 0);
+					panelGame.applyProperty(x, y, 9, (panelGame.getMapping()[x][y][9] + 1));
+					System.out.println(panelGame.getMapping()[x][y][9]);
+					if(panelGame.getMapping()[x][y][9] >= panelGame.getMapping()[x][y][15])
+					{
+						panelGame.applyProperty(x, y, 9, 0);
+						if (panelGame.getMapping()[x][y][13] == 101)
+						{
+							storeWater += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 102)
+						{
+							storeWood += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 103)
+						{
+							storeStone += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 104)
+						{
+							storeSteel += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 105)
+						{
+							storeGlass += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 106)
+						{
+							storeVegetables += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 107)
+						{
+							storeClothes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 108)
+						{
+							storeCoal += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 109)
+						{
+							storeMilk += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 110)
+						{
+							storeMeat += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 111)
+						{
+							storeMedicine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 112)
+						{
+							storeShoes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 113)
+						{
+							storeHoney += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 114)
+						{
+							storeOrnaments += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 115)
+						{
+							storeBeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 116)
+						{
+							storeFruits += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 117)
+						{
+							storeHorses += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 118)
+						{
+							storeBread += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 119)
+						{
+							storeTobacco += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 120)
+						{
+							storePerfume += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 121)
+						{
+							storeCheese += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 122)
+						{
+							storeCocoa += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 123)
+						{
+							storeIcewine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 124)
+						{
+							storeCake += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 125)
+						{
+							storeDeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 126)
+						{
+							storeChocolates += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 127)
+						{
+							storePistols += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 128)
+						{
+							storeLiquor += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 129)
+						{
+							storeBooks += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 130)
+						{
+							storeJewelry += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 131)
+						{
+							storeSalmon += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 132)
+						{
+							storeCoffee += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 133)
+						{
+							storeSand += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 134)
+						{
+							storeWool += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 135)
+						{
+							storeLeather += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 136)
+						{
+							storeMarshweed += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 137)
+						{
+							storeGrain += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 138)
+						{
+							storeHops += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 139)
+						{
+							storeCocoabeans += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 140)
+						{
+							storeChocolate += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 141)
+						{
+							storeIceflowers += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 142)
+						{
+							storeBarrels += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 143)
+						{
+							storePaper += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 144)
+						{
+							storeIronOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 145)
+						{
+							storeGoldOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 146)
+						{
+							storeCows += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][13] == 147)
+						{
+							storeGold += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+						}
+						
+					}
 				}
 			}
 		}
+		displayStorage();
 	}
 	public void consumeGoods()
 	{				
