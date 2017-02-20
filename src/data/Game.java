@@ -75,6 +75,8 @@ public class Game extends JFrame {
 	private ArrayList<MapTile> allTiles;
 	private ArrayList<Item> allItems;
 	private ArrayList<Item> constructableItems;	
+	private ArrayList<Integer>productCosts1;
+	private ArrayList<Integer>productCosts2;
 	private ArrayList<Integer>productAmounts1;
 	private ArrayList<Integer>productAmounts2;
 	
@@ -1518,7 +1520,6 @@ public class Game extends JFrame {
 		panelBuild.add(scrollPane, "cell 0 1,grow");
 		
 		panelSelectItem = new JGridPanel(3,24,4);
-		panelSelectItem.setTilesY(15);
 		panelSelectItem.setTileSize(64);
 		panelSelectItem.setPreferredSize(new Dimension(192, (panelSelectItem.getTilesY() * panelSelectItem.getTileSize())));
 		panelSelectItem.addMouseListener(new MouseAdapter() {
@@ -2114,6 +2115,7 @@ public class Game extends JFrame {
 	
 	public void displayStorage()
 	{
+		System.out.println("!1 ---" + storeVegetables);
 		lblStorageWood.setText(String.valueOf(storeWood));
 		lblStorageStone.setText(String.valueOf(storeStone));
 		lblStorageSteel.setText(String.valueOf(storeSteel));
@@ -2121,6 +2123,7 @@ public class Game extends JFrame {
 		lblStorageGold.setText(String.valueOf(storeGold));
 		lblStorageWater.setText(String.valueOf(storeWater));
 		lblStorageVegetables.setText(String.valueOf(storeVegetables));
+		
 		
 		lblStoreWood.setText(String.valueOf(storeWood));
 		lblStoreStone.setText(String.valueOf(storeStone));
@@ -3143,6 +3146,9 @@ public class Game extends JFrame {
 						if (panelGame.getMapping()[x][y][13] == 101)
 						{
 							storeWater += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							System.out.println("!2 ---" + productAmounts1.get(panelGame.getMapping()[x][y][13] - 101));
+							System.out.println("!3 ---" + (panelGame.getMapping()[x][y][13] - 101));
+							System.out.println("!4 ---" + storeWater);
 						}
 						else if (panelGame.getMapping()[x][y][13] == 102)
 						{
@@ -3329,6 +3335,194 @@ public class Game extends JFrame {
 							storeGold += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
 						}
 						
+						if (panelGame.getMapping()[x][y][14] == 101)
+						{
+							storeWater += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 102)
+						{
+							storeWood += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 103)
+						{
+							storeStone += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 104)
+						{
+							storeSteel += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 105)
+						{
+							storeGlass += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 106)
+						{
+							storeVegetables += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 107)
+						{
+							storeClothes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 108)
+						{
+							storeCoal += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 109)
+						{
+							storeMilk += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 110)
+						{
+							storeMeat += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 111)
+						{
+							storeMedicine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 112)
+						{
+							storeShoes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 113)
+						{
+							storeHoney += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 114)
+						{
+							storeOrnaments += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 115)
+						{
+							storeBeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 116)
+						{
+							storeFruits += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 117)
+						{
+							storeHorses += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 118)
+						{
+							storeBread += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 119)
+						{
+							storeTobacco += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 120)
+						{
+							storePerfume += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 121)
+						{
+							storeCheese += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 122)
+						{
+							storeCocoa += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 123)
+						{
+							storeIcewine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 124)
+						{
+							storeCake += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 125)
+						{
+							storeDeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 126)
+						{
+							storeChocolates += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 127)
+						{
+							storePistols += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 128)
+						{
+							storeLiquor += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 129)
+						{
+							storeBooks += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 130)
+						{
+							storeJewelry += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 131)
+						{
+							storeSalmon += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 132)
+						{
+							storeCoffee += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 133)
+						{
+							storeSand += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 134)
+						{
+							storeWool += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 135)
+						{
+							storeLeather += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 136)
+						{
+							storeMarshweed += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 137)
+						{
+							storeGrain += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 138)
+						{
+							storeHops += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 139)
+						{
+							storeCocoabeans += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 140)
+						{
+							storeChocolate += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 141)
+						{
+							storeIceflowers += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 142)
+						{
+							storeBarrels += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 143)
+						{
+							storePaper += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 144)
+						{
+							storeIronOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 145)
+						{
+							storeGoldOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 146)
+						{
+							storeCows += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
+						else if (panelGame.getMapping()[x][y][14] == 147)
+						{
+							storeGold += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+						}
 					}
 				}
 			}
