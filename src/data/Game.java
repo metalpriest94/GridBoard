@@ -3136,392 +3136,1166 @@ public class Game extends JFrame {
 		{
 			for (int y= 0; y < panelGame.getTilesY(); y++)
 			{
+				Boolean resource1Available = false;
+				Boolean resource2Available = false;
+				Boolean resourcesAvailable = false;
 				if(panelGame.getMapping()[x][y][4] >= 200 && panelGame.getMapping()[x][y][4] < 300)
 				{
-					panelGame.applyProperty(x, y, 9, (panelGame.getMapping()[x][y][9] + 1));
-					System.out.println(panelGame.getMapping()[x][y][9]);
-					if(panelGame.getMapping()[x][y][9] >= panelGame.getMapping()[x][y][15])
+					if (panelGame.getMapping()[x][y][9] == 0)
 					{
-						panelGame.applyProperty(x, y, 9, 0);
-						if (panelGame.getMapping()[x][y][13] == 101)
+						if (panelGame.getMapping()[x][y][11] == 0)
 						{
-							storeWater += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
-							System.out.println("!2 ---" + productAmounts1.get(panelGame.getMapping()[x][y][13] - 101));
-							System.out.println("!3 ---" + (panelGame.getMapping()[x][y][13] - 101));
-							System.out.println("!4 ---" + storeWater);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 102)
+						else if (panelGame.getMapping()[x][y][11] == 101 && storeWater >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeWood += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 103)
+						else if (panelGame.getMapping()[x][y][11] == 102 && storeWood >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeStone += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 104)
+						else if (panelGame.getMapping()[x][y][11] == 103 && storeStone >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeSteel += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 105)
+						else if (panelGame.getMapping()[x][y][11] == 104 && storeSteel >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeGlass += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 106)
+						else if (panelGame.getMapping()[x][y][11] == 105 && storeGlass >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeVegetables += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 107)
+						else if (panelGame.getMapping()[x][y][11] == 106 && storeVegetables >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeClothes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 108)
+						else if (panelGame.getMapping()[x][y][11] == 107 && storeClothes >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCoal += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 109)
+						else if (panelGame.getMapping()[x][y][11] == 108 && storeCoal >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeMilk += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 110)
+						else if (panelGame.getMapping()[x][y][11] == 109 && storeMilk >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeMeat += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 111)
+						else if (panelGame.getMapping()[x][y][11] == 110 && storeMeat >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeMedicine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 112)
+						else if (panelGame.getMapping()[x][y][11] == 111 && storeMedicine >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeShoes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 113)
+						else if (panelGame.getMapping()[x][y][11] == 112 && storeShoes >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeHoney += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 114)
+						else if (panelGame.getMapping()[x][y][11] == 113 && storeHoney >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeOrnaments += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 115)
+						else if (panelGame.getMapping()[x][y][11] == 114 && storeOrnaments >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeBeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 116)
+						else if (panelGame.getMapping()[x][y][11] == 115 && storeBeer >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeFruits += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 117)
+						else if (panelGame.getMapping()[x][y][11] == 116 && storeFruits >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeHorses += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 118)
+						else if (panelGame.getMapping()[x][y][11] == 117 && storeHorses >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeBread += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 119)
+						else if (panelGame.getMapping()[x][y][11] == 118 && storeBread >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeTobacco += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 120)
+						else if (panelGame.getMapping()[x][y][11] == 119 && storeTobacco >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storePerfume += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 121)
+						else if (panelGame.getMapping()[x][y][11] == 120 && storePerfume >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCheese += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 122)
+						else if (panelGame.getMapping()[x][y][11] == 121 && storeCheese >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCocoa += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 123)
+						else if (panelGame.getMapping()[x][y][11] == 122 && storeCocoa >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeIcewine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 124)
+						else if (panelGame.getMapping()[x][y][11] == 123 && storeIcewine >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCake += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 125)
+						else if (panelGame.getMapping()[x][y][11] == 124 && storeCake >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeDeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 126)
+						else if (panelGame.getMapping()[x][y][11] == 125 && storeDeer >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeChocolates += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 127)
+						else if (panelGame.getMapping()[x][y][11] == 126 && storeChocolates >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storePistols += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 128)
+						else if (panelGame.getMapping()[x][y][11] == 127 && storePistols >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeLiquor += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 129)
+						else if (panelGame.getMapping()[x][y][11] == 128 && storeLiquor >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeBooks += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 130)
+						else if (panelGame.getMapping()[x][y][11] == 129 && storeBooks >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeJewelry += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 131)
+						else if (panelGame.getMapping()[x][y][11] == 130 && storeJewelry >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeSalmon += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 132)
+						else if (panelGame.getMapping()[x][y][11] == 131 && storeSalmon >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCoffee += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 133)
+						else if (panelGame.getMapping()[x][y][11] == 132 && storeCoffee >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeSand += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 134)
+						else if (panelGame.getMapping()[x][y][11] == 133 && storeSand >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeWool += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 135)
+						else if (panelGame.getMapping()[x][y][11] == 134 && storeWool >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeLeather += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 136)
+						else if (panelGame.getMapping()[x][y][11] == 135 && storeLeather >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeMarshweed += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 137)
+						else if (panelGame.getMapping()[x][y][11] == 136 && storeMarshweed >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeGrain += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 138)
+						else if (panelGame.getMapping()[x][y][11] == 137 && storeGrain >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeHops += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 139)
+						else if (panelGame.getMapping()[x][y][11] == 138 && storeHops >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCocoabeans += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 140)
+						else if (panelGame.getMapping()[x][y][11] == 139 && storeCocoabeans >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeChocolate += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 141)
+						else if (panelGame.getMapping()[x][y][11] == 140 && storeChocolate >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeIceflowers += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 142)
+						else if (panelGame.getMapping()[x][y][11] == 141 && storeIceflowers >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeBarrels += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 143)
+						else if (panelGame.getMapping()[x][y][11] == 142 && storeBarrels >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storePaper += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 144)
+						else if (panelGame.getMapping()[x][y][11] == 143 && storePaper >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeIronOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][13] == 145)
+						else if (panelGame.getMapping()[x][y][11] == 144 && storeIronOre >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeGoldOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;							
 						}
-						else if (panelGame.getMapping()[x][y][13] == 146)
+						else if (panelGame.getMapping()[x][y][11] == 145 && storeGoldOre >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeCows += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;							
 						}
-						else if (panelGame.getMapping()[x][y][13] == 147)
+						else if (panelGame.getMapping()[x][y][11] == 146 && storeCows >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
 						{
-							storeGold += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							resource1Available = true;
+						}
+						else if (panelGame.getMapping()[x][y][11] == 147 && storeGold >= productCosts1.get(panelGame.getMapping()[x][y][11] - 101))
+						{
+							resource1Available = true;
 						}
 						
-						if (panelGame.getMapping()[x][y][14] == 101)
+						
+						if (panelGame.getMapping()[x][y][12] == 0)
 						{
-							storeWater += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource1Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 102)
+						else if (panelGame.getMapping()[x][y][12] == 101 && storeWater >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeWood += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 103)
+						else if (panelGame.getMapping()[x][y][12] == 102 && storeWood >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeStone += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 104)
+						else if (panelGame.getMapping()[x][y][12] == 103 && storeStone >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeSteel += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 105)
+						else if (panelGame.getMapping()[x][y][12] == 104 && storeSteel >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeGlass += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 106)
+						else if (panelGame.getMapping()[x][y][12] == 105 && storeGlass >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeVegetables += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 107)
+						else if (panelGame.getMapping()[x][y][12] == 106 && storeVegetables >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeClothes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 108)
+						else if (panelGame.getMapping()[x][y][12] == 107 && storeClothes >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCoal += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 109)
+						else if (panelGame.getMapping()[x][y][12] == 108 && storeCoal >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeMilk += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 110)
+						else if (panelGame.getMapping()[x][y][12] == 109 && storeMilk >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeMeat += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 111)
+						else if (panelGame.getMapping()[x][y][12] == 110 && storeMeat >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeMedicine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 112)
+						else if (panelGame.getMapping()[x][y][12] == 111 && storeMedicine >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeShoes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 113)
+						else if (panelGame.getMapping()[x][y][12] == 112 && storeShoes >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeHoney += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 114)
+						else if (panelGame.getMapping()[x][y][12] == 113 && storeHoney >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeOrnaments += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 115)
+						else if (panelGame.getMapping()[x][y][12] == 114 && storeOrnaments >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeBeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 116)
+						else if (panelGame.getMapping()[x][y][12] == 115 && storeBeer >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeFruits += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 117)
+						else if (panelGame.getMapping()[x][y][12] == 116 && storeFruits >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeHorses += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 118)
+						else if (panelGame.getMapping()[x][y][12] == 117 && storeHorses >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeBread += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 119)
+						else if (panelGame.getMapping()[x][y][12] == 118 && storeBread >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeTobacco += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 120)
+						else if (panelGame.getMapping()[x][y][12] == 119 && storeTobacco >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storePerfume += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 121)
+						else if (panelGame.getMapping()[x][y][12] == 120 && storePerfume >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCheese += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 122)
+						else if (panelGame.getMapping()[x][y][12] == 121 && storeCheese >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCocoa += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 123)
+						else if (panelGame.getMapping()[x][y][12] == 122 && storeCocoa >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeIcewine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 124)
+						else if (panelGame.getMapping()[x][y][12] == 123 && storeIcewine >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCake += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 125)
+						else if (panelGame.getMapping()[x][y][12] == 124 && storeCake >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeDeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 126)
+						else if (panelGame.getMapping()[x][y][12] == 125 && storeDeer >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeChocolates += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 127)
+						else if (panelGame.getMapping()[x][y][12] == 126 && storeChocolates >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storePistols += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 128)
+						else if (panelGame.getMapping()[x][y][12] == 127 && storePistols >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeLiquor += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 129)
+						else if (panelGame.getMapping()[x][y][12] == 128 && storeLiquor >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeBooks += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 130)
+						else if (panelGame.getMapping()[x][y][12] == 129 && storeBooks >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeJewelry += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 131)
+						else if (panelGame.getMapping()[x][y][12] == 130 && storeJewelry >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeSalmon += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 132)
+						else if (panelGame.getMapping()[x][y][12] == 131 && storeSalmon >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCoffee += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 133)
+						else if (panelGame.getMapping()[x][y][12] == 132 && storeCoffee >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeSand += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 134)
+						else if (panelGame.getMapping()[x][y][12] == 133 && storeSand >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeWool += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 135)
+						else if (panelGame.getMapping()[x][y][12] == 134 && storeWool >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeLeather += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 136)
+						else if (panelGame.getMapping()[x][y][12] == 135 && storeLeather >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeMarshweed += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 137)
+						else if (panelGame.getMapping()[x][y][12] == 136 && storeMarshweed >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeGrain += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 138)
+						else if (panelGame.getMapping()[x][y][12] == 137 && storeGrain >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeHops += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 139)
+						else if (panelGame.getMapping()[x][y][12] == 138 && storeHops >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCocoabeans += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 140)
+						else if (panelGame.getMapping()[x][y][12] == 139 && storeCocoabeans >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeChocolate += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 141)
+						else if (panelGame.getMapping()[x][y][12] == 140 && storeChocolate >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeIceflowers += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 142)
+						else if (panelGame.getMapping()[x][y][12] == 141 && storeIceflowers >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeBarrels += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 143)
+						else if (panelGame.getMapping()[x][y][12] == 142 && storeBarrels >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storePaper += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 144)
+						else if (panelGame.getMapping()[x][y][12] == 143 && storePaper >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeIronOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
 						}
-						else if (panelGame.getMapping()[x][y][14] == 145)
+						else if (panelGame.getMapping()[x][y][12] == 144 && storeIronOre >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeGoldOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;							
 						}
-						else if (panelGame.getMapping()[x][y][14] == 146)
+						else if (panelGame.getMapping()[x][y][12] == 145 && storeGoldOre >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeCows += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;							
 						}
-						else if (panelGame.getMapping()[x][y][14] == 147)
+						else if (panelGame.getMapping()[x][y][12] == 146 && storeCows >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
-							storeGold += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							resource2Available = true;
+						}
+						else if (panelGame.getMapping()[x][y][12] == 147 && storeGold >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
+						{
+							resource2Available = true;
+						}
+						
+						if (resource1Available && resource2Available)
+							resourcesAvailable = true;
+						
+						if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 101)
+						{
+							storeWater -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 102)
+						{
+							storeWood -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);						
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 103)
+						{
+							storeStone -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 104)
+						{
+							storeSteel -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 105)
+						{
+							storeGlass -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 106)
+						{
+							storeVegetables -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 107)
+						{
+							storeClothes -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 108)
+						{
+							storeCoal -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 109)
+						{
+							storeMilk -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 110)
+						{
+							storeMeat -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 111)
+						{
+							storeMedicine -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 112)
+						{
+							storeShoes -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 113)
+						{
+							storeHoney -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 114)
+						{
+							storeOrnaments -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 115)
+						{
+							storeBeer -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 116)
+						{
+							storeFruits -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 117)
+						{
+							storeHorses -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 118)
+						{
+							storeBread -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 119)
+						{
+							storeTobacco -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 120)
+						{
+							storePerfume -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 121)
+						{
+							storeCheese -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 122)
+						{
+							storeCocoa -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 123)
+						{
+							storeIcewine -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 124)
+						{
+							storeCake -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 125)
+						{
+							storeDeer -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 126)
+						{
+							storeChocolates -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 127)
+						{
+							storePistols -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 128)
+						{
+							storeLiquor -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 129)
+						{
+							storeBooks -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 130)
+						{
+							storeJewelry -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 131)
+						{
+							storeSalmon -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 132)
+						{
+							storeCoffee -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 133)
+						{
+							storeSand -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 134)
+						{
+							storeWool -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 135)
+						{
+							storeLeather -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 136)
+						{
+							storeMarshweed -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 137)
+						{
+							storeGrain -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 138)
+						{
+							storeHops -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 139)
+						{
+							storeCocoabeans -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 140)
+						{
+							storeChocolate -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 141)
+						{
+							storeIceflowers -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 142)
+						{
+							storeBarrels -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 143)
+						{
+							storePaper -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 144)
+						{
+							storeIronOre -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 145)
+						{
+							storeGoldOre -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 146)
+						{
+							storeCows -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 147)
+						{
+							storeGold -= productCosts1.get(panelGame.getMapping()[x][y][11] - 101);							
+						}
+						
+						
+						if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 101)
+						{
+							storeWater -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 102)
+						{
+							storeWood -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);						
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 103)
+						{
+							storeStone -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 104)
+						{
+							storeSteel -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 105)
+						{
+							storeGlass -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 106)
+						{
+							storeVegetables -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 107)
+						{
+							storeClothes -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 108)
+						{
+							storeCoal -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 109)
+						{
+							storeMilk -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 110)
+						{
+							storeMeat -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 111)
+						{
+							storeMedicine -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 112)
+						{
+							storeShoes -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 113)
+						{
+							storeHoney -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 114)
+						{
+							storeOrnaments -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 115)
+						{
+							storeBeer -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 116)
+						{
+							storeFruits -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 117)
+						{
+							storeHorses -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 118)
+						{
+							storeBread -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 119)
+						{
+							storeTobacco -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 120)
+						{
+							storePerfume -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 121)
+						{
+							storeCheese -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 122)
+						{
+							storeCocoa -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 123)
+						{
+							storeIcewine -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 124)
+						{
+							storeCake -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 125)
+						{
+							storeDeer -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 126)
+						{
+							storeChocolates -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 127)
+						{
+							storePistols -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 128)
+						{
+							storeLiquor -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 129)
+						{
+							storeBooks -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 130)
+						{
+							storeJewelry -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 131)
+						{
+							storeSalmon -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 132)
+						{
+							storeCoffee -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 133)
+						{
+							storeSand -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 134)
+						{
+							storeWool -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 135)
+						{
+							storeLeather -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 136)
+						{
+							storeMarshweed -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 137)
+						{
+							storeGrain -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 138)
+						{
+							storeHops -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 139)
+						{
+							storeCocoabeans -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 140)
+						{
+							storeChocolate -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 141)
+						{
+							storeIceflowers -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 142)
+						{
+							storeBarrels -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 143)
+						{
+							storePaper -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 144)
+						{
+							storeIronOre -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 145)
+						{
+							storeGoldOre -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 146)
+						{
+							storeCows -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+						else if (resourcesAvailable && panelGame.getMapping()[x][y][12] == 147)
+						{
+							storeGold -= productCosts2.get(panelGame.getMapping()[x][y][12] - 101);							
+						}
+					}
+					
+					else if (panelGame.getMapping()[x][y][9] >= 1)
+					{
+						panelGame.applyProperty(x, y, 9, (panelGame.getMapping()[x][y][9] + 1));
+						if(panelGame.getMapping()[x][y][9] >= panelGame.getMapping()[x][y][15])
+						{
+							panelGame.applyProperty(x, y, 9, 0);
+							if (panelGame.getMapping()[x][y][13] == 101)
+							{
+								storeWater += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 102)
+							{
+								storeWood += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 103)
+							{
+								storeStone += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 104)
+							{
+								storeSteel += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 105)
+							{
+								storeGlass += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 106)
+							{
+								storeVegetables += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 107)
+							{
+								storeClothes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 108)
+							{
+								storeCoal += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 109)
+							{
+								storeMilk += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 110)
+							{
+								storeMeat += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 111)
+							{
+								storeMedicine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 112)
+							{
+								storeShoes += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 113)
+							{
+								storeHoney += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 114)
+							{
+								storeOrnaments += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 115)
+							{
+								storeBeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 116)
+							{
+								storeFruits += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 117)
+							{
+								storeHorses += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 118)
+							{
+								storeBread += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 119)
+							{
+								storeTobacco += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 120)
+							{
+								storePerfume += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 121)
+							{
+								storeCheese += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 122)
+							{
+								storeCocoa += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 123)
+							{
+								storeIcewine += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 124)
+							{
+								storeCake += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 125)
+							{
+								storeDeer += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 126)
+							{
+								storeChocolates += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 127)
+							{
+								storePistols += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 128)
+							{
+								storeLiquor += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 129)
+							{
+								storeBooks += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 130)
+							{
+								storeJewelry += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 131)
+							{
+								storeSalmon += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 132)
+							{
+								storeCoffee += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 133)
+							{
+								storeSand += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 134)
+							{
+								storeWool += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 135)
+							{
+								storeLeather += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 136)
+							{
+								storeMarshweed += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 137)
+							{
+								storeGrain += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 138)
+							{
+								storeHops += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 139)
+							{
+								storeCocoabeans += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 140)
+							{
+								storeChocolate += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 141)
+							{
+								storeIceflowers += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 142)
+							{
+								storeBarrels += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 143)
+							{
+								storePaper += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 144)
+							{
+								storeIronOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 145)
+							{
+								storeGoldOre += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 146)
+							{
+								storeCows += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][13] == 147)
+							{
+								storeGold += productAmounts1.get(panelGame.getMapping()[x][y][13] - 101);
+							}
+							
+							if (panelGame.getMapping()[x][y][14] == 101)
+							{
+								storeWater += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 102)
+							{
+								storeWood += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 103)
+							{
+								storeStone += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 104)
+							{
+								storeSteel += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 105)
+							{
+								storeGlass += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 106)
+							{
+								storeVegetables += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 107)
+							{
+								storeClothes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 108)
+							{
+								storeCoal += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 109)
+							{
+								storeMilk += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 110)
+							{
+								storeMeat += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 111)
+							{
+								storeMedicine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 112)
+							{
+								storeShoes += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 113)
+							{
+								storeHoney += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 114)
+							{
+								storeOrnaments += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 115)
+							{
+								storeBeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 116)
+							{
+								storeFruits += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 117)
+							{
+								storeHorses += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 118)
+							{
+								storeBread += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 119)
+							{
+								storeTobacco += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 120)
+							{
+								storePerfume += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 121)
+							{
+								storeCheese += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 122)
+							{
+								storeCocoa += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 123)
+							{
+								storeIcewine += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 124)
+							{
+								storeCake += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 125)
+							{
+								storeDeer += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 126)
+							{
+								storeChocolates += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 127)
+							{
+								storePistols += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 128)
+							{
+								storeLiquor += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 129)
+							{
+								storeBooks += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 130)
+							{
+								storeJewelry += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 131)
+							{
+								storeSalmon += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 132)
+							{
+								storeCoffee += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 133)
+							{
+								storeSand += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 134)
+							{
+								storeWool += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 135)
+							{
+								storeLeather += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 136)
+							{
+								storeMarshweed += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 137)
+							{
+								storeGrain += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 138)
+							{
+								storeHops += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 139)
+							{
+								storeCocoabeans += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 140)
+							{
+								storeChocolate += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 141)
+							{
+								storeIceflowers += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 142)
+							{
+								storeBarrels += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 143)
+							{
+								storePaper += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 144)
+							{
+								storeIronOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 145)
+							{
+								storeGoldOre += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 146)
+							{
+								storeCows += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
+							else if (panelGame.getMapping()[x][y][14] == 147)
+							{
+								storeGold += productAmounts2.get(panelGame.getMapping()[x][y][14] - 101);
+							}
 						}
 					}
 				}

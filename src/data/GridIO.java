@@ -28,6 +28,8 @@ public class GridIO{
 	private int lastY, nextY;
 
 	private ArrayList<Item> constructableItems;
+	private ArrayList<Integer> productionCosts1;
+	private ArrayList<Integer> productionCosts2;
 	private ArrayList<Integer> productionAmounts1;
 	private ArrayList<Integer> productionAmounts2;
 	
@@ -56,6 +58,14 @@ public class GridIO{
 	}
 	
 	
+
+	public ArrayList<Integer> getProductionCosts1() {
+		return productionCosts1;
+	}
+
+	public ArrayList<Integer> getProductionCosts2() {
+		return productionCosts2;
+	}
 
 	public ArrayList<Integer> getProductionAmounts1() {
 		return productionAmounts1;
@@ -428,6 +438,8 @@ public class GridIO{
 		
 		allItems = new ArrayList<Item>();
 		constructableItems = new ArrayList<Item>();
+		productionCosts1 = new ArrayList<Integer>();
+		productionCosts2 = new ArrayList<Integer>();
 		productionAmounts1 = new ArrayList<Integer>();
 		productionAmounts2 = new ArrayList<Integer>();
 		
@@ -464,6 +476,8 @@ public class GridIO{
 								}
 								if(fileContent[2].equals("production"))
 								{
+									productionCosts1.add(Integer.parseInt(fileContent[21]));
+									productionCosts2.add(Integer.parseInt(fileContent[22]));
 									productionAmounts1.add(Integer.parseInt(fileContent[25]));
 									productionAmounts2.add(Integer.parseInt(fileContent[26]));
 								}
