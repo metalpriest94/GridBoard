@@ -1718,6 +1718,8 @@ public class Game extends JFrame {
 		allTiles = gioGame.createTileList();
 		allItems = gioGame.getAllItems();
 		constructableItems = gioGame.getConstructableItems();
+		productCosts1 = gioGame.getProductionCosts1();
+		productCosts2 = gioGame.getProductionCosts2();
 		productAmounts1 = gioGame.getProductionAmounts1();
 		productAmounts2 = gioGame.getProductionAmounts2();
 		
@@ -2115,7 +2117,6 @@ public class Game extends JFrame {
 	
 	public void displayStorage()
 	{
-		System.out.println("!1 ---" + storeVegetables);
 		lblStorageWood.setText(String.valueOf(storeWood));
 		lblStorageStone.setText(String.valueOf(storeStone));
 		lblStorageSteel.setText(String.valueOf(storeSteel));
@@ -3339,7 +3340,7 @@ public class Game extends JFrame {
 						
 						if (panelGame.getMapping()[x][y][12] == 0)
 						{
-							resource1Available = true;
+							resource2Available = true;
 						}
 						else if (panelGame.getMapping()[x][y][12] == 101 && storeWater >= productCosts2.get(panelGame.getMapping()[x][y][12] - 101))
 						{
@@ -3531,7 +3532,10 @@ public class Game extends JFrame {
 						}
 						
 						if (resource1Available && resource2Available)
+						{
 							resourcesAvailable = true;
+							panelGame.getMapping()[x][y][9] = 1;
+						}
 						
 						if (resourcesAvailable && panelGame.getMapping()[x][y][11] == 101)
 						{
