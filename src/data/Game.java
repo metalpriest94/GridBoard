@@ -518,6 +518,7 @@ public class Game extends JFrame {
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
+	private JLabel lblResearch;
 	
 	
 	public GridIO getGioGame() {
@@ -933,191 +934,199 @@ public class Game extends JFrame {
 		panelResearch = new JPanel();
 		panelResearch.setBackground(basicBackground);
 		panelMain.add(panelResearch, cardResearch);
-		panelResearch.setLayout(new MigLayout("", "[grow][8px:n:8px][grow][grow][8px:n:8px][grow][grow][grow][8px:n:8px][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
+		panelResearch.setLayout(new MigLayout("", "[grow][8px:n:8px][grow][grow][8px:n:8px][grow][grow][grow][8px:n:8px][grow][grow][grow]", "[][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
+		
+		setUpResearchScreen();
+		
+		lblResearch = new JLabel("Research");
+		lblResearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelResearch.add(lblResearch, "cell 0 0 4 1");
+		
 		
 		panelResearchWeaving = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "clothes.png");
 		panelResearchWeaving.setBackground(researchLocked);
-		panelResearch.add(panelResearchWeaving, "cell 0 0,grow");
-		
+		panelResearch.add(panelResearchWeaving, "cell 0 1,grow");
+		/*
 		panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 0));
-		panelResearch.add(panel, "cell 1 0 1 11,grow");
+		panelResearch.add(panel, "cell 1 1 1 11,grow");
 		
 		panelResearchCattleBreeding = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cows.png");
 		panelResearchCattleBreeding.setBackground(researchLocked);
-		panelResearch.add(panelResearchCattleBreeding, "cell 2 0,grow");
+		panelResearch.add(panelResearchCattleBreeding, "cell 2 1,grow");
 		
 		panelResearchBeeBreeding = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "honey.png");
 		panelResearchBeeBreeding.setBackground(researchLocked);
-		panelResearch.add(panelResearchBeeBreeding, "cell 3 0,grow");
+		panelResearch.add(panelResearchBeeBreeding, "cell 3 1,grow");
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(Color.BLACK);
-		panelResearch.add(panel_1, "cell 4 0 1 11,grow");
+		panelResearch.add(panel_1, "cell 4 1 1 11,grow");
 		
 		panelResearchEnhancedAgricultlure = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "fruits.png");
 		panelResearchEnhancedAgricultlure.setBackground(researchLocked);
-		panelResearch.add(panelResearchEnhancedAgricultlure, "cell 5 0,grow");
+		panelResearch.add(panelResearchEnhancedAgricultlure, "cell 5 1,grow");
 		
 		panelResearchExoticAgriculture = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "tobacco.png");
 		panelResearchExoticAgriculture.setBackground(researchLocked);
-		panelResearch.add(panelResearchExoticAgriculture, "cell 6 0,grow");
+		panelResearch.add(panelResearchExoticAgriculture, "cell 6 1,grow");
 		
 		panelResearchChocolate = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cocoabeans.png");
 		panelResearchChocolate.setBackground(researchLocked);
-		panelResearch.add(panelResearchChocolate, "cell 7 0,grow");
+		panelResearch.add(panelResearchChocolate, "cell 7 1,grow");
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.BLACK);
-		panelResearch.add(panel_2, "cell 8 0 1 11,grow");
+		panelResearch.add(panel_2, "cell 8 1 1 11,grow");
 		
 		panelResearchEnhancedBaking = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cake.png");
 		panelResearchEnhancedBaking.setBackground(researchLocked);
-		panelResearch.add(panelResearchEnhancedBaking, "cell 9 0,grow");
+		panelResearch.add(panelResearchEnhancedBaking, "cell 9 1,grow");
 		
 		panelResearchConfectionery = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "chocolates.png");
 		panelResearchConfectionery.setBackground(researchLocked);
-		panelResearch.add(panelResearchConfectionery, "cell 10 0,grow");
+		panelResearch.add(panelResearchConfectionery, "cell 10 1,grow");
 		
 		panelResearchTannery = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "leather.png");
 		panelResearchTannery.setBackground(researchLocked);
-		panelResearch.add(panelResearchTannery, "cell 3 1,grow");
+		panelResearch.add(panelResearchTannery, "cell 3 2,grow");
 		
 		panelResearchBaking = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "bread.png");
 		panelResearchBaking.setBackground(researchLocked);
-		panelResearch.add(panelResearchBaking, "cell 6 1,grow");
+		panelResearch.add(panelResearchBaking, "cell 6 2,grow");
 		
 		panelResearchDairy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "cheese.png");
 		panelResearchDairy.setBackground(researchLocked);
-		panelResearch.add(panelResearchDairy, "cell 7 1,grow");
+		panelResearch.add(panelResearchDairy, "cell 7 2,grow");
 		
 		panelResearchFermentation = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "beer.png");
 		panelResearchFermentation.setBackground(researchLocked);
-		panelResearch.add(panelResearchFermentation, "cell 6 2,grow");
+		panelResearch.add(panelResearchFermentation, "cell 6 3,grow");
 		
 		panelResearchEnhancedFermentation = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "barrels.png");
 		panelResearchEnhancedFermentation.setBackground(researchLocked);
-		panelResearch.add(panelResearchEnhancedFermentation, "cell 9 2,grow");
+		panelResearch.add(panelResearchEnhancedFermentation, "cell 9 3,grow");
 		
 		panelResearchWine = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "icewine.png");
 		panelResearchWine.setBackground(researchLocked);
-		panelResearch.add(panelResearchWine, "cell 10 2,grow");
+		panelResearch.add(panelResearchWine, "cell 10 3,grow");
 		
 		panelResearchLiquor = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "liquor.png");
 		panelResearchLiquor.setBackground(researchLocked);
-		panelResearch.add(panelResearchLiquor, "cell 11 2,grow");
+		panelResearch.add(panelResearchLiquor, "cell 11 3,grow");
 		
 		panelResearchButchery = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "meat.png");
 		panelResearchButchery.setBackground(researchLocked);
-		panelResearch.add(panelResearchButchery, "cell 3 3,grow");
+		panelResearch.add(panelResearchButchery, "cell 3 4,grow");
 		
 		panelResearchEnhancedCattleBreeding = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "horses.png");
 		panelResearchEnhancedCattleBreeding.setBackground(researchLocked);
-		panelResearch.add(panelResearchEnhancedCattleBreeding, "cell 5 3,grow");
+		panelResearch.add(panelResearchEnhancedCattleBreeding, "cell 5 4,grow");
 		
 		panelResearchHunting = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "deer.png");
 		panelResearchHunting.setBackground(researchLocked);
-		panelResearch.add(panelResearchHunting, "cell 9 3,grow");
+		panelResearch.add(panelResearchHunting, "cell 9 4,grow");
 		
 		panelResearchCoalBurning = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "coal.png");
 		panelResearchCoalBurning.setBackground(researchLocked);
-		panelResearch.add(panelResearchCoalBurning, "cell 0 4,grow");
+		panelResearch.add(panelResearchCoalBurning, "cell 0 5,grow");
 		
 		panelResearchMining = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ironore.png");
 		panelResearchMining.setBackground(researchLocked);
-		panelResearch.add(panelResearchMining, "cell 5 4,grow");
+		panelResearch.add(panelResearchMining, "cell 5 5,grow");
 		
 		panelResearchIronProcessing = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "steel.png");
 		panelResearchIronProcessing.setBackground(researchLocked);
-		panelResearch.add(panelResearchIronProcessing, "cell 6 4,grow");
+		panelResearch.add(panelResearchIronProcessing, "cell 6 5,grow");
 		
 		panelResearchDeeperMines = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "goldore.png");
 		panelResearchDeeperMines.setBackground(researchLocked);
-		panelResearch.add(panelResearchDeeperMines, "cell 9 4,grow");
+		panelResearch.add(panelResearchDeeperMines, "cell 9 5,grow");
 		
 		panelResearchGoldProcessing = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "gold.png");
 		panelResearchGoldProcessing.setBackground(researchLocked);
-		panelResearch.add(panelResearchGoldProcessing, "cell 10 4,grow");
+		panelResearch.add(panelResearchGoldProcessing, "cell 10 5,grow");
 		
 		panelResearchAdvancedSmithing = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "jewelry.png");
 		panelResearchAdvancedSmithing.setBackground(researchLocked);
-		panelResearch.add(panelResearchAdvancedSmithing, "cell 11 4,grow");
+		panelResearch.add(panelResearchAdvancedSmithing, "cell 11 5,grow");
 		
 		panelResearchRevegetation = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "wood.png");
 		panelResearchRevegetation.setBackground(researchLocked);
-		panelResearch.add(panelResearchRevegetation, "cell 3 5,grow");
+		panelResearch.add(panelResearchRevegetation, "cell 3 6,grow");
 		
 		panelResearchSandProcessing = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "sand.png");
 		panelResearchSandProcessing.setBackground(researchLocked);
-		panelResearch.add(panelResearchSandProcessing, "cell 6 5,grow");
+		panelResearch.add(panelResearchSandProcessing, "cell 6 6,grow");
 		
 		panelResearchBricklaying = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "stone.png");
 		panelResearchBricklaying.setBackground(researchLocked);
-		panelResearch.add(panelResearchBricklaying, "cell 7 5,grow");
+		panelResearch.add(panelResearchBricklaying, "cell 7 6,grow");
 		
 		panelResearchFlintlockGuns = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "pistols.png");
 		panelResearchFlintlockGuns.setBackground(researchLocked);
-		panelResearch.add(panelResearchFlintlockGuns, "cell 9 5,grow");
+		panelResearch.add(panelResearchFlintlockGuns, "cell 9 6,grow");
 		
 		panelResearchNatureStudies = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "marshweed.png");
 		panelResearchNatureStudies.setBackground(researchLocked);
-		panelResearch.add(panelResearchNatureStudies, "cell 2 6,grow");
+		panelResearch.add(panelResearchNatureStudies, "cell 2 7,grow");
 		
 		panelResearchFlorist = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "ornaments.png");
 		panelResearchFlorist.setBackground(researchLocked);
-		panelResearch.add(panelResearchFlorist, "cell 3 6,grow");
+		panelResearch.add(panelResearchFlorist, "cell 3 7,grow");
 		
 		panelResearchPaper = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "paper.png");
 		panelResearchPaper.setBackground(researchLocked);
-		panelResearch.add(panelResearchPaper, "cell 9 6,grow");
+		panelResearch.add(panelResearchPaper, "cell 9 7,grow");
 		
 		panelResearchPrinting = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "books.png");
 		panelResearchPrinting.setBackground(researchLocked);
-		panelResearch.add(panelResearchPrinting, "cell 10 6,grow");
+		panelResearch.add(panelResearchPrinting, "cell 10 7,grow");
 		
 		panelResearchAnatomy = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "medicine.png");
 		panelResearchAnatomy.setBackground(researchLocked);
-		panelResearch.add(panelResearchAnatomy, "cell 3 7,grow");
+		panelResearch.add(panelResearchAnatomy, "cell 3 8,grow");
 		
 		panelResearchGlassProduction = new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + "glass.png");
 		panelResearchGlassProduction.setBackground(researchLocked);
-		panelResearch.add(panelResearchGlassProduction, "cell 9 7,grow");
+		panelResearch.add(panelResearchGlassProduction, "cell 9 8,grow");
 		
 		panelResearchHealth1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "health.png");
 		panelResearchHealth1.setBackground(researchLocked);
-		panelResearch.add(panelResearchHealth1, "cell 5 8,grow");
+		panelResearch.add(panelResearchHealth1, "cell 5 9,grow");
 		
 		panelResearchHealth2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "health.png");
 		panelResearchHealth2.setBackground(researchLocked);
-		panelResearch.add(panelResearchHealth2, "cell 11 8,grow");
+		panelResearch.add(panelResearchHealth2, "cell 11 9,grow");
 		
 		panelResearchSafety = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "health.png");
 		panelResearchSafety.setBackground(researchLocked);
-		panelResearch.add(panelResearchSafety, "cell 11 9,grow");
+		panelResearch.add(panelResearchSafety, "cell 11 10,grow");
 		
 		panelResearchTrade1 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "trade.png");
 		panelResearchTrade1.setBackground(researchLocked);
-		panelResearch.add(panelResearchTrade1, "cell 0 10,grow");
+		panelResearch.add(panelResearchTrade1, "cell 0 11,grow");
 
 		panelResearchTrade2 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "trade.png");
 		panelResearchTrade2.setBackground(researchLocked);
-		panelResearch.add(panelResearchTrade2, "cell 2 10,grow");
+		panelResearch.add(panelResearchTrade2, "cell 2 11,grow");
 		
 		panelResearchTrade3 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "trade.png");
 		panelResearchTrade3.setBackground(researchLocked);
-		panelResearch.add(panelResearchTrade3, "cell 5 10,grow");
+		panelResearch.add(panelResearchTrade3, "cell 5 11,grow");
 		
 		panelResearchTrade4 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "trade.png");
 		panelResearchTrade4.setBackground(researchLocked);
-		panelResearch.add(panelResearchTrade4, "cell 6 10,grow");
+		panelResearch.add(panelResearchTrade4, "cell 6 11,grow");
 
 		panelResearchTradeExotic = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "tradeGold.png");
 		panelResearchTradeExotic.setBackground(researchLocked);
-		panelResearch.add(panelResearchTradeExotic, "cell 9 10,grow");
+		panelResearch.add(panelResearchTradeExotic, "cell 9 11,grow");
 		
 		panelResearchTrade5 = new JImgPanel("resources" + File.separator + "images" + File.separator + "decoration" + File.separator + "trade.png");
 		panelResearchTrade5.setBackground(researchLocked);
-		panelResearch.add(panelResearchTrade5, "cell 11 10,grow");
+		panelResearch.add(panelResearchTrade5, "cell 11 11,grow");
+		*/
 		
 		
 		panelStorage = new JPanel();
@@ -3166,6 +3175,43 @@ public class Game extends JFrame {
 		setUpTradeData(tradeData);
 	}
 	
+	public void setUpResearchScreen()
+	{
+		BufferedReader read = null;
+		String lastLine = null, shortLine=null;
+		try
+		{
+			read = new BufferedReader(new FileReader("src" + File.separator + "config" + File.separator + "research.config"));
+			read.readLine();
+			while((lastLine=read.readLine()) != null && !(lastLine.equals("---connectors")) )
+			{
+				shortLine = lastLine.split("/")[0].trim();
+				System.out.println(shortLine);
+			}
+			
+		}
+		catch(IOException ex)
+		{
+			JOptionPane.showMessageDialog(null, "Error in research.config!");
+		}
+		finally
+		{
+			try 
+			{
+				if(read!=null)
+				{
+					read.close();
+				}					
+			} 
+			catch (IOException ex) 
+			{
+				JOptionPane.showMessageDialog(null, "Error in research.config!");
+			}
+		}
+		
+				
+
+	}
 	public void receiveTradeData(int[] trades)
 	{
 		tradeData = trades;
