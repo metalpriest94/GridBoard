@@ -472,57 +472,16 @@ public class Game extends JFrame {
 	private JButton btnBackStorage;
 	private JImgPanel panelStorageCows;
 	private JLabel lblStorageStore;
-	private JPanel panelResearchWeaving;
-	private JPanel panelResearchCattleBreeding;
-	private JPanel panelResearchBeeBreeding;
-	private JPanel panelResearchEnhancedAgricultlure;
-	private JPanel panelResearchExoticAgriculture;
-	private JPanel panelResearchChocolate;
-	private JPanel panelResearchEnhancedBaking;
-	private JPanel panelResearchConfectionery;
-	private JPanel panelResearchTrade1;
-	private JPanel panelResearchButchery;
-	private JPanel panelResearchTannery;
-	private JPanel panelResearchCoalBurning;
-	private JPanel panelResearchNatureStudies;
-	private JPanel panelResearchTrade2;
-	private JPanel panelResearchTrade3;
-	private JPanel panelResearchTrade4;
-	private JPanel panelResearchTradeExotic;
-	private JPanel panelResearchTrade5;
-	private JPanel panelResearchRevegetation;
-	private JPanel panelResearchFlorist;
-	private JPanel panelResearchAnatomy;
-	private JPanel panelResearchHealth1;
-	private JPanel panelResearchMining;
-	private JPanel panelResearchIronProcessing;
-	private JPanel panelResearchSandProcessing;
-	private JPanel panelResearchBricklaying;
-	private JPanel panelResearchHealth2;
-	private JPanel panelResearchSafety;
-	private JPanel panelResearchEnhancedCattleBreeding;
-	private JPanel panelResearchHunting;
-	private JPanel panelResearchBaking;
-	private JPanel panelResearchDairy;
-	private JImgPanel panelResearchFermentation;
-	private JImgPanel panelResearchEnhancedFermentation;
-	private JImgPanel panelResearchWine;
-	private JImgPanel panelResearchLiquor;
-	private JImgPanel panelResearchDeeperMines;
-	private JImgPanel panelResearchGoldProcessing;
-	private JImgPanel panelResearchAdvancedSmithing;
-	private JImgPanel panelResearchFlintlockGuns;
-	private JImgPanel panelResearchPaper;
-	private JImgPanel panelResearchPrinting;
-	private JImgPanel panelResearchGlassProduction;
 	private JPanel panelResSeparator1;
 	private JPanel panelResSeparator2;
 	private JPanel panelResSeparator3;
 	private JLabel lblResearch;
 	
 	private ArrayList<JImgPanel> researchElements;
-	private JPanel panel;
-	
+	private ArrayList<Boolean> researchesUnlocked;
+	private ArrayList<Boolean> researchesDone;
+	private ArrayList<Integer> researchTimes;
+	private ArrayList<ArrayList<Integer>> researchRequirements;
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -2998,6 +2957,20 @@ public class Game extends JFrame {
 		int counter = 0, x = 0, y = 0;
 		
 		researchElements = new ArrayList<JImgPanel>();
+		researchesUnlocked = new ArrayList<Boolean>();
+		researchesDone = new ArrayList<Boolean>();
+		researchTimes = new ArrayList<Integer>();
+		
+
+		
+		researchRequirements = new ArrayList<ArrayList<Integer>>();
+		researchRequirements.add(new ArrayList<Integer>());
+		researchRequirements.add(new ArrayList<Integer>());
+		
+		researchesUnlocked.add(true);
+		researchesDone.add(true);
+		researchRequirements.get(0).add(0);
+		researchRequirements.get(1).add(0);
 		try
 		{
 			read = new BufferedReader(new FileReader("src" + File.separator + "config" + File.separator + "research.config"));
@@ -3012,6 +2985,8 @@ public class Game extends JFrame {
 					
 					nextLine=read.readLine();
 					nextLine=read.readLine();
+					researchTimes.add(Integer.parseInt(nextLine.split("/")[0].trim()));
+					
 					nextLine=read.readLine();
 					x = Integer.parseInt(nextLine.split("/")[0].trim());
 					
@@ -3019,17 +2994,20 @@ public class Game extends JFrame {
 					y = Integer.parseInt(nextLine.split("/")[0].trim());
 					
 					nextLine=read.readLine();
+					researchRequirements.get(0).add(Integer.parseInt(nextLine.split("/")[0].trim()));
+					
 					nextLine=read.readLine();
+					researchRequirements.get(1).add(Integer.parseInt(nextLine.split("/")[0].trim()));
+					
 					nextLine=read.readLine();
 					imgPath = nextLine.split("/")[0].trim();
-					System.out.println(x);
-					System.out.println(y);
-					System.out.println(imgPath);
 					
 					researchElements.add(new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + imgPath));
 					researchElements.get(counter).setBackground(researchLocked);
 					researchElements.get(counter).setToolTipText(objName);
 					panelResearch.add(researchElements.get(counter), "cell " + x + " " + y+1 + ",grow");
+					researchesUnlocked.add(false);
+					researchesDone.add(false);
 					counter += 1;
 				}
 				else if (lastLine.equals("-newC"))
@@ -3079,9 +3057,16 @@ public class Game extends JFrame {
 				JOptionPane.showMessageDialog(null, "Error in research.config!");
 			}
 		}
-		
-				
-
+	}
+	public void finishResearch(int id)
+	{	
+		researchesDone.set(id, true);
+		researchElements.get(id-1).setBackground(researchDone);
+	}
+	public void unlockResearch(int id)
+	{
+		researchesUnlocked.set(id, true);
+		researchElements.get(id-1).setBackground(researchOk);
 	}
 	public void receiveTradeData(int[] trades)
 	{
