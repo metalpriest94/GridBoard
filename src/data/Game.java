@@ -74,6 +74,7 @@ public class Game extends JFrame {
 	
 	private final Color researchLocked = new Color(140, 0, 0);
 	private final Color researchOk = new Color(255, 210, 0);
+	private final Color researchActive= new Color(140, 210, 140);
 	private final Color researchDone = new Color(0, 140, 0);
 	
 	private ArrayList<MapTile> allTiles;
@@ -482,6 +483,9 @@ public class Game extends JFrame {
 	private ArrayList<Boolean> researchesDone;
 	private ArrayList<Integer> researchTimes;
 	private ArrayList<ArrayList<Integer>> researchRequirements;
+	private ArrayList<String> researchNames;
+	private int researchTimeDone;
+	private int activeResearch;
 	
 	public GridIO getGioGame() {
 		return gioGame;
@@ -2960,8 +2964,7 @@ public class Game extends JFrame {
 		researchesUnlocked = new ArrayList<Boolean>();
 		researchesDone = new ArrayList<Boolean>();
 		researchTimes = new ArrayList<Integer>();
-		
-
+		researchNames = new ArrayList<String>();
 		
 		researchRequirements = new ArrayList<ArrayList<Integer>>();
 		researchRequirements.add(new ArrayList<Integer>());
@@ -2971,6 +2974,8 @@ public class Game extends JFrame {
 		researchesDone.add(true);
 		researchRequirements.get(0).add(0);
 		researchRequirements.get(1).add(0);
+		researchTimes.add(0);
+		researchNames.add("-");
 		try
 		{
 			read = new BufferedReader(new FileReader("src" + File.separator + "config" + File.separator + "research.config"));
@@ -2981,7 +2986,7 @@ public class Game extends JFrame {
 				{
 					nextLine=read.readLine();
 					nextLine=read.readLine();
-					objName =nextLine.split("/")[0].trim();
+					researchNames.add(nextLine.split("/")[0].trim());
 					
 					nextLine=read.readLine();
 					nextLine=read.readLine();
@@ -3004,10 +3009,32 @@ public class Game extends JFrame {
 					
 					researchElements.add(new JImgPanel("resources" + File.separator + "images" + File.separator + "items" + File.separator + imgPath));
 					researchElements.get(counter).setBackground(researchLocked);
-					researchElements.get(counter).setToolTipText(objName);
+					researchElements.get(counter).setToolTipText(researchNames.get(counter+1));
 					panelResearch.add(researchElements.get(counter), "cell " + x + " " + y+1 + ",grow");
 					researchesUnlocked.add(false);
 					researchesDone.add(false);
+					
+					researchElements.get(counter).addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							boolean done = false;
+							int i = 1;
+							JImgPanel source = (JImgPanel)e.getSource();
+							while(!done && i < researchElements.size())
+							{
+								if (source.getToolTipText().equals(researchNames.get(i)) && true) //researchesUnlocked.get(i)
+								{
+									setNewResearch(i);
+									done = true;
+								}
+								else
+								{
+									i++;
+								}
+							}
+						}
+					});
+					
 					counter += 1;
 				}
 				else if (lastLine.equals("-newC"))
@@ -3061,12 +3088,48 @@ public class Game extends JFrame {
 	public void finishResearch(int id)
 	{	
 		researchesDone.set(id, true);
+		boolean checkLock1, checkLock2;
+		int researchToCheck;
+		for (int i = 1; i < researchRequirements.get(0).size(); i++)
+		{
+			checkLock1 = false;
+			checkLock2 = false;
+			
+			researchToCheck = researchRequirements.get(0).get(i);
+			if(researchesDone.get(researchToCheck))
+				checkLock1 = true;
+			
+			researchToCheck = researchRequirements.get(1).get(i);
+			if(researchesDone.get(researchToCheck))
+				checkLock2 = true;
+				
+			if (checkLock1 && checkLock2 && !researchesDone.get(i))
+				unlockResearch(i);
+		}
 		researchElements.get(id-1).setBackground(researchDone);
+		activeResearch = 0;
 	}
 	public void unlockResearch(int id)
 	{
 		researchesUnlocked.set(id, true);
 		researchElements.get(id-1).setBackground(researchOk);
+	}
+	public void setNewResearch(int id)
+	{
+		if (activeResearch == 0)
+		{
+			researchElements.get(id-1).setBackground(researchActive);
+			activeResearch = id;
+			researchTimeDone = 0;
+		}
+		else if (activeResearch != 0 && activeResearch != id)
+		{
+			researchElements.get(activeResearch-1).setBackground(researchOk);
+			researchElements.get(id-1).setBackground(researchActive);
+			activeResearch = id;
+			researchTimeDone = 0;
+		}
+		
 	}
 	public void receiveTradeData(int[] trades)
 	{
@@ -3256,6 +3319,17 @@ public class Game extends JFrame {
 			{
 				inhabs++;
 				lblInhabs.setText("Inhabitants: "+ inhabs);
+			}
+		}
+		{
+			if(activeResearch != 0)
+			{
+				researchTimeDone++;
+				if (researchTimeDone == researchTimes.get(activeResearch))
+				{
+					finishResearch(activeResearch);
+					researchTimeDone=0;
+				}
 			}
 		}
 		{
