@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 public class MiniMapUpdater implements Runnable {
 	private JGridPanel affected, info;
 	private int itemColor = (255*256*256) + (191*256) + (31);
+	
+	private boolean askedToSuspend = false;
+	
 	public MiniMapUpdater(JGridPanel miniMap, JGridPanel wholeMap)
 	{
 		affected = miniMap;
@@ -14,8 +17,14 @@ public class MiniMapUpdater implements Runnable {
 		affected.setDragged(true);
 		
 	}
+	
+	public void askToSuspend()
+	{
+		askedToSuspend = true;
+	}
+	
 	public void run() {
-		while(true)
+		while(!askedToSuspend)
 		{
 			synchronized (this) 
 			{
@@ -28,7 +37,7 @@ public class MiniMapUpdater implements Runnable {
 			}
 			catch(InterruptedException ex)
 			{
-				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
+				break;
 			}
 		}
 	}

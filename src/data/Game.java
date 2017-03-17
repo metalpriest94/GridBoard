@@ -1625,6 +1625,12 @@ public class Game extends JFrame {
 		btnQuit.setVisible(false);
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gsGame.askToSuspend();
+				mmuGame.askToSuspend();
+				cwGame.askToSuspend();
+				smGame.askToSuspend();
+				paGame.askToSuspend();
+				Thread.currentThread().interrupt();
 				dispose();
 				MainMenu.main(null);
 			}

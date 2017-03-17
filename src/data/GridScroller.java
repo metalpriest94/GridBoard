@@ -19,6 +19,7 @@ public class GridScroller implements Runnable {
 	private boolean keyUp, keyDown, keyLeft, keyRight;
 	private boolean awaitZoomIn, awaitZoomOut;
 	
+	private boolean askedToSuspend = false;
 	
 	
 	public GridScroller(JGridPanel jgridpanel, JComponent cursorBase) {
@@ -178,9 +179,14 @@ public class GridScroller implements Runnable {
 		affected.setTileSize(zoomLevel * baseTileSize + baseTileSize);
 	}
 	
+	public void askToSuspend()
+	{
+		askedToSuspend = true;
+	}
+	
 	@Override
 	public void run() {
-		while(true)
+		while(!askedToSuspend)
 		{
 			synchronized (this) 
 			{
@@ -206,7 +212,7 @@ public class GridScroller implements Runnable {
 			}
 			catch(InterruptedException ex)
 			{
-				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
+				break;
 			}
 		}
 	}

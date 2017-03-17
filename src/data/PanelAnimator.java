@@ -6,13 +6,21 @@ public class PanelAnimator implements Runnable {
 	private JGridPanel panel;
 	private int refresh;
 	
+	private boolean askedToSuspend = false;
+	
 	public PanelAnimator(JGridPanel panel, int refreshRate) {
 		this.panel = panel;
 		this.refresh = refreshRate;
 	}
+	
+	public void askToSuspend()
+	{
+		askedToSuspend = true;
+	}
+	
 	@Override
 	public void run() {
-		while(true)
+		while(!askedToSuspend)
 		{
 			synchronized(panel)
 			{
@@ -24,7 +32,7 @@ public class PanelAnimator implements Runnable {
 			}
 			catch(InterruptedException ex)
 			{
-				JOptionPane.showMessageDialog(null, "Critical RuntimeException occured.");
+				break;
 			}
 		}
 	}

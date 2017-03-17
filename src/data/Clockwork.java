@@ -14,6 +14,8 @@ public class Clockwork implements Runnable {
 	private int continousTime = 0;
 	private Game base;
 	
+	private boolean askedToSuspend = false;
+	
 	
 	public Clockwork(JLabel days, JLabel hours, JLabel minutes, Game caller)
 	{
@@ -58,6 +60,11 @@ public class Clockwork implements Runnable {
 		return time;
 	}
 	
+	public void askToSuspend()
+	{
+		askedToSuspend = true;
+	}
+	
 	public void forward(int minutes)
 	{
 		this.minutes += minutes;
@@ -90,7 +97,7 @@ public class Clockwork implements Runnable {
 	@Override
 	public void run() 
 	{
-		while(true)
+		while(!askedToSuspend)
 		{
 			try
 			{
